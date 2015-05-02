@@ -17,7 +17,7 @@ use Http\Adapter\Normalizer\HeaderNormalizer;
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-abstract class AbstractHttpAdapter implements HttpAdapter
+abstract class CoreHttpAdapter implements HttpAdapter
 {
     use HttpAdapterTrait;
 
