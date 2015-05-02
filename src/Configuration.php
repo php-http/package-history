@@ -48,7 +48,7 @@ class Configuration implements ConfigurationInterface
     private $boundary;
 
     /**
-     * @var integer
+     * @var float
      */
     private $timeout = 10;
 
@@ -64,7 +64,7 @@ class Configuration implements ConfigurationInterface
     {
         $this->setMessageFactory($messageFactory ?: new MessageFactory());
         $this->setBoundary(sha1(microtime()));
-        // $this->setUserAgent('Http Adapter '.HttpAdapterInterface::VERSION);
+        $this->setUserAgent('PHP Http Adapter');
     }
 
     /**

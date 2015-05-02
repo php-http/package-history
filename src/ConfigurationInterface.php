@@ -104,14 +104,14 @@ interface ConfigurationInterface
     /**
      * Returns the timeout (in seconds)
      *
-     * @return integer
+     * @return float
      */
     public function getTimeout();
 
     /**
      * Sets the timeout (in seconds)
      *
-     * @param integer $timeout
+     * @param float $timeout
      */
     public function setTimeout($timeout);
 

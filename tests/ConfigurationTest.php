@@ -50,7 +50,7 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($this->configuration->hasEncodingType());
         $this->assertInternalType('string', $this->configuration->getBoundary());
         $this->assertSame(10, $this->configuration->getTimeout());
-        // $this->assertSame('Http Adapter '.HttpAdapter::VERSION, $this->configuration->getUserAgent());
+        $this->assertSame('PHP Http Adapter', $this->configuration->getUserAgent());
         $this->assertFalse($this->configuration->hasBaseUri());
     }
 
