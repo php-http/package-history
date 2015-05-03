@@ -47,8 +47,8 @@ class InternalRequestTest extends \PHPUnit_Framework_TestCase
 
     public function testDefaultState()
     {
-        $this->assertEmpty((string) $this->internalRequest->getUri());
         $this->assertNull($this->internalRequest->getMethod());
+        $this->assertEmpty((string) $this->internalRequest->getUri());
         $this->assertEmpty($this->internalRequest->getHeaders());
         $this->assertEmpty((string) $this->internalRequest->getBody());
         $this->assertEmpty($this->internalRequest->getAllData());
@@ -59,19 +59,19 @@ class InternalRequestTest extends \PHPUnit_Framework_TestCase
     public function testInitialState()
     {
         $this->internalRequest = new InternalRequest(
-            $uri = 'http://php-http.org/',
             $method = InternalRequest::METHOD_POST,
-            'php://memory',
+            $uri = 'http://php-http.org/',
+            $headers = ['foo' => ['bar']],
+            $body = 'php://memory',
             $data = ['baz' => 'bat'],
             $files = ['bot' => 'ban'],
-            $headers = ['foo' => ['bar']],
             $parameters = ['bip' => 'pog']
         );
 
         $headers['Host'] = ['php-http.org'];
 
-        $this->assertSame($uri, (string) $this->internalRequest->getUri());
         $this->assertSame($method, $this->internalRequest->getMethod());
+        $this->assertSame($uri, (string) $this->internalRequest->getUri());
         $this->assertSame($headers, $this->internalRequest->getHeaders());
         $this->assertEmpty((string) $this->internalRequest->getBody());
         $this->assertSame($data, $this->internalRequest->getAllData());

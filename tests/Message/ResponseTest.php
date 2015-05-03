@@ -60,9 +60,9 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
     public function testInitialState()
     {
         $this->response = new Response(
-            $body = $this->getMock('Psr\Http\Message\StreamInterface'),
             $statusCode = 302,
             $headers = ['foo' => ['bar']],
+            $body = $this->getMock('Psr\Http\Message\StreamInterface'),
             $parameters = ['baz' => 'bat']
         );
 

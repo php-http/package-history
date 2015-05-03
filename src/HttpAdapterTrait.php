@@ -26,7 +26,7 @@ trait HttpAdapterTrait
      */
     public function get($uri, array $headers = [])
     {
-        return $this->send($uri, InternalRequestInterface::METHOD_GET, $headers);
+        return $this->send(InternalRequestInterface::METHOD_GET, $uri, $headers);
     }
 
     /**
@@ -34,7 +34,7 @@ trait HttpAdapterTrait
      */
     public function head($uri, array $headers = [])
     {
-        return $this->send($uri, InternalRequestInterface::METHOD_HEAD, $headers);
+        return $this->send(InternalRequestInterface::METHOD_HEAD, $uri, $headers);
     }
 
     /**
@@ -42,7 +42,7 @@ trait HttpAdapterTrait
      */
     public function trace($uri, array $headers = [])
     {
-        return $this->send($uri, InternalRequestInterface::METHOD_TRACE, $headers);
+        return $this->send(InternalRequestInterface::METHOD_TRACE, $uri, $headers);
     }
 
     /**
@@ -50,7 +50,7 @@ trait HttpAdapterTrait
      */
     public function post($uri, array $headers = [], $data = [], array $files = [])
     {
-        return $this->send($uri, InternalRequestInterface::METHOD_POST, $headers, $data, $files);
+        return $this->send(InternalRequestInterface::METHOD_POST, $uri, $headers, $data, $files);
     }
 
     /**
@@ -58,7 +58,7 @@ trait HttpAdapterTrait
      */
     public function put($uri, array $headers = [], $data = [], array $files = [])
     {
-        return $this->send($uri, InternalRequestInterface::METHOD_PUT, $headers, $data, $files);
+        return $this->send(InternalRequestInterface::METHOD_PUT, $uri, $headers, $data, $files);
     }
 
     /**
@@ -66,7 +66,7 @@ trait HttpAdapterTrait
      */
     public function patch($uri, array $headers = [], $data = [], array $files = [])
     {
-        return $this->send($uri, InternalRequestInterface::METHOD_PATCH, $headers, $data, $files);
+        return $this->send(InternalRequestInterface::METHOD_PATCH, $uri, $headers, $data, $files);
     }
 
     /**
@@ -74,7 +74,7 @@ trait HttpAdapterTrait
      */
     public function delete($uri, array $headers = [], $data = [], array $files = [])
     {
-        return $this->send($uri, InternalRequestInterface::METHOD_DELETE, $headers, $data, $files);
+        return $this->send(InternalRequestInterface::METHOD_DELETE, $uri, $headers, $data, $files);
     }
 
     /**
@@ -82,17 +82,17 @@ trait HttpAdapterTrait
      */
     public function options($uri, array $headers = [], $data = [], array $files = [])
     {
-        return $this->send($uri, InternalRequestInterface::METHOD_OPTIONS, $headers, $data, $files);
+        return $this->send(InternalRequestInterface::METHOD_OPTIONS, $uri, $headers, $data, $files);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function send($uri, $method, array $headers = [], $data = [], array $files = [])
+    public function send($method, $uri, array $headers = [], $data = [], array $files = [])
     {
         return $this->sendRequest($this->getConfiguration()->getMessageFactory()->createInternalRequest(
-            $uri,
             $method,
+            $uri,
             $this->getConfiguration()->getProtocolVersion(),
             $headers,
             $data,
@@ -113,8 +113,8 @@ trait HttpAdapterTrait
         $this->getConfiguration()->setProtocolVersion($request->getProtocolVersion());
 
         $response = $this->send(
-            $request->getUri(),
             $request->getMethod(),
+            $request->getUri(),
             $request->getHeaders(),
             $request->getBody()
         );
@@ -148,8 +148,8 @@ trait HttpAdapterTrait
                 unset($requests[$index]);
             } elseif (!$request instanceof InternalRequestInterface) {
                 $request = $this->getConfiguration()->getMessageFactory()->createInternalRequest(
-                    $request->getUri(),
                     $request->getMethod(),
+                    $request->getUri(),
                     $request->getProtocolVersion(),
                     $request->getHeaders(),
                     $request->getBody()

@@ -51,8 +51,8 @@ class RequestTest extends \PHPUnit_Framework_TestCase
 
     public function testDefaultState()
     {
-        $this->assertEmpty((string) $this->request->getUri());
         $this->assertNull($this->request->getMethod());
+        $this->assertEmpty((string) $this->request->getUri());
         $this->assertEmpty($this->request->getHeaders());
         $this->assertEmpty((string) $this->request->getBody());
         $this->assertEmpty($this->request->getParameters());
@@ -61,17 +61,17 @@ class RequestTest extends \PHPUnit_Framework_TestCase
     public function testInitialState()
     {
         $this->request = new Request(
-            $uri = 'http://php-http.org/',
             $method = Request::METHOD_POST,
-            $body = $this->getMock('Psr\Http\Message\StreamInterface'),
+            $uri = 'http://php-http.org/',
             $headers = ['foo' => ['bar']],
+            $body = $this->getMock('Psr\Http\Message\StreamInterface'),
             $parameters = ['baz' => 'bat']
         );
 
         $headers['Host'] = ['php-http.org'];
 
-        $this->assertSame($uri, (string) $this->request->getUri());
         $this->assertSame($method, $this->request->getMethod());
+        $this->assertSame($uri, (string) $this->request->getUri());
         $this->assertSame($headers, $this->request->getHeaders());
         $this->assertSame($body, $this->request->getBody());
         $this->assertSame($parameters, $this->request->getParameters());

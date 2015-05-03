@@ -23,17 +23,17 @@ class Request extends PhlyRequest implements RequestInterface
     use MessageTrait;
 
     /**
-     * @param null|string|UriInterface        $uri
      * @param null|string                     $method
-     * @param string|resource|StreamInterface $body
+     * @param null|string|UriInterface        $uri
      * @param string[]                        $headers
+     * @param string|resource|StreamInterface $body
      * @param array                           $parameters
      */
     public function __construct(
-        $uri = null,
         $method = null,
-        $body = 'php://memory',
+        $uri = null,
         array $headers = [],
+        $body = 'php://memory',
         array $parameters = []
     ) {
         parent::__construct($uri, $method, $body, $headers);

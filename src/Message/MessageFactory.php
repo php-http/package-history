@@ -67,18 +67,18 @@ class MessageFactory implements MessageFactoryInterface
      * {@inheritdoc}
      */
     public function createRequest(
+        $method,
         $uri,
-        $method = RequestInterface::METHOD_GET,
         $protocolVersion = RequestInterface::PROTOCOL_VERSION_1_1,
         array $headers = [],
         $body = null,
         array $parameters = []
     ) {
         return (new Request(
-            $this->createUri($uri),
             $method,
-            $this->createStream($body),
+            $this->createUri($uri),
             HeaderNormalizer::normalize($headers),
+            $this->createStream($body),
             $parameters
         ))->withProtocolVersion($protocolVersion);
     }
@@ -87,8 +87,8 @@ class MessageFactory implements MessageFactoryInterface
      * {@inheritdoc}
      */
     public function createInternalRequest(
+        $method,
         $uri,
-        $method = RequestInterface::METHOD_GET,
         $protocolVersion = RequestInterface::PROTOCOL_VERSION_1_1,
         array $headers = [],
         $data = [],
@@ -103,12 +103,12 @@ class MessageFactory implements MessageFactoryInterface
         }
 
         return (new InternalRequest(
-            $this->createUri($uri),
             $method,
+            $this->createUri($uri),
+            HeaderNormalizer::normalize($headers),
             $body !== null ? $body : 'php://memory',
             $data,
             $files,
-            HeaderNormalizer::normalize($headers),
             $parameters
         ))->withProtocolVersion($protocolVersion);
     }
@@ -124,9 +124,9 @@ class MessageFactory implements MessageFactoryInterface
         array $parameters = []
     ) {
         return (new Response(
-            $this->createStream($body),
             $statusCode,
             HeaderNormalizer::normalize($headers),
+            $this->createStream($body),
             $parameters
         ))->withProtocolVersion($protocolVersion);
     }

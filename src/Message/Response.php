@@ -22,15 +22,15 @@ class Response extends PhlyResponse implements ResponseInterface
     use MessageTrait;
 
     /**
-     * @param string|resource|StreamInterface $body
      * @param integer                         $status
      * @param string[]                        $headers
+     * @param string|resource|StreamInterface $body
      * @param array                           $parameters
      */
     public function __construct(
-        $body = 'php://memory',
         $status = 200,
         array $headers = [],
+        $body = 'php://memory',
         array $parameters = []
     ) {
         parent::__construct($body, $status, $headers);

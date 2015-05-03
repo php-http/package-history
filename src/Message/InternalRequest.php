@@ -30,24 +30,24 @@ class InternalRequest extends Request implements InternalRequestInterface
     private $files = [];
 
     /**
-     * @param null|string|UriInterface        $uri
      * @param null|string                     $method
+     * @param null|string|UriInterface        $uri
+     * @param string[]                        $headers
      * @param string|resource|StreamInterface $body
      * @param array                           $data
      * @param array                           $files
-     * @param string[]                        $headers
      * @param array                           $parameters
      */
     public function __construct(
-        $uri = null,
         $method = null,
+        $uri = null,
+        array $headers = [],
         $body = 'php://memory',
         array $data = [],
         array $files = [],
-        array $headers = [],
         array $parameters = []
     ) {
-        parent::__construct($uri, $method, $body, $headers, $parameters);
+        parent::__construct($method, $uri, $headers, $body, $parameters);
 
         $this->data = $data;
         $this->files = $files;
