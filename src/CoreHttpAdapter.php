@@ -73,7 +73,7 @@ abstract class CoreHttpAdapter implements HttpAdapter
         if (!$internalRequest->hasHeader('Connection')) {
             $internalRequest = $internalRequest->withHeader(
                 'Connection',
-                $this->configuration->getKeepAlive() ? 'keep-alive' : 'close'
+                $this->configuration->isKeptAlive() ? 'keep-alive' : 'close'
             );
         }
 
