@@ -41,9 +41,7 @@ abstract class CurlHttpAdapter extends CoreHttpAdapter
      */
     protected function prepareContent(InternalRequestInterface $internalRequest)
     {
-        $files = $internalRequest->getFiles();
-
-        if (empty($files)) {
+        if (!$internalRequest->hasFiles()) {
             return $this->prepareBody($internalRequest);
         }
 
@@ -53,7 +51,7 @@ abstract class CurlHttpAdapter extends CoreHttpAdapter
             $content = array_merge($content, $this->prepareRawContent($name, $data));
         }
 
-        foreach ($files as $name => $file) {
+        foreach ($internalRequest->getFiles() as $name => $file) {
             $content = array_merge($content, $this->prepareRawContent($name, $file, true));
         }
 
@@ -93,19 +91,19 @@ abstract class CurlHttpAdapter extends CoreHttpAdapter
      */
     private function prepareRawContent($name, $data, $isFile = false)
     {
-        if (is_array($data)) {
-            $preparedData = [];
-
-            foreach ($data as $subName => $subData) {
-                $preparedData = array_merge(
-                    $preparedData,
-                    $this->prepareRawContent($this->prepareName($name, $subName), $subData, $isFile)
-                );
-            }
-
-            return $preparedData;
+        if (!is_array($data)) {
+            return [$name => $isFile ? $this->createFile($data) : $data];
         }
 
-        return [$name => $isFile ? $this->createFile($data) : $data];
+        $preparedData = [];
+
+        foreach ($data as $subName => $subData) {
+            $preparedData = array_merge(
+                $preparedData,
+                $this->prepareRawContent($this->prepareName($name, $subName), $subData, $isFile)
+            );
+        }
+
+        return $preparedData;
     }
 }
