@@ -55,7 +55,7 @@ class Configuration implements ConfigurationInterface
     /**
      * @var string
      */
-    private $userAgent;
+    private $userAgent = 'PHP Http Adapter';
 
     /**
      * @param MessageFactoryInterface|null $messageFactory
@@ -64,7 +64,6 @@ class Configuration implements ConfigurationInterface
     {
         $this->setMessageFactory($messageFactory ?: new MessageFactory());
         $this->setBoundary(sha1(microtime()));
-        $this->setUserAgent('PHP Http Adapter');
     }
 
     /**
