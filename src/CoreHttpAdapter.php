@@ -78,20 +78,20 @@ abstract class CoreHttpAdapter implements HttpAdapter
         }
 
         if (!$internalRequest->hasHeader('Content-Type')) {
-            if ($this->configuration->hasEncodingType()) {
+            if ($this->configuration->hasContentType()) {
                 $internalRequest = $internalRequest->withHeader(
                     'Content-Type',
-                    $this->configuration->getEncodingType()
+                    $this->configuration->getContentType()
                 );
             } elseif ($contentType && $internalRequest->hasFiles()) {
                 $internalRequest = $internalRequest->withHeader(
                     'Content-Type',
-                    ConfigurationInterface::ENCODING_TYPE_FORMDATA.'; boundary='.$this->configuration->getBoundary()
+                    ConfigurationInterface::CONTENT_TYPE_FORMDATA.'; boundary='.$this->configuration->getBoundary()
                 );
             } elseif ($contentType && ($internalRequest->hasAnyData() || $internalRequest->getBody()->getSize() > 0)) {
                 $internalRequest = $internalRequest->withHeader(
                     'Content-Type',
-                    ConfigurationInterface::ENCODING_TYPE_URLENCODED
+                    ConfigurationInterface::CONTENT_TYPE_URLENCODED
                 );
             }
         }

@@ -47,7 +47,7 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('Http\Adapter\Message\MessageFactory', $this->configuration->getMessageFactory());
         $this->assertSame(InternalRequestInterface::PROTOCOL_VERSION_1_1, $this->configuration->getProtocolVersion());
         $this->assertFalse($this->configuration->isKeptAlive());
-        $this->assertFalse($this->configuration->hasEncodingType());
+        $this->assertFalse($this->configuration->hasContentType());
         $this->assertInternalType('string', $this->configuration->getBoundary());
         $this->assertSame(10, $this->configuration->getTimeout());
         $this->assertSame('PHP Http Adapter', $this->configuration->getUserAgent());
@@ -82,11 +82,11 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($this->configuration->isKeptAlive());
     }
 
-    public function testSetEncodingType()
+    public function testSetContentType()
     {
-        $this->configuration->setEncodingType($encodingType = Configuration::ENCODING_TYPE_FORMDATA);
+        $this->configuration->setContentType($encodingType = Configuration::CONTENT_TYPE_FORMDATA);
 
-        $this->assertSame($encodingType, $this->configuration->getEncodingType());
+        $this->assertSame($encodingType, $this->configuration->getContentType());
     }
 
     public function testSetBoundary()

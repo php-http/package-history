@@ -40,7 +40,7 @@ class Configuration implements ConfigurationInterface
     /**
      * @var string|null
      */
-    private $encodingType;
+    private $contentType;
 
     /**
      * @var string
@@ -117,25 +117,25 @@ class Configuration implements ConfigurationInterface
     /**
      * {@inheritdoc}
      */
-    public function getEncodingType()
+    public function getContentType()
     {
-        return $this->encodingType;
+        return $this->contentType;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function hasEncodingType()
+    public function hasContentType()
     {
-        return isset($this->encodingType);
+        return isset($this->contentType);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function setEncodingType($encodingType)
+    public function setContentType($contentType)
     {
-        $this->encodingType = $encodingType;
+        $this->contentType = $contentType;
     }
 
     /**

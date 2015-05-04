@@ -19,10 +19,10 @@ use Http\Adapter\Message\MessageFactoryInterface;
 interface ConfigurationInterface
 {
     /** @const string */
-    const ENCODING_TYPE_URLENCODED = 'application/x-www-form-urlencoded';
+    const CONTENT_TYPE_URLENCODED = 'application/x-www-form-urlencoded';
 
     /** @const string */
-    const ENCODING_TYPE_FORMDATA = 'multipart/form-data';
+    const CONTENT_TYPE_FORMDATA = 'multipart/form-data';
 
     /**
      * Returns the message factory
@@ -67,25 +67,25 @@ interface ConfigurationInterface
     public function setKeepAlive($keepAlive);
 
     /**
-     * Returns the encoding type
+     * Returns the content type
      *
      * @return string|null
      */
-    public function getEncodingType();
+    public function getContentType();
 
     /**
-     * Checks if there is an encoding type
+     * Checks if there is a content type
      *
      * @return boolean
      */
-    public function hasEncodingType();
+    public function hasContentType();
 
     /**
-     * Sets the encoding type.
+     * Sets the content type.
      *
-     * @param string|null $encodingType
+     * @param string|null $contentType
      */
-    public function setEncodingType($encodingType);
+    public function setContentType($contentType);
 
     /**
      * Returns the boundary
