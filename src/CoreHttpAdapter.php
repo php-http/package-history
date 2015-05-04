@@ -78,21 +78,17 @@ abstract class CoreHttpAdapter implements HttpAdapter
         }
 
         if (!$internalRequest->hasHeader('Content-Type')) {
-            $rawData = (string) $internalRequest->getBody();
-            $data = $internalRequest->getAllData();
-            $files = $internalRequest->getFiles();
-
             if ($this->configuration->hasEncodingType()) {
                 $internalRequest = $internalRequest->withHeader(
                     'Content-Type',
                     $this->configuration->getEncodingType()
                 );
-            } elseif ($contentType && !empty($files)) {
+            } elseif ($contentType && $internalRequest->hasFiles()) {
                 $internalRequest = $internalRequest->withHeader(
                     'Content-Type',
                     ConfigurationInterface::ENCODING_TYPE_FORMDATA.'; boundary='.$this->configuration->getBoundary()
                 );
-            } elseif ($contentType && (!empty($data) || !empty($rawData))) {
+            } elseif ($contentType && ($internalRequest->hasAnyData() || $internalRequest->getBody()->getSize() > 0)) {
                 $internalRequest = $internalRequest->withHeader(
                     'Content-Type',
                     ConfigurationInterface::ENCODING_TYPE_URLENCODED
@@ -121,15 +117,11 @@ abstract class CoreHttpAdapter implements HttpAdapter
      */
     protected function prepareBody(InternalRequestInterface $internalRequest)
     {
-        $body = (string) $internalRequest->getBody();
-
-        if (!empty($body)) {
-            return $body;
+        if ($internalRequest->getBody()->getSize() > 0) {
+            return (string) $internalRequest->getBody();
         }
 
-        $files = $internalRequest->getFiles();
-
-        if (empty($files)) {
+        if (!$internalRequest->hasFiles()) {
             return http_build_query($internalRequest->getAllData(), null, '&');
         }
 
