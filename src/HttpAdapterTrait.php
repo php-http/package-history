@@ -14,6 +14,7 @@ namespace Http\Adapter;
 use Http\Adapter\Message\InternalRequestInterface;
 use Http\Adapter\Message\ResponseInterface;
 use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\StreamInterface;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
@@ -89,6 +90,10 @@ trait HttpAdapterTrait
      */
     public function send($method, $uri, array $headers = [], $data = [], array $files = [])
     {
+        if ($data instanceof StreamInterface && !empty($files)) {
+            throw new \InvalidArgumentException('You cannot use files if you use a StreamInterface as data.');
+        }
+
         return $this->sendRequest($this->getConfiguration()->getMessageFactory()->createInternalRequest(
             $method,
             $uri,
