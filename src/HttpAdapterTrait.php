@@ -91,7 +91,7 @@ trait HttpAdapterTrait
     public function send($method, $uri, array $headers = [], $data = [], array $files = [])
     {
         if ($data instanceof StreamInterface && !empty($files)) {
-            throw new \InvalidArgumentException('You cannot use files if you use a StreamInterface as data.');
+            throw new \InvalidArgumentException('A data instance of Psr\Http\Message\StreamInterface and $files parameters should not be passed together.');
         }
 
         return $this->sendRequest($this->getConfiguration()->getMessageFactory()->createInternalRequest(
