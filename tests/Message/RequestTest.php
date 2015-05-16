@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Http\Adapter\Tests\Message;
+namespace Http\Adapter\Core\Tests\Message;
 
-use Http\Adapter\Message\Request;
+use Http\Adapter\Core\Message\Request;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
@@ -44,8 +44,8 @@ class RequestTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('Psr\Http\Message\RequestInterface', $this->request);
         $this->assertInstanceOf('Http\Adapter\Message\RequestInterface', $this->request);
         $this->assertTrue(in_array(
-            'Http\Adapter\Message\MessageTrait',
-            class_uses('Http\Adapter\Message\Request')
+            'Http\Adapter\Core\Message\MessageTrait',
+            class_uses('Http\Adapter\Core\Message\Request')
         ));
     }
 

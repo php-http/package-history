@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Http\Adapter\Message;
+namespace Http\Adapter\Core\Message;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>

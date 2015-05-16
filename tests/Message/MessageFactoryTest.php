@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Http\Adapter\Tests\Message;
+namespace Http\Adapter\Core\Tests\Message;
 
-use Http\Adapter\Message\MessageFactory;
+use Http\Adapter\Core\Message\MessageFactory;
 use Http\Adapter\Message\RequestInterface;
 
 /**
@@ -54,7 +54,7 @@ class MessageFactoryTest extends \PHPUnit_Framework_TestCase
     {
         $request = $this->messageFactory->createRequest($method = RequestInterface::METHOD_GET, $uri = 'http://php-http.org/');
 
-        $this->assertInstanceOf('Http\Adapter\Message\Request', $request);
+        $this->assertInstanceOf('Http\Adapter\Core\Message\Request', $request);
         $this->assertSame(RequestInterface::METHOD_GET, $request->getMethod());
         $this->assertSame($uri, (string) $request->getUri());
         $this->assertSame(['Host' => ['php-http.org']], $request->getHeaders());
@@ -87,7 +87,7 @@ class MessageFactoryTest extends \PHPUnit_Framework_TestCase
     {
         $internalRequest = $this->messageFactory->createInternalRequest($method = RequestInterface::METHOD_GET, $uri = 'http://php-http.org/');
 
-        $this->assertInstanceOf('Http\Adapter\Message\InternalRequest', $internalRequest);
+        $this->assertInstanceOf('Http\Adapter\Core\Message\InternalRequest', $internalRequest);
         $this->assertSame(RequestInterface::METHOD_GET, $internalRequest->getMethod());
         $this->assertSame($uri, (string) $internalRequest->getUri());
         $this->assertSame(RequestInterface::PROTOCOL_VERSION_1_1, $internalRequest->getProtocolVersion());
@@ -177,7 +177,7 @@ class MessageFactoryTest extends \PHPUnit_Framework_TestCase
     {
         $response = $this->messageFactory->createResponse();
 
-        $this->assertInstanceOf('Http\Adapter\Message\Response', $response);
+        $this->assertInstanceOf('Http\Adapter\Core\Message\Response', $response);
 
         $this->assertSame(200, $response->getStatusCode());
         $this->assertSame('OK', $response->getReasonPhrase());
@@ -217,7 +217,7 @@ class MessageFactoryTest extends \PHPUnit_Framework_TestCase
 
         $request = $this->messageFactory->createRequest($method = RequestInterface::METHOD_GET, $uri = 'test');
 
-        $this->assertInstanceOf('Http\Adapter\Message\Request', $request);
+        $this->assertInstanceOf('Http\Adapter\Core\Message\Request', $request);
         $this->assertSame($baseUri.$uri, (string) $request->getUri());
     }
 
@@ -227,7 +227,7 @@ class MessageFactoryTest extends \PHPUnit_Framework_TestCase
 
         $request = $this->messageFactory->createInternalRequest($method = RequestInterface::METHOD_GET, $uri = 'test');
 
-        $this->assertInstanceOf('Http\Adapter\Message\InternalRequest', $request);
+        $this->assertInstanceOf('Http\Adapter\Core\Message\InternalRequest', $request);
         $this->assertSame($baseUri.$uri, (string) $request->getUri());
     }
 }

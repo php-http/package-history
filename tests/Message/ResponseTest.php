@@ -11,7 +11,7 @@
 
 namespace Http\Adapter\Tests\Message;
 
-use Http\Adapter\Message\Response;
+use Http\Adapter\Core\Message\Response;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
@@ -44,8 +44,8 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('Psr\Http\Message\ResponseInterface', $this->response);
         $this->assertInstanceOf('Http\Adapter\Message\ResponseInterface', $this->response);
         $this->assertTrue(in_array(
-            'Http\Adapter\Message\MessageTrait',
-            class_uses('Http\Adapter\Message\Response')
+            'Http\Adapter\Core\Message\MessageTrait',
+            class_uses('Http\Adapter\Core\Message\Response')
         ));
     }
 

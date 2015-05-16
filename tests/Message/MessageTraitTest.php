@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Http\Adapter\Tests\Message;
+namespace Http\Adapter\Core\Tests\Message;
 
-use Http\Adapter\Message\MessageTrait;
+use Http\Adapter\Core\Message\MessageTrait;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
@@ -28,7 +28,7 @@ class MessageTraitTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->message = $this->getObjectForTrait('Http\Adapter\Message\MessageTrait');
+        $this->message = $this->getObjectForTrait('Http\Adapter\Core\Message\MessageTrait');
     }
 
     /**

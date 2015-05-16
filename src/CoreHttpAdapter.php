@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Http\Adapter;
+namespace Http\Adapter\Core;
 
 use Http\Adapter\Message\InternalRequestInterface;
 use Http\Adapter\Normalizer\HeaderNormalizer;

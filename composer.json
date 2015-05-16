@@ -21,12 +21,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Http\\Adapter\\": "src/"
+            "Http\\Adapter\\Core\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Http\\Adapter\\Tests\\": "tests/"
+            "Http\\Adapter\\Core\\Tests\\": "tests/"
         }
     },
     "extra": {

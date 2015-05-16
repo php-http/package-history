@@ -9,8 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace Http\Adapter\Message;
+namespace Http\Adapter\Core\Message;
 
+use Http\Adapter\Message\MessageFactoryInterface;
+use Http\Adapter\Message\RequestInterface;
 use Http\Adapter\Normalizer\HeaderNormalizer;
 use Phly\Http\Stream;
 use Phly\Http\Uri;

@@ -9,8 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Http\Adapter\Message;
+namespace Http\Adapter\Core\Message;
 
+use Http\Adapter\Message\ResponseInterface;
 use Phly\Http\Response as PhlyResponse;
 use Psr\Http\Message\StreamInterface;
 

@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Http\Adapter;
+namespace Http\Adapter\Core;
 
-use Http\Adapter\Message\MessageFactory;
+use Http\Adapter\Core\Message\MessageFactory;
 use Http\Adapter\Message\MessageFactoryInterface;
 use Http\Adapter\Message\MessageInterface;
 

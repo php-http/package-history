@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Http\Adapter\Tests;
+namespace Http\Adapter\Core\Tests;
 
-use Http\Adapter\Configuration;
+use Http\Adapter\Core\Configuration;
 use Http\Adapter\HttpAdapter;
 use Http\Adapter\Message\InternalRequestInterface;
 use Http\Adapter\Message\MessageFactoryInterface;
@@ -44,7 +44,7 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
 
     public function testDefaultState()
     {
-        $this->assertInstanceOf('Http\Adapter\Message\MessageFactory', $this->configuration->getMessageFactory());
+        $this->assertInstanceOf('Http\Adapter\Core\Message\MessageFactory', $this->configuration->getMessageFactory());
         $this->assertSame(InternalRequestInterface::PROTOCOL_VERSION_1_1, $this->configuration->getProtocolVersion());
         $this->assertFalse($this->configuration->isKeptAlive());
         $this->assertFalse($this->configuration->hasContentType());

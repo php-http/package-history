@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Http\Adapter\Tests\Message;
+namespace Http\Adapter\Core\Tests\Message;
 
-use Http\Adapter\Message\InternalRequest;
+use Http\Adapter\Core\Message\InternalRequest;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
@@ -41,7 +41,7 @@ class InternalRequestTest extends \PHPUnit_Framework_TestCase
 
     public function testInheritance()
     {
-        $this->assertInstanceOf('Http\Adapter\Message\Request', $this->internalRequest);
+        $this->assertInstanceOf('Http\Adapter\Core\Message\Request', $this->internalRequest);
         $this->assertInstanceOf('Http\Adapter\Message\InternalRequestInterface', $this->internalRequest);
     }
 
