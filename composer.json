@@ -14,7 +14,7 @@
         "php": ">=5.4",
         "php-http/adapter": "dev-master",
         "php-http/adapter-helper": "dev-master",
-        "phly/http": "^0.12.0"
+        "phly/http": "^0.13"
     },
     "require-dev": {
         "phpunit/phpunit": "~4.4"
