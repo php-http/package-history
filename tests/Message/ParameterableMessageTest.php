@@ -11,15 +11,15 @@
 
 namespace Http\Adapter\Core\Tests\Message;
 
-use Http\Adapter\Core\Message\MessageTrait;
+use Http\Adapter\Core\Message\ParameterableMessage;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class MessageTraitTest extends \PHPUnit_Framework_TestCase
+class ParameterableMessageTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var MessageTrait
+     * @var ParameterableMessage
      */
     private $message;
 
@@ -28,7 +28,7 @@ class MessageTraitTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->message = $this->getObjectForTrait('Http\Adapter\Core\Message\MessageTrait');
+        $this->message = $this->getObjectForTrait('Http\Adapter\Core\Message\ParameterableMessage');
     }
 
     /**

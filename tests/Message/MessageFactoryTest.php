@@ -12,7 +12,6 @@
 namespace Http\Adapter\Core\Tests\Message;
 
 use Http\Adapter\Core\Message\MessageFactory;
-use Http\Adapter\Message\RequestInterface;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
@@ -47,27 +46,26 @@ class MessageFactoryTest extends \PHPUnit_Framework_TestCase
 
     public function testInheritance()
     {
-        $this->assertInstanceOf('Http\Adapter\Message\MessageFactoryInterface', $this->messageFactory);
+        $this->assertInstanceOf('Http\Adapter\Message\MessageFactory', $this->messageFactory);
     }
 
     public function testCreateRequest()
     {
-        $request = $this->messageFactory->createRequest($method = RequestInterface::METHOD_GET, $uri = 'http://php-http.org/');
+        $request = $this->messageFactory->createRequest($method = 'GET', $uri = 'http://php-http.org/');
 
-        $this->assertInstanceOf('Http\Adapter\Core\Message\Request', $request);
-        $this->assertSame(RequestInterface::METHOD_GET, $request->getMethod());
+        $this->assertInstanceOf('Phly\Http\Request', $request);
+        $this->assertSame('GET', $request->getMethod());
         $this->assertSame($uri, (string) $request->getUri());
         $this->assertSame(['Host' => ['php-http.org']], $request->getHeaders());
         $this->assertEmpty((string) $request->getBody());
-        $this->assertEmpty($request->getParameters());
     }
 
     public function testCreateRequestWithFullInformations()
     {
         $request = $this->messageFactory->createRequest(
-            $method = RequestInterface::METHOD_POST,
+            $method = 'POST',
             $uri = 'http://php-http.org/',
-            $protocolVersion = RequestInterface::PROTOCOL_VERSION_1_0,
+            $protocolVersion = '1.0',
             $headers = ['foo' => ['bar']],
             $body = $this->getMock('Psr\Http\Message\StreamInterface'),
             $parameters = ['baz' => 'bat']
@@ -80,17 +78,16 @@ class MessageFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($protocolVersion, $request->getProtocolVersion());
         $this->assertSame($headers, $request->getHeaders());
         $this->assertSame($body, $request->getBody());
-        $this->assertSame($parameters, $request->getParameters());
     }
 
     public function testCreateInternalRequest()
     {
-        $internalRequest = $this->messageFactory->createInternalRequest($method = RequestInterface::METHOD_GET, $uri = 'http://php-http.org/');
+        $internalRequest = $this->messageFactory->createInternalRequest($method = 'GET', $uri = 'http://php-http.org/');
 
         $this->assertInstanceOf('Http\Adapter\Core\Message\InternalRequest', $internalRequest);
-        $this->assertSame(RequestInterface::METHOD_GET, $internalRequest->getMethod());
+        $this->assertSame('GET', $internalRequest->getMethod());
         $this->assertSame($uri, (string) $internalRequest->getUri());
-        $this->assertSame(RequestInterface::PROTOCOL_VERSION_1_1, $internalRequest->getProtocolVersion());
+        $this->assertSame('1.1', $internalRequest->getProtocolVersion());
         $this->assertSame(['Host' => ['php-http.org']], $internalRequest->getHeaders());
         $this->assertEmpty((string) $internalRequest->getBody());
         $this->assertEmpty($internalRequest->getAllData());
@@ -101,9 +98,9 @@ class MessageFactoryTest extends \PHPUnit_Framework_TestCase
     public function testCreateInternalRequestWithArrayData()
     {
         $internalRequest = $this->messageFactory->createInternalRequest(
-            $method = RequestInterface::METHOD_POST,
+            $method = 'POST',
             $uri = 'http://php-http.org/',
-            $protocolVersion = RequestInterface::PROTOCOL_VERSION_1_0,
+            $protocolVersion = '1.0',
             $headers = ['foo' => ['bar']],
             $data = ['baz' => 'bat'],
             $files = ['bot' => 'ban'],
@@ -125,9 +122,9 @@ class MessageFactoryTest extends \PHPUnit_Framework_TestCase
     public function testCreateInternalRequestWithStringData()
     {
         $internalRequest = $this->messageFactory->createInternalRequest(
-            $method = RequestInterface::METHOD_POST,
+            $method = 'POST',
             $uri = 'http://php-http.org/',
-            $protocolVersion = RequestInterface::PROTOCOL_VERSION_1_0,
+            $protocolVersion = '1.0',
             $headers = ['foo' => ['bar']],
             $data = 'baz=bat',
             $files = [],
@@ -152,9 +149,9 @@ class MessageFactoryTest extends \PHPUnit_Framework_TestCase
         fwrite($resource, $data = 'baz=bat');
 
         $internalRequest = $this->messageFactory->createInternalRequest(
-            $method = RequestInterface::METHOD_POST,
+            $method = 'POST',
             $uri = 'http://php-http.org/',
-            $protocolVersion = RequestInterface::PROTOCOL_VERSION_1_0,
+            $protocolVersion = '1.0',
             $headers = ['foo' => ['bar']],
             $resource,
             $files = [],
@@ -177,20 +174,19 @@ class MessageFactoryTest extends \PHPUnit_Framework_TestCase
     {
         $response = $this->messageFactory->createResponse();
 
-        $this->assertInstanceOf('Http\Adapter\Core\Message\Response', $response);
+        $this->assertInstanceOf('Phly\Http\Response', $response);
 
         $this->assertSame(200, $response->getStatusCode());
         $this->assertSame('OK', $response->getReasonPhrase());
         $this->assertEmpty($response->getHeaders());
         $this->assertEmpty((string) $response->getBody());
-        $this->assertEmpty($response->getParameters());
     }
 
     public function testCreateResponseWithFullInformations()
     {
         $response = $this->messageFactory->createResponse(
             $statusCode = 404,
-            $protocolVersion = RequestInterface::PROTOCOL_VERSION_1_0,
+            $protocolVersion = '1.0',
             $headers = ['foo' => ['bar']],
             $body = $this->getMock('Psr\Http\Message\StreamInterface'),
             $parameters = ['baz' => 'bat']
@@ -200,7 +196,6 @@ class MessageFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($protocolVersion, $response->getProtocolVersion());
         $this->assertSame($headers, $response->getHeaders());
         $this->assertSame($body, $response->getBody());
-        $this->assertSame($parameters, $response->getParameters());
     }
 
     public function testSetBaseUri()
@@ -215,9 +210,9 @@ class MessageFactoryTest extends \PHPUnit_Framework_TestCase
     {
         $this->messageFactory->setBaseUri($baseUri = 'http://php-http.org/');
 
-        $request = $this->messageFactory->createRequest($method = RequestInterface::METHOD_GET, $uri = 'test');
+        $request = $this->messageFactory->createRequest($method = 'GET', $uri = 'test');
 
-        $this->assertInstanceOf('Http\Adapter\Core\Message\Request', $request);
+        $this->assertInstanceOf('Phly\Http\Request', $request);
         $this->assertSame($baseUri.$uri, (string) $request->getUri());
     }
 
@@ -225,7 +220,7 @@ class MessageFactoryTest extends \PHPUnit_Framework_TestCase
     {
         $this->messageFactory->setBaseUri($baseUri = 'http://php-http.org/');
 
-        $request = $this->messageFactory->createInternalRequest($method = RequestInterface::METHOD_GET, $uri = 'test');
+        $request = $this->messageFactory->createInternalRequest($method = 'GET', $uri = 'test');
 
         $this->assertInstanceOf('Http\Adapter\Core\Message\InternalRequest', $request);
         $this->assertSame($baseUri.$uri, (string) $request->getUri());

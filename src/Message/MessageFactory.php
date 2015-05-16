@@ -11,9 +11,11 @@
 
 namespace Http\Adapter\Core\Message;
 
-use Http\Adapter\Message\MessageFactoryInterface;
+use Http\Adapter\Message\MessageFactory as MessageFactoryInterface;
 use Http\Adapter\Message\RequestInterface;
 use Http\Adapter\Normalizer\HeaderNormalizer;
+use Phly\Http\Request;
+use Phly\Http\Response;
 use Phly\Http\Stream;
 use Phly\Http\Uri;
 use Psr\Http\Message\StreamInterface;
@@ -71,17 +73,15 @@ class MessageFactory implements MessageFactoryInterface
     public function createRequest(
         $method,
         $uri,
-        $protocolVersion = RequestInterface::PROTOCOL_VERSION_1_1,
+        $protocolVersion = '1.1',
         array $headers = [],
-        $body = null,
-        array $parameters = []
+        $body = null
     ) {
         return (new Request(
-            $method,
             $this->createUri($uri),
-            HeaderNormalizer::normalize($headers),
+            $method,
             $this->createStream($body),
-            $parameters
+            HeaderNormalizer::normalize($headers)
         ))->withProtocolVersion($protocolVersion);
     }
 
@@ -91,7 +91,7 @@ class MessageFactory implements MessageFactoryInterface
     public function createInternalRequest(
         $method,
         $uri,
-        $protocolVersion = RequestInterface::PROTOCOL_VERSION_1_1,
+        $protocolVersion = '1.1',
         array $headers = [],
         $data = [],
         array $files = [],
@@ -120,16 +120,14 @@ class MessageFactory implements MessageFactoryInterface
      */
     public function createResponse(
         $statusCode = 200,
-        $protocolVersion = RequestInterface::PROTOCOL_VERSION_1_1,
+        $protocolVersion = '1.1',
         array $headers = [],
-        $body = null,
-        array $parameters = []
+        $body = null
     ) {
         return (new Response(
-            $statusCode,
-            HeaderNormalizer::normalize($headers),
             $this->createStream($body),
-            $parameters
+            $statusCode,
+            HeaderNormalizer::normalize($headers)
         ))->withProtocolVersion($protocolVersion);
     }
 

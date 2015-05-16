@@ -11,7 +11,8 @@
 
 namespace Http\Adapter\Core\Message;
 
-use Http\Adapter\Message\InternalRequestInterface;
+use Http\Adapter\Message\InternalRequest as InternalRequestInterface;
+use Phly\Http\Request;
 use Psr\Http\Message\UriInterface;
 use Psr\Http\Message\StreamInterface;
 
@@ -20,6 +21,8 @@ use Psr\Http\Message\StreamInterface;
  */
 class InternalRequest extends Request implements InternalRequestInterface
 {
+    use ParameterableMessage;
+
     /**
      * @var array
      */
@@ -48,10 +51,11 @@ class InternalRequest extends Request implements InternalRequestInterface
         array $files = [],
         array $parameters = []
     ) {
-        parent::__construct($method, $uri, $headers, $body, $parameters);
+        parent::__construct($uri, $method, $body, $headers);
 
         $this->data = $data;
         $this->files = $files;
+        $this->parameters = $parameters;
     }
 
     /**

@@ -11,7 +11,7 @@
 
 namespace Http\Adapter\Core;
 
-use Http\Adapter\Message\MessageFactoryInterface;
+use Http\Adapter\Message\MessageFactory;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
@@ -27,16 +27,16 @@ interface ConfigurationInterface
     /**
      * Returns the message factory
      *
-     * @return MessageFactoryInterface
+     * @return MessageFactory
      */
     public function getMessageFactory();
 
     /**
      * Sets the message factory
      *
-     * @param MessageFactoryInterface $messageFactory
+     * @param MessageFactory $messageFactory
      */
-    public function setMessageFactory(MessageFactoryInterface $messageFactory);
+    public function setMessageFactory(MessageFactory $messageFactory);
 
     /**
      * Returns the protocol version

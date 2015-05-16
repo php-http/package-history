@@ -14,7 +14,7 @@ namespace Http\Adapter\Core\Message;
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-trait MessageTrait
+trait ParameterableMessage
 {
     /**
      * @var array

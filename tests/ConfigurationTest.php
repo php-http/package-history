@@ -13,8 +13,8 @@ namespace Http\Adapter\Core\Tests;
 
 use Http\Adapter\Core\Configuration;
 use Http\Adapter\HttpAdapter;
-use Http\Adapter\Message\InternalRequestInterface;
-use Http\Adapter\Message\MessageFactoryInterface;
+use Http\Adapter\Message\InternalRequest;
+use Http\Adapter\Message\MessageFactory;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
@@ -45,7 +45,7 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
     public function testDefaultState()
     {
         $this->assertInstanceOf('Http\Adapter\Core\Message\MessageFactory', $this->configuration->getMessageFactory());
-        $this->assertSame(InternalRequestInterface::PROTOCOL_VERSION_1_1, $this->configuration->getProtocolVersion());
+        $this->assertSame('1.1', $this->configuration->getProtocolVersion());
         $this->assertFalse($this->configuration->isKeptAlive());
         $this->assertFalse($this->configuration->hasContentType());
         $this->assertInternalType('string', $this->configuration->getBoundary());
@@ -70,7 +70,7 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
 
     public function testSetProtocolVersion()
     {
-        $this->configuration->setProtocolVersion($protocolVersion = InternalRequestInterface::PROTOCOL_VERSION_1_0);
+        $this->configuration->setProtocolVersion($protocolVersion = '1.0');
 
         $this->assertSame($protocolVersion, $this->configuration->getProtocolVersion());
     }
@@ -125,6 +125,6 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
      */
     private function createMessageFactoryMock()
     {
-        return $this->getMock('Http\Adapter\Message\MessageFactoryInterface');
+        return $this->getMock('Http\Adapter\Message\MessageFactory');
     }
 }

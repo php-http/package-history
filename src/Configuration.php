@@ -12,8 +12,7 @@
 namespace Http\Adapter\Core;
 
 use Http\Adapter\Core\Message\MessageFactory;
-use Http\Adapter\Message\MessageFactoryInterface;
-use Http\Adapter\Message\MessageInterface;
+use Http\Adapter\Message\MessageFactory as MessageFactoryInterface;
 
 /**
  * {@inheritdoc}
@@ -30,7 +29,7 @@ class Configuration implements ConfigurationInterface
     /**
      * @var string
      */
-    private $protocolVersion = MessageInterface::PROTOCOL_VERSION_1_1;
+    private $protocolVersion = '1.1';
 
     /**
      * @var boolean

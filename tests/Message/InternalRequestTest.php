@@ -41,8 +41,8 @@ class InternalRequestTest extends \PHPUnit_Framework_TestCase
 
     public function testInheritance()
     {
-        $this->assertInstanceOf('Http\Adapter\Core\Message\Request', $this->internalRequest);
-        $this->assertInstanceOf('Http\Adapter\Message\InternalRequestInterface', $this->internalRequest);
+        $this->assertInstanceOf('Phly\Http\Request', $this->internalRequest);
+        $this->assertInstanceOf('Http\Adapter\Message\InternalRequest', $this->internalRequest);
     }
 
     public function testDefaultState()
@@ -59,7 +59,7 @@ class InternalRequestTest extends \PHPUnit_Framework_TestCase
     public function testInitialState()
     {
         $this->internalRequest = new InternalRequest(
-            $method = InternalRequest::METHOD_POST,
+            $method = 'POST',
             $uri = 'http://php-http.org/',
             $headers = ['foo' => ['bar']],
             $body = 'php://memory',
