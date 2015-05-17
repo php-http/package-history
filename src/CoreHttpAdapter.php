@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Http Adapter package.
+ * This file is part of the Http Adapter Core package.
  *
  * (c) Eric GELOEN <geloen.eric@gmail.com>
  *
@@ -11,61 +11,78 @@
 
 namespace Http\Adapter\Core;
 
-use Http\Adapter\Message\InternalRequestInterface;
+use Http\Adapter\ConfigurableHttpAdapter;
+use Http\Adapter\Configurable as ConfigurableInterface;
+use Http\Adapter\Message\InternalRequest;
+use Http\Adapter\Message\MessageFactory;
+use Http\Adapter\Message\MessageFactoryAware;
 use Http\Adapter\Normalizer\HeaderNormalizer;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-abstract class CoreHttpAdapter implements HttpAdapter
+abstract class CoreHttpAdapter implements ConfigurableHttpAdapter, ConfigurableInterface, MessageFactoryAware
 {
-    use HttpAdapterTrait;
+    use HttpAdapter;
+    use Configurable;
 
     /**
-     * @var ConfigurationInterface
+     * @var MessageFactoryInterface
      */
-    private $configuration;
+    protected $messageFactory;
 
     /**
-     * @param ConfigurationInterface|null $configuration
+     * @var array
      */
-    public function __construct(ConfigurationInterface $configuration = null)
+    protected $defaultOptions = [
+        'protocolVersion' => '1.1',
+        'keepAlive'       => false,
+        'boundary'        => '',
+        'timeout'         => 10,
+        'userAgent'       => 'PHP HTTP Adapter',
+    ];
+
+    /**
+     * @param array $options
+     */
+    public function __construct(array $options = [], MessageFactory $messageFactory = null)
     {
-        $this->setConfiguration($configuration ?: new Configuration());
+        $this->options = array_merge($this->defaultOptions, $options);
+        $this->messageFactory = $messageFactory ?: new Message\MessageFactory();
     }
 
     /**
-     * Returns the configuration
-     *
-     * @return ConfigurationInterface
+     * {@inheritdoc}
      */
-    public function getConfiguration()
+    public function getMessageFactory()
     {
-        return $this->configuration;
+        if (!isset($this->messageFactory)) {
+            $this->messageFactory = new Message\MessageFactory();
+        }
+
+        return $this->messageFactory;
     }
 
     /**
-     * Sets the configuration
-     *
-     * @param ConfigurationInterface $configuration
+     * {@inheritdoc}
      */
-    public function setConfiguration(ConfigurationInterface $configuration)
+    public function setMessageFactory(MessageFactory $messageFactory)
     {
-        $this->configuration = $configuration;
+        $this->messageFactory = $messageFactory;
     }
 
     /**
      * Prepares the headers
      *
-     * @param InternalRequestInterface $internalRequest
-     * @param boolean                  $associative     TRUE if the prepared headers should be associative else FALSE.
-     * @param boolean                  $contentType     TRUE if the content type header should be prepared else FALSE.
-     * @param boolean                  $contentLength   TRUE if the content length header should be prepared else FALSE.
+     * @param InternalRequest $internalRequest
+     * @param boolean         $associative     TRUE if the prepared headers should be associative else FALSE.
+     * @param boolean         $contentType     TRUE if the content type header should be prepared else FALSE.
+     * @param boolean         $contentLength   TRUE if the content length header should be prepared else FALSE.
      *
      * @return array
      */
     protected function prepareHeaders(
-        InternalRequestInterface &$internalRequest,
+        InternalRequest &$internalRequest,
         $associative = true,
         $contentType = true,
         $contentLength = false
@@ -73,25 +90,25 @@ abstract class CoreHttpAdapter implements HttpAdapter
         if (!$internalRequest->hasHeader('Connection')) {
             $internalRequest = $internalRequest->withHeader(
                 'Connection',
-                $this->configuration->isKeptAlive() ? 'keep-alive' : 'close'
+                $internalRequest->getOption('keepAlive') ? 'keep-alive' : 'close'
             );
         }
 
         if (!$internalRequest->hasHeader('Content-Type')) {
-            if ($this->configuration->hasContentType()) {
+            if ($internalRequest->hasOption('contentType')) {
                 $internalRequest = $internalRequest->withHeader(
                     'Content-Type',
-                    $this->configuration->getContentType()
+                    $internalRequest->getOption('contentType')
                 );
             } elseif ($contentType && $internalRequest->hasFiles()) {
                 $internalRequest = $internalRequest->withHeader(
                     'Content-Type',
-                    ConfigurationInterface::CONTENT_TYPE_FORMDATA.'; boundary='.$this->configuration->getBoundary()
+                    'multipart/form-data; boundary='.$internalRequest->getOption('boundary')
                 );
             } elseif ($contentType && ($internalRequest->hasAnyData() || $internalRequest->getBody()->getSize() > 0)) {
                 $internalRequest = $internalRequest->withHeader(
                     'Content-Type',
-                    ConfigurationInterface::CONTENT_TYPE_URLENCODED
+                    'application/x-www-form-urlencoded'
                 );
             }
         }
@@ -102,7 +119,7 @@ abstract class CoreHttpAdapter implements HttpAdapter
         }
 
         if (!$internalRequest->hasHeader('User-Agent')) {
-            $internalRequest = $internalRequest->withHeader('User-Agent', $this->configuration->getUserAgent());
+            $internalRequest = $internalRequest->withHeader('User-Agent', $internalRequest->getOption('userAgent'));
         }
 
         return HeaderNormalizer::normalize($internalRequest->getHeaders(), $associative);
@@ -111,11 +128,11 @@ abstract class CoreHttpAdapter implements HttpAdapter
     /**
      * Prepares the body
      *
-     * @param InternalRequestInterface $internalRequest
+     * @param InternalRequest $internalRequest
      *
      * @return string
      */
-    protected function prepareBody(InternalRequestInterface $internalRequest)
+    protected function prepareBody(InternalRequest $internalRequest)
     {
         if ($internalRequest->getBody()->getSize() > 0) {
             return (string) $internalRequest->getBody();
@@ -135,7 +152,7 @@ abstract class CoreHttpAdapter implements HttpAdapter
             $body .= $this->prepareRawBody($name, $file, true);
         }
 
-        $body .= '--'.$this->configuration->getBoundary().'--'."\r\n";
+        $body .= '--'.$internalRequest->getOption('boundary').'--'."\r\n";
 
         return $body;
     }
@@ -174,7 +191,7 @@ abstract class CoreHttpAdapter implements HttpAdapter
             return $body;
         }
 
-        $body = '--'.$this->configuration->getBoundary()."\r\n".'Content-Disposition: form-data; name="'.$name.'"';
+        $body = '--'.$this->getOption('boundary')."\r\n".'Content-Disposition: form-data; name="'.$name.'"';
 
         if ($isFile) {
             $body .= '; filename="'.basename($data).'"';

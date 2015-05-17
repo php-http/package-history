@@ -26,7 +26,7 @@ $ composer require php-http/adapter-core
 ## Testing
 
 ``` bash
-$ phpunit
+$ phpspec run
 ```
 
 

@@ -1,0 +1,10 @@
+suites:
+  adapter_core_suite:
+    namespace: Http\Adapter\Core
+    psr4_prefix: Http\Adapter\Core
+extensions:
+  - PhpSpec\Extension\CodeCoverageExtension
+formatter.name: pretty
+code_coverage:
+  format: clover
+  output: build/coverage.xml

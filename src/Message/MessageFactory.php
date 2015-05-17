@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Http Adapter package.
+ * This file is part of the Http Adapter Core package.
  *
  * (c) Eric GELOEN <geloen.eric@gmail.com>
  *
@@ -95,7 +95,8 @@ class MessageFactory implements MessageFactoryInterface
         array $headers = [],
         $data = [],
         array $files = [],
-        array $parameters = []
+        array $parameters = [],
+        array $options = []
     ) {
         $body = null;
 
@@ -111,7 +112,8 @@ class MessageFactory implements MessageFactoryInterface
             $body !== null ? $body : 'php://memory',
             $data,
             $files,
-            $parameters
+            $parameters,
+            $options
         ))->withProtocolVersion($protocolVersion);
     }
 

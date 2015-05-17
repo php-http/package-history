@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Http Adapter package.
+ * This file is part of the Http Adapter Core package.
  *
  * (c) Eric GELOEN <geloen.eric@gmail.com>
  *
@@ -11,7 +11,7 @@
 
 namespace Http\Adapter\Core;
 
-use Http\Adapter\Message\InternalRequestInterface;
+use Http\Adapter\Message\InternalRequest;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
@@ -21,13 +21,13 @@ abstract class CurlHttpAdapter extends CoreHttpAdapter
     /**
      * Prepares the protocol version
      *
-     * @param InternalRequestInterface $internalRequest
+     * @param InternalRequest $internalRequest
      *
      * @return integer
      */
-    protected function prepareProtocolVersion(InternalRequestInterface $internalRequest)
+    protected function prepareProtocolVersion(InternalRequest $internalRequest)
     {
-        return $internalRequest->getProtocolVersion() === InternalRequestInterface::PROTOCOL_VERSION_1_0
+        return $internalRequest->getProtocolVersion() === '1.0'
             ? CURL_HTTP_VERSION_1_0
             : CURL_HTTP_VERSION_1_1;
     }
@@ -35,11 +35,11 @@ abstract class CurlHttpAdapter extends CoreHttpAdapter
     /**
      * Prepares the content
      *
-     * @param InternalRequestInterface $internalRequest
+     * @param InternalRequest $internalRequest
      *
      * @return array|string
      */
-    protected function prepareContent(InternalRequestInterface $internalRequest)
+    protected function prepareContent(InternalRequest $internalRequest)
     {
         if (!$internalRequest->hasFiles()) {
             return $this->prepareBody($internalRequest);

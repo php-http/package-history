@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Http Adapter package.
+ * This file is part of the Http Adapter Core package.
  *
  * (c) Eric GELOEN <geloen.eric@gmail.com>
  *

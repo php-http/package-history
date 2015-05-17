@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Http Adapter package.
+ * This file is part of the Http Adapter Core package.
  *
  * (c) Eric GELOEN <geloen.eric@gmail.com>
  *
@@ -21,6 +21,7 @@ use Psr\Http\Message\StreamInterface;
  */
 class InternalRequest extends Request implements InternalRequestInterface
 {
+    use ConfigurableMessage;
     use ParameterableMessage;
 
     /**
@@ -41,6 +42,7 @@ class InternalRequest extends Request implements InternalRequestInterface
      * @param array                           $data
      * @param array                           $files
      * @param array                           $parameters
+     * @param array                           $options
      */
     public function __construct(
         $method = null,
@@ -49,13 +51,15 @@ class InternalRequest extends Request implements InternalRequestInterface
         $body = 'php://memory',
         array $data = [],
         array $files = [],
-        array $parameters = []
+        array $parameters = [],
+        array $options = []
     ) {
         parent::__construct($uri, $method, $body, $headers);
 
         $this->data = $data;
         $this->files = $files;
         $this->parameters = $parameters;
+        $this->options = $options;
     }
 
     /**
