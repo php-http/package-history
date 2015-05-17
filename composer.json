@@ -1,0 +1,29 @@
+{
+    "name": "php-http/adapter-internal",
+    "description": "HTTP adapter internal contract",
+    "license": "MIT",
+    "keywords": ["http", "adapter", "internal"],
+    "homepage": "http://php-http.org",
+    "authors": [
+        {
+            "name": "Eric GELOEN",
+            "email": "geloen.eric@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.4",
+        "php-http/adapter": "dev-internal_separation"
+    },
+    "autoload": {
+        "psr-4": {
+            "Http\\Adapter\\Internal\\": "src/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.1-dev"
+        }
+    },
+    "prefer-stable": true,
+    "minimum-stability": "dev"
+}
