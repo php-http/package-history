@@ -11,7 +11,8 @@
 
 namespace Http\Adapter\Core\Message;
 
-use Http\Adapter\Message\ConfigurableMessage as ConfigurableMessageInterface;
+use Http\Adapter\Common\Message\Configurable;
+use Http\Adapter\Message\Configurable as ConfigurableInterface;
 use Http\Message\RequestDecorator;
 
 /**
@@ -19,7 +20,7 @@ use Http\Message\RequestDecorator;
  *
  * @author Márk Sági-Kazár mark.sagikazar@gmail.com>
  */
-class ConfigurableRequest extends RequestDecorator implements ConfigurableMessageInterface
+class ConfigurableRequest extends RequestDecorator implements ConfigurableInterface
 {
-    use ConfigurableMessage;
+    use Configurable;
 }

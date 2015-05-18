@@ -11,7 +11,7 @@
 
 namespace Http\Adapter\Core\Message;
 
-use Http\Adapter\Message\ParameterableMessage as ParameterableMessageInterface;
+use Http\Adapter\Internal\Message\Parameterable as ParameterableInterface;
 use Http\Message\ResponseDecorator;
 
 /**
@@ -19,7 +19,7 @@ use Http\Message\ResponseDecorator;
  *
  * @author Márk Sági-Kazár mark.sagikazar@gmail.com>
  */
-class ParameterableResponse extends ResponseDecorator implements ParameterableMessageInterface
+class ParameterableResponse extends ResponseDecorator implements ParameterableInterface
 {
-    use ParameterableMessage;
+    use Parameterable;
 }

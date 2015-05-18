@@ -3,8 +3,8 @@
 namespace spec\Http\Adapter\Core;
 
 use Http\Adapter\Core\CoreHttpAdapter;
-use Http\Adapter\Message\InternalRequest;
-use Http\Adapter\Message\MessageFactory;
+use Http\Adapter\Internal\Message\InternalRequest;
+use Http\Adapter\Internal\Message\MessageFactory;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
 use PhpSpec\ObjectBehavior;
@@ -24,7 +24,7 @@ class CoreHttpAdapterSpec extends ObjectBehavior
 
     function it_is_message_factory_aware(MessageFactory $messageFactory, MessageFactory $anotherMessageFactory)
     {
-        $this->shouldImplement('Http\Adapter\Message\MessageFactoryAware');
+        $this->shouldImplement('Http\Adapter\Internal\Message\MessageFactoryAware');
 
         $this->getMessageFactory()->shouldReturn($messageFactory);
         $this->setMessageFactory($anotherMessageFactory);

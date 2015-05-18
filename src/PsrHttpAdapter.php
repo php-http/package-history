@@ -11,10 +11,11 @@
 
 namespace Http\Adapter\Core;
 
+use Http\Adapter\Common\Exception;
 use Http\Adapter\Exception\HttpAdapterException;
 use Http\Adapter\Exception\MultiHttpAdapterException;
-use Http\Adapter\HasConfiguration as HasConfigurationInterface;
-use Http\Adapter\Message\InternalRequest;
+use Http\Adapter\HasConfiguration;
+use Http\Adapter\Internal\Message\InternalRequest;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
@@ -26,6 +27,11 @@ use Psr\Http\Message\StreamInterface;
  */
 trait PsrHttpAdapter
 {
+    /**
+     * {@inheritdoc}
+     */
+    abstract public function getMessageFactory();
+
     /**
      * {@inheritdoc}
      */
@@ -47,18 +53,18 @@ trait PsrHttpAdapter
 
         foreach ($requests as $index => &$request) {
             if (is_string($request)) {
-                $request = array($request);
+                $request = [$request];
             }
 
             if (is_array($request)) {
                 $request = call_user_func_array(
-                    array($this->getMessageFactory(), 'createInternalRequest'),
+                    [$this->getMessageFactory(), 'createInternalRequest'],
                     $request
                 );
             }
 
             if (!$request instanceof RequestInterface) {
-                $exceptions[] = new Exception\InvalidRequestException($request);
+                $exceptions[] = new Exception\InvalidRequest($request);
                 unset($requests[$index]);
             } elseif (!$request instanceof InternalRequest) {
                 $request = $this->createRequestInternalFromPsr($request);
@@ -133,11 +139,11 @@ trait PsrHttpAdapter
         $globalOptions = [];
         $options = [];
 
-        if ($this instanceof HasConfigurationInterface) {
+        if ($this instanceof HasConfiguration) {
             $globalOptions = $this->getOptions();
         }
 
-        if ($request instanceof HasConfigurationInterface) {
+        if ($request instanceof HasConfiguration) {
             $options = $request->getOptions();
         }
 

@@ -11,7 +11,8 @@
 
 namespace Http\Adapter\Core\Message;
 
-use Http\Adapter\Message\InternalRequest as InternalRequestInterface;
+use Http\Adapter\Common\Message\Configurable;
+use Http\Adapter\Internal\Message\InternalRequest as InternalRequestInterface;
 use Phly\Http\Request;
 use Psr\Http\Message\UriInterface;
 use Psr\Http\Message\StreamInterface;
@@ -21,8 +22,8 @@ use Psr\Http\Message\StreamInterface;
  */
 class InternalRequest extends Request implements InternalRequestInterface
 {
-    use ConfigurableMessage;
-    use ParameterableMessage;
+    use Configurable;
+    use Parameterable;
 
     /**
      * @var array

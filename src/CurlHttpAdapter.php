@@ -11,7 +11,7 @@
 
 namespace Http\Adapter\Core;
 
-use Http\Adapter\Message\InternalRequest;
+use Http\Adapter\Internal\Message\InternalRequest;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>

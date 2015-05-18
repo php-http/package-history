@@ -12,10 +12,9 @@
     ],
     "require": {
         "php": ">=5.4",
-        "php-http/adapter": "dev-exceptions",
-        "php-http/message-decorator": "dev-master",
-        "php-http/adapter-helper": "dev-master",
-        "phly/http": "^0.13"
+        "php-http/adapter-common": "dev-master",
+        "php-http/adapter-internal": "dev-master",
+        "php-http/message-decorator": "dev-master"
     },
     "require-dev": {
         "phpspec/phpspec": "~2.1",

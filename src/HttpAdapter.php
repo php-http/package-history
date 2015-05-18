@@ -11,10 +11,8 @@
 
 namespace Http\Adapter\Core;
 
-use Http\Adapter\HasConfiguration as HasConfigurationInterface;
-use Http\Adapter\Message\InternalRequestInterface;
-use Http\Adapter\Message\ResponseInterface;
-use Psr\Http\Message\RequestInterface;
+use Http\Adapter\HasConfiguration;
+use Http\Adapter\Common\ConfigurableHttpAdapter;
 use Psr\Http\Message\StreamInterface;
 
 /**
@@ -22,71 +20,8 @@ use Psr\Http\Message\StreamInterface;
  */
 trait HttpAdapter
 {
+    use ConfigurableHttpAdapter;
     use PsrHttpAdapter;
-
-    /**
-     * {@inheritdoc}
-     */
-    public function get($uri, array $headers = [], array $options = [])
-    {
-        return $this->send('GET', $uri, $headers, $options);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function head($uri, array $headers = [], array $options = [])
-    {
-        return $this->send('HEAD', $uri, $headers, $options);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function trace($uri, array $headers = [], array $options = [])
-    {
-        return $this->send('TRACE', $uri, $headers, $options);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function post($uri, array $headers = [], $data = [], array $files = [], array $options = [])
-    {
-        return $this->send('POST', $uri, $headers, $data, $files, $options);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function put($uri, array $headers = [], $data = [], array $files = [], array $options = [])
-    {
-        return $this->send('PUT', $uri, $headers, $data, $files, $options);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function patch($uri, array $headers = [], $data = [], array $files = [], array $options = [])
-    {
-        return $this->send('PATCH', $uri, $headers, $data, $files, $options);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function delete($uri, array $headers = [], $data = [], array $files = [], array $options = [])
-    {
-        return $this->send('DELETE', $uri, $headers, $data, $files, $options);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function options($uri, array $headers = [], $data = [], array $files = [], array $options = [])
-    {
-        return $this->send('OPTIONS', $uri, $headers, $data, $files, $options);
-    }
 
     /**
      * {@inheritdoc}
@@ -99,7 +34,7 @@ trait HttpAdapter
 
         $globalOptions = [];
 
-        if ($this instanceof HasConfigurationInterface) {
+        if ($this instanceof HasConfiguration) {
             $globalOptions = $this->getOptions();
         }
 

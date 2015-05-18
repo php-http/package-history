@@ -11,11 +11,12 @@
 
 namespace Http\Adapter\Core;
 
+use Http\Adapter\Common\Configurable;
 use Http\Adapter\ConfigurableHttpAdapter;
 use Http\Adapter\Configurable as ConfigurableInterface;
-use Http\Adapter\Message\InternalRequest;
-use Http\Adapter\Message\MessageFactory;
-use Http\Adapter\Message\MessageFactoryAware;
+use Http\Adapter\Internal\Message\InternalRequest;
+use Http\Adapter\Internal\Message\MessageFactory;
+use Http\Adapter\Internal\Message\MessageFactoryAware;
 use Http\Adapter\Normalizer\HeaderNormalizer;
 
 /**
@@ -27,7 +28,7 @@ abstract class CoreHttpAdapter implements ConfigurableHttpAdapter, ConfigurableI
     use Configurable;
 
     /**
-     * @var MessageFactoryInterface
+     * @var MessageFactory
      */
     protected $messageFactory;
 

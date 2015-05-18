@@ -3,8 +3,8 @@
 namespace spec\Http\Adapter\Core;
 
 use Http\Adapter\Core\CurlHttpAdapter;
-use Http\Adapter\Message\InternalRequest;
-use Http\Adapter\Message\MessageFactory;
+use Http\Adapter\Internal\Message\InternalRequest;
+use Http\Adapter\Internal\Message\MessageFactory;
 use PhpSpec\ObjectBehavior;
 
 class CurlHttpAdapterSpec extends ObjectBehavior

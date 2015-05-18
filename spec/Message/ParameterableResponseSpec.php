@@ -20,7 +20,7 @@ class ParameterableResponseSpec extends ObjectBehavior
 
     function it_is_a_parameterable_message(ResponseInterface $response)
     {
-        $this->shouldImplement('Http\Adapter\Message\ParameterableMessage');
+        $this->shouldImplement('Http\Adapter\Internal\Message\Parameterable');
 
         $this->getMessage()->shouldReturn($response);
         $this->hasParameter('param')->shouldReturn(false);

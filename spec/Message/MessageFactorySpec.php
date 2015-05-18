@@ -19,33 +19,11 @@ class MessageFactorySpec extends ObjectBehavior
 
     function it_is_a_message_factory()
     {
-        $this->shouldImplement('Http\Adapter\Message\MessageFactory');
-    }
-
-    function it_has_a_base_uri()
-    {
-        $this->getBaseUri()->shouldHaveType('Psr\Http\Message\UriInterface');
-        $this->hasBaseUri()->shouldReturn(true);
-    }
-
-    function it_accepts_a_base_uri()
-    {
-        $this->setBaseUri(null);
-        $this->hasBaseUri()->shouldReturn(false);
-    }
-
-    function it_creates_a_request()
-    {
-        $this->createRequest('GET', '/')->shouldHaveType('Psr\Http\Message\RequestInterface');
+        $this->shouldImplement('Http\Adapter\Internal\Message\MessageFactory');
     }
 
     function it_creates_an_internal_request()
     {
-        $this->createInternalRequest('GET', '/')->shouldHaveType('Http\Adapter\Message\InternalRequest');
-    }
-
-    function it_creates_a_response()
-    {
-        $this->createResponse()->shouldHaveType('Psr\Http\Message\ResponseInterface');
+        $this->createInternalRequest('GET', '/')->shouldHaveType('Http\Adapter\Internal\Message\InternalRequest');
     }
 }
