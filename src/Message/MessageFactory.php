@@ -108,7 +108,7 @@ class MessageFactory implements MessageFactoryInterface
      *
      * @return string
      */
-    private function createUri($uri)
+    protected function createUri($uri)
     {
         if ($this->hasBaseUri() && (stripos($uri, $baseUri = (string) $this->getBaseUri()) === false)) {
             return $baseUri.$uri;
@@ -124,7 +124,7 @@ class MessageFactory implements MessageFactoryInterface
      *
      * @return StreamInterface
      */
-    private function createStream($body)
+    protected function createStream($body)
     {
         if ($body instanceof StreamInterface) {
             $body->rewind();
