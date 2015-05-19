@@ -2,16 +2,11 @@
 
 namespace spec\Http\Adapter\Common\Message;
 
+use Psr\Http\Message\StreamInterface;
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 
 class MessageFactorySpec extends ObjectBehavior
 {
-    function let()
-    {
-        $this->beConstructedWith('http://php-http.org');
-    }
-
     function it_is_initializable()
     {
         $this->shouldHaveType('Http\Adapter\Common\Message\MessageFactory');
@@ -19,19 +14,7 @@ class MessageFactorySpec extends ObjectBehavior
 
     function it_is_a_message_factory()
     {
-        $this->shouldImplement('Http\Adapter\Message\MessageFactory');
-    }
-
-    function it_has_a_base_uri()
-    {
-        $this->getBaseUri()->shouldHaveType('Psr\Http\Message\UriInterface');
-        $this->hasBaseUri()->shouldReturn(true);
-    }
-
-    function it_accepts_a_base_uri()
-    {
-        $this->setBaseUri(null);
-        $this->hasBaseUri()->shouldReturn(false);
+        $this->shouldImplement('Http\Message\ClientContextFactory');
     }
 
     function it_creates_a_request()
@@ -42,5 +25,33 @@ class MessageFactorySpec extends ObjectBehavior
     function it_creates_a_response()
     {
         $this->createResponse()->shouldHaveType('Psr\Http\Message\ResponseInterface');
+    }
+
+    function it_creates_an_empty_stream()
+    {
+        $this->createStream()->shouldHaveType('Psr\Http\Message\StreamInterface');
+    }
+
+    function it_creates_a_string_stream()
+    {
+        $this->createStream('Body')->shouldHaveType('Psr\Http\Message\StreamInterface');
+    }
+
+    function it_creates_a_resource_stream()
+    {
+        $resource = tmpfile();
+        $this->createStream($resource)->shouldHaveType('Psr\Http\Message\StreamInterface');
+    }
+
+    function it_creates_a_stream_stream(StreamInterface $stream)
+    {
+        $stream->rewind()->shouldBeCalled();
+
+        $this->createUri($stream)->shouldHaveType('Psr\Http\Message\StreamInterface');
+    }
+
+    function it_creates_an_uri()
+    {
+        $this->createUri('http://php-http.org')->shouldHaveType('Psr\Http\Message\UriInterface');
     }
 }

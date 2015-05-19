@@ -11,62 +11,20 @@
 
 namespace Http\Adapter\Common\Message;
 
-use Http\Adapter\Message\MessageFactory as MessageFactoryInterface;
-use Http\Adapter\Message\RequestInterface;
+use Http\Message\ClientContextFactory;
 use Http\Adapter\Normalizer\HeaderNormalizer;
 use Phly\Http\Request;
 use Phly\Http\Response;
 use Phly\Http\Stream;
 use Phly\Http\Uri;
+use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\StreamInterface;
-use Psr\Http\Message\UriInterface;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class MessageFactory implements MessageFactoryInterface
+class MessageFactory implements ClientContextFactory
 {
-    /**
-     * @var UriInterface|null
-     */
-    private $baseUri;
-
-    /**
-     * @param UriInterface|string $baseUri
-     */
-    public function __construct($baseUri = null)
-    {
-        $this->setBaseUri($baseUri);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getBaseUri()
-    {
-        return $this->baseUri;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function hasBaseUri()
-    {
-        return isset($this->baseUri);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setBaseUri($baseUri = null)
-    {
-        if (is_string($baseUri)) {
-            $baseUri = new Uri($baseUri);
-        }
-
-        $this->baseUri = $baseUri;
-    }
-
     /**
      * {@inheritdoc}
      */
@@ -90,6 +48,7 @@ class MessageFactory implements MessageFactoryInterface
      */
     public function createResponse(
         $statusCode = 200,
+        $reasonPhrase = null,
         $protocolVersion = '1.1',
         array $headers = [],
         $body = null
@@ -102,48 +61,34 @@ class MessageFactory implements MessageFactoryInterface
     }
 
     /**
-     * Creates an uri
-     *
-     * @param string $uri
-     *
-     * @return string
+     * {@inheritdoc}
      */
-    protected function createUri($uri)
+    public function createUri($uri)
     {
-        if ($this->hasBaseUri() && (stripos($uri, $baseUri = (string) $this->getBaseUri()) === false)) {
-            return $baseUri.$uri;
-        }
-
-        return $uri;
+        return new Uri($uri);
     }
 
     /**
-     * Creates a stream
-     *
-     * @param null|resource|string|StreamInterface $body
-     *
-     * @return StreamInterface
+     * {@inheritdoc}
      */
-    protected function createStream($body)
+    public function createStream($body = null)
     {
-        if ($body instanceof StreamInterface) {
-            $body->rewind();
+        if (!$body instanceof StreamInterface) {
+            if (is_resource($body)) {
+                $body = new Stream($body);
+            } else {
+                $stream = new Stream('php://memory', 'rw');
 
-            return $body;
+                if (isset($body)) {
+                    $stream->write((string) $body);
+                }
+
+                $body = $stream;
+            }
         }
 
-        if (is_resource($body)) {
-            return $this->createStream(new Stream($body));
-        }
+        $body->rewind();
 
-        $stream = new Stream('php://memory', 'rw');
-
-        if ($body === null) {
-            return $stream;
-        }
-
-        $stream->write((string) $body);
-
-        return $this->createStream($stream);
+        return $body;
     }
 }
