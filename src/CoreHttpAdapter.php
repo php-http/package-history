@@ -52,7 +52,9 @@ abstract class CoreHttpAdapter implements ConfigurableHttpAdapter, ConfigurableI
     }
 
     /**
-     * {@inheritdoc}
+     * Returns Message Factory
+     *
+     * @return MessageFactory
      */
     public function getMessageFactory()
     {
@@ -64,7 +66,9 @@ abstract class CoreHttpAdapter implements ConfigurableHttpAdapter, ConfigurableI
     }
 
     /**
-     * {@inheritdoc}
+     * Sets a Message Factory
+     *
+     * @param MessageFactory $messageFactory
      */
     public function setMessageFactory(MessageFactory $messageFactory)
     {
