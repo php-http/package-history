@@ -7,11 +7,6 @@ use Prophecy\Argument;
 
 class MessageFactorySpec extends ObjectBehavior
 {
-    function let()
-    {
-        $this->beConstructedWith('/');
-    }
-
     function it_is_initializable()
     {
         $this->shouldHaveType('Http\Adapter\Core\Message\MessageFactory');
@@ -24,6 +19,6 @@ class MessageFactorySpec extends ObjectBehavior
 
     function it_creates_an_internal_request()
     {
-        $this->createInternalRequest('GET', '/')->shouldHaveType('Http\Adapter\Internal\Message\InternalRequest');
+        $this->createInternalRequest('GET', '/', '1.1', [], 'body')->shouldHaveType('Http\Adapter\Internal\Message\InternalRequest');
     }
 }

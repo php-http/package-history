@@ -11,14 +11,14 @@
 
 namespace Http\Adapter\Core\Message;
 
-use Http\Adapter\Common\Message\MessageFactory as MessageFactoryParent;
-use Http\Adapter\Internal\Message\MessageFactory as MessageFactoryInterface;
+use Http\Adapter\Common\Message\MessageFactory as ClientContextFactory;
+use Http\Adapter\Internal\Message\MessageFactory as InternalMessageFactory;
 use Http\Adapter\Normalizer\HeaderNormalizer;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class MessageFactory extends MessageFactoryParent implements MessageFactoryInterface
+class MessageFactory extends ClientContextFactory implements InternalMessageFactory
 {
     /**
      * {@inheritdoc}
@@ -44,7 +44,7 @@ class MessageFactory extends MessageFactoryParent implements MessageFactoryInter
             $method,
             $this->createUri($uri),
             HeaderNormalizer::normalize($headers),
-            $body !== null ? $body : 'php://memory',
+            isset($body) ? $body : 'php://memory',
             $data,
             $files,
             $parameters,

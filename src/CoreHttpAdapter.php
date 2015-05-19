@@ -16,13 +16,12 @@ use Http\Adapter\ConfigurableHttpAdapter;
 use Http\Adapter\Configurable as ConfigurableInterface;
 use Http\Adapter\Internal\Message\InternalRequest;
 use Http\Adapter\Internal\Message\MessageFactory;
-use Http\Adapter\Internal\Message\MessageFactoryAware;
 use Http\Adapter\Normalizer\HeaderNormalizer;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-abstract class CoreHttpAdapter implements ConfigurableHttpAdapter, ConfigurableInterface, MessageFactoryAware
+abstract class CoreHttpAdapter implements ConfigurableHttpAdapter, ConfigurableInterface
 {
     use HttpAdapter;
     use Configurable;
