@@ -47,7 +47,7 @@ class MessageFactorySpec extends ObjectBehavior
     {
         $stream->rewind()->shouldBeCalled();
 
-        $this->createUri($stream)->shouldHaveType('Psr\Http\Message\StreamInterface');
+        $this->createStream($stream)->shouldHaveType('Psr\Http\Message\StreamInterface');
     }
 
     function it_creates_an_uri()
