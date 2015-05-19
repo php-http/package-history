@@ -204,4 +204,20 @@ abstract class CoreHttpAdapter implements ConfigurableHttpAdapter, ConfigurableI
 
         return $body."\r\n\r\n".$data."\r\n";
     }
+
+    /**
+     * Prepares the URI
+     *
+     * @param string $uri
+     *
+     * @return string
+     */
+    protected function prepareUri($uri)
+    {
+        if ($this->hasOption('baseUri') && (stripos($uri, $baseUri = (string) $this->getOption('baseUri')) === false)) {
+            return $baseUri.$uri;
+        }
+
+        return $uri;
+    }
 }
