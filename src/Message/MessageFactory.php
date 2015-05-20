@@ -19,6 +19,7 @@ use Phly\Http\Stream;
 use Phly\Http\Uri;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\StreamInterface;
+use Psr\Http\Message\UriInterface;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
