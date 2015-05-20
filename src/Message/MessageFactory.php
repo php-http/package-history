@@ -65,6 +65,10 @@ class MessageFactory implements ClientContextFactory
      */
     public function createUri($uri)
     {
+        if ($uri instanceof UriInterface) {
+            return $uri;
+        }
+
         return new Uri($uri);
     }
 
