@@ -12,10 +12,11 @@
 namespace Http\Adapter\Core;
 
 use Http\Adapter\Common\Configurable;
-use Http\Adapter\ConfigurableHttpAdapter;
 use Http\Adapter\Configurable as ConfigurableInterface;
+use Http\Adapter\ConfigurableHttpAdapter;
 use Http\Adapter\Internal\Message\InternalRequest;
 use Http\Adapter\Internal\Message\MessageFactory;
+use Http\Adapter\Message\Configurable as ConfigurableMessage;
 use Http\Adapter\Normalizer\HeaderNormalizer;
 
 /**
@@ -94,7 +95,7 @@ abstract class CoreHttpAdapter implements ConfigurableHttpAdapter, ConfigurableI
         if (!$internalRequest->hasHeader('Connection')) {
             $internalRequest = $internalRequest->withHeader(
                 'Connection',
-                $internalRequest->getOption('keepAlive') ? 'keep-alive' : 'close'
+                $this->getContextOption('keepAlive', $internalRequest) ? 'keep-alive' : 'close'
             );
         }
 
@@ -102,12 +103,12 @@ abstract class CoreHttpAdapter implements ConfigurableHttpAdapter, ConfigurableI
             if ($internalRequest->hasOption('contentType')) {
                 $internalRequest = $internalRequest->withHeader(
                     'Content-Type',
-                    $internalRequest->getOption('contentType')
+                    $this->getContextOption('contentType', $internalRequest)
                 );
             } elseif ($contentType && $internalRequest->hasFiles()) {
                 $internalRequest = $internalRequest->withHeader(
                     'Content-Type',
-                    'multipart/form-data; boundary='.$internalRequest->getOption('boundary')
+                    'multipart/form-data; boundary='.$this->getContextOption('boundary', $internalRequest)
                 );
             } elseif ($contentType && ($internalRequest->hasAnyData() || $internalRequest->getBody()->getSize() > 0)) {
                 $internalRequest = $internalRequest->withHeader(
@@ -123,7 +124,7 @@ abstract class CoreHttpAdapter implements ConfigurableHttpAdapter, ConfigurableI
         }
 
         if (!$internalRequest->hasHeader('User-Agent')) {
-            $internalRequest = $internalRequest->withHeader('User-Agent', $internalRequest->getOption('userAgent'));
+            $internalRequest = $internalRequest->withHeader('User-Agent', $this->getContextOption('userAgent', $internalRequest));
         }
 
         return HeaderNormalizer::normalize($internalRequest->getHeaders(), $associative);
@@ -156,7 +157,7 @@ abstract class CoreHttpAdapter implements ConfigurableHttpAdapter, ConfigurableI
             $body .= $this->prepareRawBody($name, $file, true);
         }
 
-        $body .= '--'.$internalRequest->getOption('boundary').'--'."\r\n";
+        $body .= '--'.$this->getContextOption('boundary', $internalRequest).'--'."\r\n";
 
         return $body;
     }
@@ -219,5 +220,22 @@ abstract class CoreHttpAdapter implements ConfigurableHttpAdapter, ConfigurableI
         }
 
         return $uri;
+    }
+
+    /**
+     * Returns options based on the context
+     *
+     * @param string                   $option
+     * @param ConfigurableMessage|null $configurableMessage
+     *
+     * @return mixed
+     */
+    protected function getContextOption($option, ConfigurableMessage $configurableMessage = null)
+    {
+        if (isset($configurableMessage) && $configurableMessage->hasOption($option)) {
+            return $configurableMessage->getOption($option);
+        }
+
+        return $this->getOption($option);
     }
 }
