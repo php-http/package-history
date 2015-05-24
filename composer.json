@@ -15,7 +15,7 @@
         "php-http/adapter": "dev-internal_separation",
         "php-http/message-factory": "dev-master",
         "php-http/adapter-helper": "dev-master",
-        "phly/http": "^0.13"
+        "zendframework/zend-diactoros": "~1.0"
     },
     "require-dev": {
         "phpspec/phpspec": "~2.1",

@@ -13,10 +13,10 @@ namespace Http\Adapter\Common\Message;
 
 use Http\Message\ClientContextFactory;
 use Http\Adapter\Normalizer\HeaderNormalizer;
-use Phly\Http\Request;
-use Phly\Http\Response;
-use Phly\Http\Stream;
-use Phly\Http\Uri;
+use Zend\Diactoros\Request;
+use Zend\Diactoros\Response;
+use Zend\Diactoros\Stream;
+use Zend\Diactoros\Uri;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\UriInterface;
