@@ -13,7 +13,7 @@ namespace Http\Adapter\Core\Message;
 
 use Http\Adapter\Common\Message\Configurable;
 use Http\Adapter\Internal\Message\InternalRequest as InternalRequestInterface;
-use Phly\Http\Request;
+use Zend\Diactoros\Request;
 use Psr\Http\Message\UriInterface;
 use Psr\Http\Message\StreamInterface;
 
