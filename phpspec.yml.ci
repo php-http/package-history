@@ -1,0 +1,10 @@
+suites:
+  common_suite:
+    namespace: Http\Common
+    psr4_prefix: Http\Common
+extensions:
+  - PhpSpec\Extension\CodeCoverageExtension
+formatter.name: pretty
+code_coverage:
+  format: clover
+  output: build/coverage.xml
