@@ -29,7 +29,10 @@ class MessageFactoryGuesserSpec extends ObjectBehavior
 
         $this->guess()->shouldHaveType('Http\Common\Message\MessageFactory\GuzzleFactory');
         $this->unregister('guzzle');
-        $this->guess()->shouldHaveType('Http\Common\Message\MessageFactory\DiactorosFactory');
+
+        if (class_exists('Zend\Diactoros\Request')) {
+            $this->guess()->shouldHaveType('Http\Common\Message\MessageFactory\DiactorosFactory');
+        }
     }
 
     function it_throws_an_exception_when_no_message_factory_is_found()

@@ -3,10 +3,18 @@
 namespace spec\Http\Common\Message\MessageFactory;
 
 use Psr\Http\Message\StreamInterface;
+use PhpSpec\Exception\Example\SkippingException;
 use PhpSpec\ObjectBehavior;
 
 class DiactorosFactorySpec extends ObjectBehavior
 {
+    function let()
+    {
+        if (!class_exists('Zend\Diactoros\Request')) {
+            throw new SkippingException('Diactoros is not available');
+        }
+    }
+
     function it_is_initializable()
     {
         $this->shouldHaveType('Http\Common\Message\MessageFactory\DiactorosFactory');
