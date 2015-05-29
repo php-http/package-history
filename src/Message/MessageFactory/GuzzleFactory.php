@@ -14,12 +14,12 @@ namespace Http\Common\Message\MessageFactory;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use Http\Helper\Normalizer\HeaderNormalizer;
-use Http\Message\ClientContextFactory;
+use Http\Message\MessageFactory;
 
 /**
  * @author Márk Sági-Kazár <mark.sagikazar@gmail.com>
  */
-class GuzzleFactory implements ClientContextFactory
+class GuzzleFactory implements MessageFactory
 {
     /**
      * {@inheritdoc}
@@ -57,21 +57,5 @@ class GuzzleFactory implements ClientContextFactory
             $protocolVersion,
             $reasonPhrase
         );
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function createUri($uri)
-    {
-        return \GuzzleHttp\Psr7\uri_for($uri);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function createStream($body = null)
-    {
-        return \GuzzleHttp\Psr7\stream_for($body);
     }
 }

@@ -14,7 +14,7 @@ class GuzzleFactorySpec extends ObjectBehavior
 
     function it_is_a_message_factory()
     {
-        $this->shouldImplement('Http\Message\ClientContextFactory');
+        $this->shouldImplement('Http\Message\MessageFactory');
     }
 
     function it_creates_a_request()
@@ -25,26 +25,5 @@ class GuzzleFactorySpec extends ObjectBehavior
     function it_creates_a_response()
     {
         $this->createResponse()->shouldHaveType('Psr\Http\Message\ResponseInterface');
-    }
-
-    function it_creates_an_empty_stream()
-    {
-        $this->createStream()->shouldHaveType('Psr\Http\Message\StreamInterface');
-    }
-
-    function it_creates_a_string_stream()
-    {
-        $this->createStream('Body')->shouldHaveType('Psr\Http\Message\StreamInterface');
-    }
-
-    function it_creates_a_resource_stream()
-    {
-        $resource = tmpfile();
-        $this->createStream($resource)->shouldHaveType('Psr\Http\Message\StreamInterface');
-    }
-
-    function it_creates_an_uri()
-    {
-        $this->createUri('http://php-http.org')->shouldHaveType('Psr\Http\Message\UriInterface');
     }
 }

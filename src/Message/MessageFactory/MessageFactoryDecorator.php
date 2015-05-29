@@ -11,26 +11,26 @@
 
 namespace Http\Common\Message\MessageFactory;
 
-use Http\Message\ClientContextFactory;
+use Http\Message\MessageFactory;
 
 /**
  * Can be used with custom logic
  *
  * @author Márk Sági-Kazár <mark.sagikazar@gmail.com>
  */
-abstract class ClientContextFactoryDecorator implements ClientContextFactory
+abstract class MessageFactoryDecorator implements MessageFactory
 {
     /**
-     * @var ClientContextFactory
+     * @var MessageFactory
      */
-    protected $clientContextFactory;
+    protected $messageFactory;
 
     /**
-     * @param ClientContextFactory $clientContextFactory
+     * @param MessageFactory $messageFactory
      */
-    public function __construct(ClientContextFactory $clientContextFactory)
+    public function __construct(MessageFactory $messageFactory)
     {
-        $this->clientContextFactory = $clientContextFactory;
+        $this->messageFactory = $messageFactory;
     }
 
     /**
@@ -43,7 +43,7 @@ abstract class ClientContextFactoryDecorator implements ClientContextFactory
         array $headers = [],
         $body = null
     ) {
-        return $this->clientContextFactory->createRequest(
+        return $this->messageFactory->createRequest(
             $method,
             $uri,
             $protocolVersion,
@@ -62,28 +62,12 @@ abstract class ClientContextFactoryDecorator implements ClientContextFactory
         array $headers = [],
         $body = null
     ) {
-        return $this->clientContextFactory->createResponse(
+        return $this->messageFactory->createResponse(
             $statusCode,
             $reasonPhrase,
             $protocolVersion,
             $headers,
             $body
         );
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function createUri($uri)
-    {
-        return $this->clientContextFactory->createUri($uri);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function createStream($body = null)
-    {
-        return $this->clientContextFactory->createStream($body);
     }
 }

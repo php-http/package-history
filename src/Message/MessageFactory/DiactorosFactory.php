@@ -12,7 +12,7 @@
 namespace Http\Common\Message\MessageFactory;
 
 use Http\Helper\Normalizer\HeaderNormalizer;
-use Http\Message\ClientContextFactory;
+use Http\Message\MessageFactory;
 use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\UriInterface;
 use Zend\Diactoros\Request;
@@ -23,7 +23,7 @@ use Zend\Diactoros\Uri;
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class DiactorosFactory implements ClientContextFactory
+class DiactorosFactory implements MessageFactory
 {
     /**
      * {@inheritdoc}
@@ -36,7 +36,7 @@ class DiactorosFactory implements ClientContextFactory
         $body = null
     ) {
         return (new Request(
-            $this->createUri($uri),
+            $uri,
             $method,
             $this->createStream($body),
             HeaderNormalizer::normalize($headers)
@@ -61,21 +61,15 @@ class DiactorosFactory implements ClientContextFactory
     }
 
     /**
-     * {@inheritdoc}
+     * Creates a stream
+     *
+     * @param string|resource|StreamInterface|null $body
+     *
+     * @return StreamInterface
+     *
+     * @throws \InvalidArgumentException If the stream body is invalid
      */
-    public function createUri($uri)
-    {
-        if ($uri instanceof UriInterface) {
-            return $uri;
-        }
-
-        return new Uri($uri);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function createStream($body = null)
+    protected function createStream($body = null)
     {
         if (!$body instanceof StreamInterface) {
             if (is_resource($body)) {
