@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Http Adapter Internal package.
+ * This file is part of the Http Client package.
  *
  * (c) Eric GELOEN <geloen.eric@gmail.com>
  *
@@ -9,9 +9,8 @@
  * file that was distributed with this source code.
  */
 
-namespace Http\Adapter\Internal\Message;
+namespace Http\Client\Message;
 
-use Http\Adapter\Message\Configurable;
 use Psr\Http\Message\RequestInterface;
 
 /**

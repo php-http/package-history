@@ -1,10 +1,10 @@
-# HTTP Adapter Internal
+# HTTP Client
 
-[![Latest Version](https://img.shields.io/github/release/php-http/adapter-internal.svg?style=flat-square)](https://github.com/php-http/adapter-internal/releases)
+[![Latest Version](https://img.shields.io/github/release/php-http/client.svg?style=flat-square)](https://github.com/php-http/client/releases)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
-[![Total Downloads](https://img.shields.io/packagist/dt/php-http/adapter-internal.svg?style=flat-square)](https://packagist.org/packages/php-http/adapter-internal)
+[![Total Downloads](https://img.shields.io/packagist/dt/php-http/client.svg?style=flat-square)](https://packagist.org/packages/php-http/client)
 
-**HTTP adapter internal contract.**
+**HTTP client contract.**
 
 
 ## Install
@@ -12,13 +12,13 @@
 Via Composer
 
 ``` bash
-$ composer require php-http/adapter-internal
+$ composer require php-http/client
 ```
 
 
 ## Usage
 
-This is the contract package for HTTP Adapter Internals. It should be used when implementing a custom HTTP Adapter which does not support PSR-7 out of the box.
+This is the contract package for HTTP Client. It should be used when implementing a custom HTTP Client.
 
 
 ## Contributing
