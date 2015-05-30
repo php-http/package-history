@@ -73,7 +73,7 @@ class MessageFactoryGuesser
     public static function guess()
     {
         foreach (static::$messageFactories as $name => $definition) {
-            if (class_exists($definition['class'], false)) {
+            if (class_exists($definition['class'])) {
                 return new $definition['factory'];
             }
         }
