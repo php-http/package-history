@@ -70,6 +70,13 @@ class MyResponseDecorator implements ResponseInterface
 
 Since the underlying message is immutable as well, there is no risk that you can alter it, so exposing it is safe. However the decorators are completely transparent, so there are rare cases when you want to access the original message.
 
+In other cases you might want to modify the decorated message instance. While you must be aware of the fact that your message is actually being decorated, it can be useful in some cases.
+
+``` php
+$request = $request->withRequest($anotherRequest);
+$response = $response->withResponse($anotherResponse);
+```
+
 
 **Note:** Hence the immutability of both the decorators and the underlying messages, every writting operation causes two object cloning which definitely mean a bigger performance hit (even if clone is relatively cheap in PHP).
 
