@@ -46,7 +46,7 @@ class MyRequestDecorator implements RequestInterface
 $request = new MyRequestDecorator($decoratedRequest);
 ```
 
-The decorated messages are stored under a private `$message` property. To ease acces to this property, there is a public `getMessage` method available in both decorators.
+The decorated messages are stored under a private `$message` property. To ease acces to this property, there is a public `getMessage` method available (declared in `MessageDecorator`) which are renamed accordingly (to `getRequest` and `getResponse`) in both decorators.
 
 ``` php
 use Http\Message\ResponseDecorator;
@@ -63,7 +63,7 @@ class MyResponseDecorator implements ResponseInterface
 
     public function stringifyResponse()
     {
-        return (string) $this->getMessage()->getBody();
+        return (string) $this->getResponse()->getBody();
     }
 }
 ```

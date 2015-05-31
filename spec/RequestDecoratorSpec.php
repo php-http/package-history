@@ -32,14 +32,14 @@ class RequestDecoratorSpec extends ObjectBehavior
 
     function it_has_a_request()
     {
-        $this->getMessage()->shouldImplement('Psr\Http\Message\RequestInterface');
+        $this->getRequest()->shouldImplement('Psr\Http\Message\RequestInterface');
     }
 
     function it_accepts_a_request(RequestInterface $request)
     {
         $new = $this->withRequest($request);
 
-        $new->getMessage()->shouldReturn($request);
+        $new->getRequest()->shouldReturn($request);
     }
 
     function it_has_a_request_target(RequestInterface $request)

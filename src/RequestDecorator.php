@@ -19,7 +19,9 @@ use Psr\Http\Message\UriInterface;
  */
 trait RequestDecorator
 {
-    use MessageDecorator;
+    use MessageDecorator {
+        getMessage as getRequest;
+    }
 
     /**
      * Exchanges the underlying request with another
