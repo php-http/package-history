@@ -13,7 +13,6 @@ namespace Http\Common\Message\MessageFactory;
 
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
-use Http\Helper\Normalizer\HeaderNormalizer;
 use Http\Message\MessageFactory;
 
 /**
@@ -34,7 +33,7 @@ class GuzzleFactory implements MessageFactory
         return new Request(
             $method,
             $uri,
-            HeaderNormalizer::normalize($headers),
+            $headers,
             $body,
             $protocolVersion
         );
@@ -52,7 +51,7 @@ class GuzzleFactory implements MessageFactory
     ) {
         return new Response(
             $statusCode,
-            HeaderNormalizer::normalize($headers),
+            $headers,
             $body,
             $protocolVersion,
             $reasonPhrase

@@ -11,7 +11,6 @@
 
 namespace Http\Common\Message\MessageFactory;
 
-use Http\Helper\Normalizer\HeaderNormalizer;
 use Http\Message\MessageFactory;
 use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\UriInterface;
@@ -39,7 +38,7 @@ class DiactorosFactory implements MessageFactory
             $uri,
             $method,
             $this->createStream($body),
-            HeaderNormalizer::normalize($headers)
+            $headers
         ))->withProtocolVersion($protocolVersion);
     }
 
@@ -56,7 +55,7 @@ class DiactorosFactory implements MessageFactory
         return (new Response(
             $this->createStream($body),
             $statusCode,
-            HeaderNormalizer::normalize($headers)
+            $headers
         ))->withProtocolVersion($protocolVersion);
     }
 
