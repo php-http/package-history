@@ -11,12 +11,29 @@
 
 namespace Http\Message;
 
+use Psr\Http\Message\ResponseInterface;
+
 /**
  * @author Márk Sági-Kazár <mark.sagikazar@gmail.com>
  */
 trait ResponseDecorator
 {
     use MessageDecorator;
+
+    /**
+     * Exchanges the underlying response with another
+     *
+     * @param ResponseInterface $response
+     *
+     * @return self
+     */
+    public function withResponse(ResponseInterface $response)
+    {
+        $new = clone $this;
+        $new->message = $response;
+
+        return $new;
+    }
 
     /**
      * {@inheritdoc}

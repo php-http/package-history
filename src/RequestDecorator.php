@@ -11,6 +11,7 @@
 
 namespace Http\Message;
 
+use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\UriInterface;
 
 /**
@@ -19,6 +20,21 @@ use Psr\Http\Message\UriInterface;
 trait RequestDecorator
 {
     use MessageDecorator;
+
+    /**
+     * Exchanges the underlying request with another
+     *
+     * @param RequestInterface $request
+     *
+     * @return self
+     */
+    public function withRequest(RequestInterface $request)
+    {
+        $new = clone $this;
+        $new->message = $request;
+
+        return $new;
+    }
 
     /**
      * {@inheritdoc}

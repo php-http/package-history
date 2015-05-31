@@ -34,6 +34,13 @@ class ResponseDecoratorSpec extends ObjectBehavior
         $this->getMessage()->shouldImplement('Psr\Http\Message\ResponseInterface');
     }
 
+    function it_accepts_a_response(ResponseInterface $response)
+    {
+        $new = $this->withResponse($response);
+
+        $new->getMessage()->shouldReturn($response);
+    }
+
     function it_has_a_status_code(ResponseInterface $response)
     {
         $response->getStatusCode()->willReturn(200);
