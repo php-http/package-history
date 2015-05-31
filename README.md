@@ -72,7 +72,7 @@ class MyResponseDecorator extends ResponseDecorator
 Since the underlying message is immutable as well, there is no risk that you can alter it, so exposing it is safe. However the decorators are completely transparent, so there are rare cases when you want to access the original message.
 
 
-**Note:** Hence the immutability of both the decorators and the underlying messages, every writting operation causes two object cloning which definitely mean a bigger performance hit.
+**Note:** Hence the immutability of both the decorators and the underlying messages, every writting operation causes two object cloning which definitely mean a bigger performance hit (even if clone is relatively cheap in PHP).
 
 
 ## Testing
