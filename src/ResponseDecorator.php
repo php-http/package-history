@@ -11,22 +11,12 @@
 
 namespace Http\Message;
 
-use Psr\Http\Message\ResponseInterface;
-
 /**
  * @author Márk Sági-Kazár <mark.sagikazar@gmail.com>
  */
-class ResponseDecorator implements ResponseInterface
+trait ResponseDecorator
 {
     use MessageDecorator;
-
-    /**
-     * @param ResponseInterface $message
-     */
-    public function __construct(ResponseInterface $message)
-    {
-        $this->message = $message;
-    }
 
     /**
      * {@inheritdoc}

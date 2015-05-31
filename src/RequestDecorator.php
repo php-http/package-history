@@ -11,23 +11,14 @@
 
 namespace Http\Message;
 
-use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\UriInterface;
 
 /**
  * @author Márk Sági-Kazár <mark.sagikazar@gmail.com>
  */
-class RequestDecorator implements RequestInterface
+trait RequestDecorator
 {
     use MessageDecorator;
-
-    /**
-     * @param RequestInterface $message
-     */
-    public function __construct(RequestInterface $message)
-    {
-        $this->message = $message;
-    }
 
     /**
      * {@inheritdoc}

@@ -22,13 +22,21 @@ $ composer require php-http/message-decorator
 
 ## Usage
 
-This package provides an easy way to decorate PSR-7 messages. While the decorator classes themselves are not abstract, they only make sense when they are extended to add custom logic:
+This package provides an easy way to decorate PSR-7 messages. The decorator traits make sense when they are used to add custom logic. Make sure to always initialize the decorator by setting the appropriate message.
 
 ``` php
 use Http\Message\RequestDecorator;
+use Psr\Http\Message\RequestInterface;
 
-class MyRequestDecorator extends RequestDecorator
+class MyRequestDecorator implements RequestInterface
 {
+    use RequestDecorator;
+
+    public function __construct(RequestInterface $request)
+    {
+        $this->message = $request;
+    }
+
     public function isThisAPostRequest()
     {
         return $this->getMethod() === 'POST';
@@ -38,30 +46,21 @@ class MyRequestDecorator extends RequestDecorator
 $request = new MyRequestDecorator($decoratedRequest);
 ```
 
-If you override the constructor, make sure that you accept a message argument (either request or response):
+The decorated messages are stored under a private `$message` property. To ease acces to this property, there is a public `getMessage` method available in both decorators.
 
 ``` php
 use Http\Message\ResponseDecorator;
 use Psr\Http\Message\ResponseInterface;
 
-class MyResponseDecorator extends ResponseDecorator
+class MyResponseDecorator implements ResponseInterface
 {
-    public function __construct(ResponseInterface $message)
+    use ResponseDecorator;
+
+    public function __construct(ResponseInterface $response)
     {
-        parent::__construct($message);
-
-        // some custom logic
+        $this->message = $response;
     }
-}
-```
 
-The decorated messages are stored under a private `$message` property. To ease acces to this property, there is a public `getMessage` method available in both decorators.
-
-``` php
-use Http\Message\ResponseDecorator;
-
-class MyResponseDecorator extends ResponseDecorator
-{
     public function stringifyResponse()
     {
         return (string) $this->getMessage()->getBody();
