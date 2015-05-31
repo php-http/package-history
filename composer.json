@@ -19,12 +19,14 @@
         "php-http/message-factory": "dev-master"
     },
     "require-dev": {
+        "php-http/message-decorator": "dev-master",
         "zendframework/zend-diactoros": "~1.0",
         "guzzlehttp/psr7": "~1.0",
         "phpspec/phpspec": "~2.1",
         "henrikbjorn/phpspec-code-coverage" : "~1.0"
     },
     "suggest": {
+        "php-http/message-decorator": "Used with decorated messages",
         "zendframework/zend-diactoros": "Used with Diactoros MessageFactory",
         "guzzlehttp/psr7": "Used with Guzzle PSR-7 MessageFactory"
     },

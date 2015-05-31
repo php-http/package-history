@@ -12,13 +12,22 @@
 namespace Http\Common\Message;
 
 use Http\Message\RequestDecorator;
+use Psr\Http\Message\RequestInterface;
 
 /**
  * Allows to add configuration to a request
  *
  * @author Márk Sági-Kazár mark.sagikazar@gmail.com>
  */
-class ConfigurableRequest extends RequestDecorator implements Configurable
+class ConfigurableRequest implements Configurable, RequestInterface
 {
-    use ConfigurableTemplate;
+    use ConfigurableTemplate, RequestDecorator;
+
+    /**
+     * @param RequestInterface $request
+     */
+    public function __construct(RequestInterface $request)
+    {
+        $this->message = $request;
+    }
 }
