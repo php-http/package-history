@@ -22,13 +22,21 @@ $ composer require php-http/message-decorator
 
 ## Usage
 
-This package provides an easy way to decorate PSR-7 messages. While the decorator classes themselves are not abstract, they only make sense when they are extended to add custom logic:
+This package provides an easy way to decorate PSR-7 messages. The decorator traits make sense when they are used to add custom logic. Make sure to always initialize the decorator by setting the appropriate message.
 
 ``` php
 use Http\Message\RequestDecorator;
+use Psr\Http\Message\RequestInterface;
 
-class MyRequestDecorator extends RequestDecorator
+class MyRequestDecorator implements RequestInterface
 {
+    use RequestDecorator;
+
+    public function __construct(RequestInterface $request)
+    {
+        $this->message = $request;
+    }
+
     public function isThisAPostRequest()
     {
         return $this->getMethod() === 'POST';
@@ -38,41 +46,39 @@ class MyRequestDecorator extends RequestDecorator
 $request = new MyRequestDecorator($decoratedRequest);
 ```
 
-If you override the constructor, make sure that you accept a message argument (either request or response):
+The decorated messages are stored under a private `$message` property. To ease acces to this property, there is a public `getMessage` method available (declared in `MessageDecorator`) which are renamed accordingly (to `getRequest` and `getResponse`) in both decorators.
 
 ``` php
 use Http\Message\ResponseDecorator;
 use Psr\Http\Message\ResponseInterface;
 
-class MyResponseDecorator extends ResponseDecorator
+class MyResponseDecorator implements ResponseInterface
 {
-    public function __construct(ResponseInterface $message)
+    use ResponseDecorator;
+
+    public function __construct(ResponseInterface $response)
     {
-        parent::__construct($message);
-
-        // some custom logic
+        $this->message = $response;
     }
-}
-```
 
-The decorated messages are stored under a private `$message` property. To ease acces to this property, there is a public `getMessage` method available in both decorators.
-
-``` php
-use Http\Message\ResponseDecorator;
-
-class MyResponseDecorator extends ResponseDecorator
-{
     public function stringifyResponse()
     {
-        return (string) $this->getMessage()->getBody();
+        return (string) $this->getResponse()->getBody();
     }
 }
 ```
 
 Since the underlying message is immutable as well, there is no risk that you can alter it, so exposing it is safe. However the decorators are completely transparent, so there are rare cases when you want to access the original message.
 
+In other cases you might want to modify the decorated message instance. While you must be aware of the fact that your message is actually being decorated, it can be useful in some cases.
 
-**Note:** Hence the immutability of both the decorators and the underlying messages, every writting operation causes two object cloning which definitely mean a bigger performance hit.
+``` php
+$request = $request->withRequest($anotherRequest);
+$response = $response->withResponse($anotherResponse);
+```
+
+
+**Note:** Hence the immutability of both the decorators and the underlying messages, every writting operation causes two object cloning which definitely mean a bigger performance hit (even if clone is relatively cheap in PHP).
 
 
 ## Testing

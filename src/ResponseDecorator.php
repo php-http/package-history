@@ -16,16 +16,25 @@ use Psr\Http\Message\ResponseInterface;
 /**
  * @author Márk Sági-Kazár <mark.sagikazar@gmail.com>
  */
-class ResponseDecorator implements ResponseInterface
+trait ResponseDecorator
 {
-    use MessageDecorator;
+    use MessageDecorator {
+        getMessage as getResponse;
+    }
 
     /**
-     * @param ResponseInterface $message
+     * Exchanges the underlying response with another
+     *
+     * @param ResponseInterface $response
+     *
+     * @return self
      */
-    public function __construct(ResponseInterface $message)
+    public function withResponse(ResponseInterface $response)
     {
-        $this->message = $message;
+        $new = clone $this;
+        $new->message = $response;
+
+        return $new;
     }
 
     /**

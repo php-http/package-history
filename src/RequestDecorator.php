@@ -17,16 +17,25 @@ use Psr\Http\Message\UriInterface;
 /**
  * @author Márk Sági-Kazár <mark.sagikazar@gmail.com>
  */
-class RequestDecorator implements RequestInterface
+trait RequestDecorator
 {
-    use MessageDecorator;
+    use MessageDecorator {
+        getMessage as getRequest;
+    }
 
     /**
-     * @param RequestInterface $message
+     * Exchanges the underlying request with another
+     *
+     * @param RequestInterface $request
+     *
+     * @return self
      */
-    public function __construct(RequestInterface $message)
+    public function withRequest(RequestInterface $request)
     {
-        $this->message = $message;
+        $new = clone $this;
+        $new->message = $request;
+
+        return $new;
     }
 
     /**
