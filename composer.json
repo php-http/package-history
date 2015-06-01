@@ -16,10 +16,10 @@
     ],
     "require": {
         "php": ">=5.4",
-        "php-http/message-factory": "dev-master"
+        "php-http/message-factory": "^0.1"
     },
     "require-dev": {
-        "php-http/message-decorator": "dev-master",
+        "php-http/message-decorator": "^0.1",
         "zendframework/zend-diactoros": "~1.0",
         "guzzlehttp/psr7": "~1.0",
         "phpspec/phpspec": "~2.1",
