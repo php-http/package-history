@@ -16,7 +16,7 @@ use Psr\Http\Message\UriInterface;
 use Psr\Http\Message\ResponseInterface;
 
 /**
- * @author GeLo <geloen.eric@gmail.com>
+ * @author Márk Sági-Kazár mark.sagikazar@gmail.com>
  */
 interface HttpClient
 {
@@ -25,39 +25,42 @@ interface HttpClient
      *
      * @param string|UriInterface $uri
      * @param array               $headers
+     * @param array               $options
      *
      * @throws \InvalidArgumentException
      * @throws Exception
      *
      * @return ResponseInterface
      */
-    public function get($uri, array $headers = []);
+    public function get($uri, array $headers = [], array $options = []);
 
     /**
      * Sends an HEAD request
      *
      * @param string|UriInterface $uri
      * @param array               $headers
+     * @param array               $options
      *
      * @throws \InvalidArgumentException
      * @throws Exception
      *
      * @return ResponseInterface
      */
-    public function head($uri, array $headers = []);
+    public function head($uri, array $headers = [], array $options = []);
 
     /**
      * Sends a TRACE request
      *
      * @param string|UriInterface $uri
      * @param array               $headers
+     * @param array               $options
      *
      * @throws \InvalidArgumentException
      * @throws Exception
      *
      * @return ResponseInterface
      */
-    public function trace($uri, array $headers = []);
+    public function trace($uri, array $headers = [], array $options = []);
 
     /**
      * Sends a POST request
@@ -66,13 +69,14 @@ interface HttpClient
      * @param array                        $headers
      * @param array|string|StreamInterface $data
      * @param array                        $files
+     * @param array                        $options
      *
      * @throws \InvalidArgumentException
      * @throws Exception
      *
      * @return ResponseInterface
      */
-    public function post($uri, array $headers = [], $data = [], array $files = []);
+    public function post($uri, array $headers = [], $data = [], array $files = [], array $options = []);
 
     /**
      * Sends a PUT request
@@ -81,13 +85,14 @@ interface HttpClient
      * @param array                        $headers
      * @param array|string|StreamInterface $data
      * @param array                        $files
+     * @param array                        $options
      *
      * @throws \InvalidArgumentException
      * @throws Exception
      *
      * @return ResponseInterface
      */
-    public function put($uri, array $headers = [], $data = [], array $files = []);
+    public function put($uri, array $headers = [], $data = [], array $files = [], array $options = []);
 
     /**
      * Sends a PATCH request
@@ -96,13 +101,14 @@ interface HttpClient
      * @param array                        $headers
      * @param array|string|StreamInterface $data
      * @param array                        $files
+     * @param array                        $options
      *
      * @throws \InvalidArgumentException
      * @throws Exception
      *
      * @return ResponseInterface
      */
-    public function patch($uri, array $headers = [], $data = [], array $files = []);
+    public function patch($uri, array $headers = [], $data = [], array $files = [], array $options = []);
 
     /**
      * Sends a DELETE request
@@ -111,13 +117,14 @@ interface HttpClient
      * @param array                        $headers
      * @param array|string|StreamInterface $data
      * @param array                        $files
+     * @param array                        $options
      *
      * @throws \InvalidArgumentException
      * @throws Exception
      *
      * @return ResponseInterface
      */
-    public function delete($uri, array $headers = [], $data = [], array $files = []);
+    public function delete($uri, array $headers = [], $data = [], array $files = [], array $options = []);
 
     /**
      * Sends an OPTIONS request
@@ -126,13 +133,14 @@ interface HttpClient
      * @param array                        $headers
      * @param array|string|StreamInterface $data
      * @param array                        $files
+     * @param array                        $options
      *
      * @throws \InvalidArgumentException
      * @throws Exception
      *
      * @return ResponseInterface
      */
-    public function options($uri, array $headers = [], $data = [], array $files = []);
+    public function options($uri, array $headers = [], $data = [], array $files = [], array $options = []);
 
     /**
      * Sends a request
@@ -142,11 +150,12 @@ interface HttpClient
      * @param array                        $headers
      * @param array|string|StreamInterface $data
      * @param array                        $files
+     * @param array                        $options
      *
      * @throws \InvalidArgumentException
      * @throws Exception
      *
      * @return ResponseInterface
      */
-    public function send($method, $uri, array $headers = [], $data = [], array $files = []);
+    public function send($method, $uri, array $headers = [], $data = [], array $files = [], array $options = []);
 }

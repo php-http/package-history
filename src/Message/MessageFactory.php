@@ -29,7 +29,6 @@ interface MessageFactory extends PsrMessageFactory
      * @param array|string        $data
      * @param array               $files
      * @param array               $parameters
-     * @param array               $options
      *
      * @return InternalRequest
      */
@@ -40,7 +39,6 @@ interface MessageFactory extends PsrMessageFactory
         array $headers = [],
         $data = [],
         array $files = [],
-        array $parameters = [],
-        array $options = []
+        array $parameters = []
     );
 }
