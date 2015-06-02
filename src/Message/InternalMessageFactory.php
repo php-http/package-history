@@ -11,13 +11,13 @@
 
 namespace Http\Client\Message;
 
-use Http\Message\MessageFactory as PsrMessageFactory;
+use Http\Message\MessageFactory;
 use Psr\Http\Message\UriInterface;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-interface MessageFactory extends PsrMessageFactory
+interface InternalMessageFactory extends MessageFactory
 {
     /**
      * Creates an internal request
