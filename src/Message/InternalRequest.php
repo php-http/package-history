@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Http Adapter package.
+ * This file is part of the Http Adapter Client package.
  *
  * (c) Eric GELOEN <geloen.eric@gmail.com>
  *
@@ -11,14 +11,17 @@
 
 namespace Http\Adapter\Message;
 
-use Psr\Http\Message\UriInterface;
-use Psr\Http\Message\StreamInterface;
+use Http\Client\Message\InternalRequest as InternalRequestInterface;
+use Http\Message\RequestDecorator;
+use Psr\Http\Message\RequestInterface;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class InternalRequest extends Request implements InternalRequestInterface
+class InternalRequest implements InternalRequestInterface
 {
+    use ParameterableTemplate, RequestDecorator;
+
     /**
      * @var array
      */
@@ -30,27 +33,21 @@ class InternalRequest extends Request implements InternalRequestInterface
     private $files = [];
 
     /**
-     * @param null|string                     $method
-     * @param null|string|UriInterface        $uri
-     * @param string[]                        $headers
-     * @param string|resource|StreamInterface $body
-     * @param array                           $data
-     * @param array                           $files
-     * @param array                           $parameters
+     * @param RequestInterface $request
+     * @param array            $data
+     * @param array            $files
+     * @param array            $parameters
      */
     public function __construct(
-        $method = null,
-        $uri = null,
-        array $headers = [],
-        $body = 'php://memory',
+        RequestInterface $request,
         array $data = [],
         array $files = [],
         array $parameters = []
     ) {
-        parent::__construct($method, $uri, $headers, $body, $parameters);
-
+        $this->message = $request;
         $this->data = $data;
         $this->files = $files;
+        $this->parameters = $parameters;
     }
 
     /**

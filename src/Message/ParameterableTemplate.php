@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Http Adapter package.
+ * This file is part of the Http Adapter Client package.
  *
  * (c) Eric GELOEN <geloen.eric@gmail.com>
  *
@@ -12,9 +12,11 @@
 namespace Http\Adapter\Message;
 
 /**
- * @author GeLo <geloen.eric@gmail.com>
+ * Should be used with Http\Client\Message\Parameterable interface
+ *
+ * @author Márk Sági-Kazár <mark.sagikazar@gmail.com>
  */
-trait MessageTrait
+trait ParameterableTemplate
 {
     /**
      * @var array

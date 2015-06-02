@@ -11,48 +11,88 @@
 
 namespace Http\Adapter;
 
-use Http\Adapter\Message\InternalRequestInterface;
+use Http\Client\HttpClient;
+use Http\Client\Message\InternalRequest;
+use Http\Client\Message\InternalMessageFactory;
+use Http\Message\MessageFactory;
+use Http\Message\MessageFactoryGuesser;
+use Psr\Http\Message\StreamInterface;
+
 use Http\Adapter\Normalizer\HeaderNormalizer;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-abstract class CoreHttpAdapter implements HttpAdapter
+class Client implements HttpClient
 {
-    use HttpAdapterTrait;
+    use HttpClientTemplate;
 
     /**
-     * @var ConfigurationInterface
+     * @var HttpAdapter
      */
-    private $configuration;
+    private $adapter;
 
     /**
-     * @param ConfigurationInterface|null $configuration
+     * @var MessageFactory
      */
-    public function __construct(ConfigurationInterface $configuration = null)
+    private $messageFactory;
+
+    /**
+     * @param HttpAdapter|null    $adapter
+     * @param MessageFactory|null $messageFactory
+     */
+    public function __construct(HttpAdapter $adapter = null, MessageFactory $messageFactory = null)
     {
-        $this->setConfiguration($configuration ?: new Configuration());
+        // guess http adapter
+
+        if (!isset($messageFactory)) {
+            $messageFactory = MessageFactoryGuesser::guess();
+        }
+
+        if (!$messageFactory instanceof InternalMessageFactory) {
+            $messageFactory = new Message\InternalMessageFactory($messageFactory);
+        }
+
+        $this->messageFactory = $messageFactory;
     }
 
     /**
-     * Returns the configuration
-     *
-     * @return ConfigurationInterface
+     * {@inheritdoc}
      */
-    public function getConfiguration()
+    public function send($method, $uri, array $headers = [], $data = [], array $files = [], array $options = [])
     {
-        return $this->configuration;
+        if ($data instanceof StreamInterface && !empty($files)) {
+            throw new \InvalidArgumentException('A data instance of Psr\Http\Message\StreamInterface and $files parameters should not be passed together.');
+        }
+
+        $request = $this->messageFactory->createInternalRequest(
+            $method,
+            $uri,
+            isset($options['protocolVersion']) ? $options['protocolVersion'] : '1.1',
+            $headers,
+            $data,
+            $files
+        );
+
+        return $this->sendRequest($request);
     }
 
     /**
-     * Sets the configuration
-     *
-     * @param ConfigurationInterface $configuration
+     * {@inheritdoc}
      */
-    public function setConfiguration(ConfigurationInterface $configuration)
+    public function sendRequest(RequestInterface $request)
     {
-        $this->configuration = $configuration;
+        return $this->adapter->sendRequest($request);
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function sendRequests(array $requests)
+    {
+        return $this->adapter->sendRequests($requests);
+    }
+
 
     /**
      * Prepares the headers

@@ -1,14 +1,14 @@
-# Adapter Core
+# Adapter Client
 
-[![Latest Version](https://img.shields.io/github/release/php-http/adapter-core.svg?style=flat-square)](https://github.com/php-http/adapter-core/releases)
+[![Latest Version](https://img.shields.io/github/release/php-http/adapter-client.svg?style=flat-square)](https://github.com/php-http/adapter-client/releases)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
-[![Build Status](https://img.shields.io/travis/php-http/adapter-core.svg?style=flat-square)](https://travis-ci.org/php-http/adapter-core)
-[![Code Coverage](https://img.shields.io/scrutinizer/coverage/g/php-http/adapter-core.svg?style=flat-square)](https://scrutinizer-ci.com/g/php-http/adapter-core)
-[![Quality Score](https://img.shields.io/scrutinizer/g/php-http/adapter-core.svg?style=flat-square)](https://scrutinizer-ci.com/g/php-http/adapter-core)
-[![HHVM Status](https://img.shields.io/hhvm/php-http/adapter-core.svg?style=flat-square)](http://hhvm.h4cc.de/package/php-http/adapter-core)
-[![Total Downloads](https://img.shields.io/packagist/dt/php-http/adapter-core.svg?style=flat-square)](https://packagist.org/packages/php-http/adapter-core)
+[![Build Status](https://img.shields.io/travis/php-http/adapter-client.svg?style=flat-square)](https://travis-ci.org/php-http/adapter-client)
+[![Code Coverage](https://img.shields.io/scrutinizer/coverage/g/php-http/adapter-client.svg?style=flat-square)](https://scrutinizer-ci.com/g/php-http/adapter-client)
+[![Quality Score](https://img.shields.io/scrutinizer/g/php-http/adapter-client.svg?style=flat-square)](https://scrutinizer-ci.com/g/php-http/adapter-client)
+[![HHVM Status](https://img.shields.io/hhvm/php-http/adapter-client.svg?style=flat-square)](http://hhvm.h4cc.de/package/php-http/adapter-client)
+[![Total Downloads](https://img.shields.io/packagist/dt/php-http/adapter-client.svg?style=flat-square)](https://packagist.org/packages/php-http/adapter-client)
 
-**HTTP Adapter default implementations and internal classes.**
+**HTTP Client using adapters.**
 
 
 ## Install
@@ -16,7 +16,7 @@
 Via Composer
 
 ``` bash
-$ composer require php-http/adapter-core
+$ composer require php-http/adapter-client
 ```
 
 
@@ -26,7 +26,7 @@ $ composer require php-http/adapter-core
 ## Testing
 
 ``` bash
-$ phpunit
+$ phpspec run
 ```
 
 
