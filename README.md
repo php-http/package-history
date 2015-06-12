@@ -4,7 +4,7 @@
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
 [![Total Downloads](https://img.shields.io/packagist/dt/php-http/client.svg?style=flat-square)](https://packagist.org/packages/php-http/client)
 
-**HTTP client contract.**
+**HTTP client interfaces.**
 
 
 ## Install

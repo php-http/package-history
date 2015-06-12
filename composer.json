@@ -1,6 +1,6 @@
 {
     "name": "php-http/client",
-    "description": "HTTP client contract",
+    "description": "HTTP client interfaces",
     "license": "MIT",
     "keywords": ["http", "client"],
     "homepage": "http://php-http.org",
