@@ -16,17 +16,16 @@
     ],
     "require": {
         "php": ">=5.4",
-        "php-http/adapter": "^0.1@dev",
         "php-http/adapter-implementation": "^0.1",
         "php-http/client": "^0.1",
         "php-http/helper": "^0.1@dev",
         "php-http/message-decorator": "^0.1",
         "php-http/message-factory": "^0.1",
-        "php-http/message-factory-guesser": "^0.1@dev"
+        "php-http/discovery": "^0.1"
     },
     "require-dev": {
-        "php-http/guzzle6-adapter": "^0.1@dev",
-        "php-http/adapter-integration-tests": "^0.1@dev",
+        "php-http/guzzle6-adapter": "^0.1",
+        "php-http/adapter-integration-tests": "^0.1",
         "phpspec/phpspec": "~2.1",
         "henrikbjorn/phpspec-code-coverage" : "~1.0"
     },

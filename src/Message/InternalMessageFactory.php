@@ -15,8 +15,6 @@ use Http\Client\Message\InternalMessageFactory as InternalMessageFactoryInterfac
 use Http\Message\MessageFactory;
 
 /**
- * Can be used with custom logic
- *
  * @author Márk Sági-Kazár <mark.sagikazar@gmail.com>
  */
 class InternalMessageFactory implements InternalMessageFactoryInterface
