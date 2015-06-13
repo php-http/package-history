@@ -3,8 +3,8 @@ suites:
     namespace: Http\Message
     psr4_prefix: Http\Message
 extensions:
-  - PhpSpec\Extension\CodeCoverageExtension
 formatter.name: pretty
+  - PhpSpec\Extension\CodeCoverageExtension
 code_coverage:
   format: clover
   output: build/coverage.xml

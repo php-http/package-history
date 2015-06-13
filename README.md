@@ -5,7 +5,6 @@
 [![Build Status](https://img.shields.io/travis/php-http/message-decorator.svg?style=flat-square)](https://travis-ci.org/php-http/message-decorator)
 [![Code Coverage](https://img.shields.io/scrutinizer/coverage/g/php-http/message-decorator.svg?style=flat-square)](https://scrutinizer-ci.com/g/php-http/message-decorator)
 [![Quality Score](https://img.shields.io/scrutinizer/g/php-http/message-decorator.svg?style=flat-square)](https://scrutinizer-ci.com/g/php-http/message-decorator)
-[![HHVM Status](https://img.shields.io/hhvm/php-http/message-decorator.svg?style=flat-square)](http://hhvm.h4cc.de/package/php-http/message-decorator)
 [![Total Downloads](https://img.shields.io/packagist/dt/php-http/message-decorator.svg?style=flat-square)](https://packagist.org/packages/php-http/message-decorator)
 
 **Decorators for PSR-7 HTTP Messages.**
