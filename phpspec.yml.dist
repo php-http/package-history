@@ -1,0 +1,5 @@
+suites:
+  cookie_suite:
+    namespace: Http\Cookie
+    psr4_prefix: Http\Cookie
+formatter.name: pretty

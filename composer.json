@@ -1,0 +1,36 @@
+{
+    "name": "php-http/cookie",
+    "description": "Simple Cookie container logic for HTTP Requests",
+    "license": "MIT",
+    "keywords": ["cookie", "http"],
+    "homepage": "http://php-http.org",
+    "authors": [
+        {
+            "name": "Eric GELOEN",
+            "email": "geloen.eric@gmail.com"
+        },
+        {
+            "name": "Márk Sági-Kazár",
+            "email": "mark.sagikazar@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.4"
+    },
+    "require-dev": {
+        "phpspec/phpspec": "^2.2",
+        "henrikbjorn/phpspec-code-coverage" : "^1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Http\\Cookie\\": "src/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.1-dev"
+        }
+    },
+    "prefer-stable": true,
+    "minimum-stability": "dev"
+}

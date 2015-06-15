@@ -1,0 +1,10 @@
+suites:
+  cookie_suite:
+    namespace: Http\Cookie
+    psr4_prefix: Http\Cookie
+formatter.name: pretty
+extensions:
+  - PhpSpec\Extension\CodeCoverageExtension
+code_coverage:
+  format: clover
+  output: build/coverage.xml
