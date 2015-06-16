@@ -81,7 +81,7 @@ final class Cookie
         }
 
         /**
-         * Name attribute is a token defined by RFC2616
+         * Name attribute is a token as per spec in RFC 2616
          *
          * @see http://tools.ietf.org/search/rfc2616#section-2.2
          */
@@ -96,7 +96,7 @@ final class Cookie
             $maxAge = $expiration;
             $expires = new \DateTime(sprintf('%d seconds', $maxAge));
 
-            // According to RFC2616 date should be set to earliest representable date
+            // According to RFC 2616 date should be set to earliest representable date
             if ($maxAge <= 0) {
                 $expires->setTimestamp(-PHP_INT_MAX);
             }
@@ -105,12 +105,22 @@ final class Cookie
             $expires = $expiration;
         }
 
+        /**
+         * Remove the leading '.' and lowercase the domain as per spec in RFC 6265
+         *
+         * @see http://tools.ietf.org/html/rfc6265#section-4.1.2.3
+         * @see http://tools.ietf.org/html/rfc6265#section-5.1.3
+         */
+        if (isset($domain)) {
+            $domain = ltrim(strtolower($domain), '.');
+        }
+
         $this->name = $name;
         $this->value = $value;
         $this->maxAge = $maxAge;
         $this->expires = $expires;
-        $this->path = $path;
         $this->domain = $domain;
+        $this->path = $path;
         $this->secure = (bool) $secure;
         $this->httpOnly = (bool) $httpOnly;
     }

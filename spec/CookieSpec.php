@@ -9,7 +9,7 @@ class CookieSpec extends ObjectBehavior
 {
     function let()
     {
-        $this->beConstructedWith('name', 'value', 0, '/', null, false, false);
+        $this->beConstructedWith('name', 'value', 0, null, '/', false, false);
     }
 
     function it_is_initializable()
@@ -107,6 +107,14 @@ class CookieSpec extends ObjectBehavior
     {
         $this->getDomain()->shouldReturn(null);
         $this->hasDomain()->shouldReturn(false);
+    }
+
+    function it_has_a_valid_domain()
+    {
+        $this->beConstructedWith('name', 'value', null, '.InVaLiD.cOm');
+
+        $this->getDomain()->shouldReturn('invalid.com');
+        $this->hasDomain()->shouldReturn(true);
     }
 
     function it_has_a_path()
