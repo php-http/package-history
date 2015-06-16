@@ -66,6 +66,8 @@ final class Cookie
      * @param string|null       $path
      * @param boolean           $secure
      * @param boolean           $httpOnly
+     *
+     * @throws \InvalidArgumentException
      */
     public function __construct(
         $name,
@@ -76,77 +78,126 @@ final class Cookie
         $secure = false,
         $httpOnly = false
     ) {
-        if (strlen($name) < 1) {
-            throw new \InvalidArgumentException('The name cannot be empty');
-        }
-
-        /**
-         * Name attribute is a token as per spec in RFC 2616
-         *
-         * @see http://tools.ietf.org/search/rfc2616#section-2.2
-         */
-        if (preg_match('/[\x00-\x20\x22\x28-\x29\x2c\x2f\x3a-\x40\x5b-\x5d\x7b\x7d\x7f]/', $name)) {
-            throw new \InvalidArgumentException(sprintf('The cookie name "%s" contains invalid characters.', $name));
-        }
-
-        /**
-         * Check valid value
-         *
-         * @see http://tools.ietf.org/html/rfc6265#section-4.1.1
-         */
-        if (isset($value)) {
-            if (preg_match('/[^\x21\x23-\x2B\x2D-\x3A\x3C-\x5B\x5D-\x7E]/', $value)) {
-                throw new \InvalidArgumentException(sprintf('The cookie value "%s" contains invalid characters.', $value));
-            }
-        }
+        $this->validateName($name);
+        $this->validateValue($value);
 
         $maxAge = null;
         $expires = null;
 
         if (is_int($expiration)) {
             $maxAge = $expiration;
-            $expires = new \DateTime(sprintf('%d seconds', $maxAge));
-
-            // According to RFC 2616 date should be set to earliest representable date
-            if ($maxAge <= 0) {
-                $expires->setTimestamp(-PHP_INT_MAX);
-            }
-
+            $expires = $this->createExpiresFromMaxAge($expiration);
         } elseif ($expiration instanceof \DateTime) {
             $expires = $expiration;
-        }
-
-        /**
-         * Remove the leading '.' and lowercase the domain as per spec in RFC 6265
-         *
-         * @see http://tools.ietf.org/html/rfc6265#section-4.1.2.3
-         * @see http://tools.ietf.org/html/rfc6265#section-5.1.3
-         * @see http://tools.ietf.org/html/rfc6265#section-5.2.3
-         */
-        if (isset($domain)) {
-            $domain = ltrim(strtolower($domain), '.');
-        }
-
-        /**
-         * Process path as per spec in RFC 6265
-         *
-         * @see http://tools.ietf.org/html/rfc6265#section-5.1.4
-         * @see http://tools.ietf.org/html/rfc6265#section-5.2.4
-         */
-        $path = rtrim($path, '/');
-
-        if (empty($path) or substr($path, 0, 1) !== '/') {
-            $path = '/';
         }
 
         $this->name = $name;
         $this->value = $value;
         $this->maxAge = $maxAge;
         $this->expires = $expires;
-        $this->domain = $domain;
-        $this->path = $path;
+        $this->domain = $this->normalizeDomain($domain);
+        $this->path = $this->normalizePath($path);
         $this->secure = (bool) $secure;
         $this->httpOnly = (bool) $httpOnly;
+    }
+
+    /**
+     * Validates the name attribute
+     *
+     * @param string $name
+     *
+     * @throws \InvalidArgumentException
+     *
+     * @see http://tools.ietf.org/search/rfc2616#section-2.2
+     */
+    private function validateName($name)
+    {
+        if (strlen($name) < 1) {
+            throw new \InvalidArgumentException('The name cannot be empty');
+        }
+
+        // Name attribute is a token as per spec in RFC 2616
+        if (preg_match('/[\x00-\x20\x22\x28-\x29\x2c\x2f\x3a-\x40\x5b-\x5d\x7b\x7d\x7f]/', $name)) {
+            throw new \InvalidArgumentException(sprintf('The cookie name "%s" contains invalid characters.', $name));
+        }
+    }
+
+    /**
+     * Validates a value
+     *
+     * @param string|null $value
+     *
+     * @throws \InvalidArgumentException
+     *
+     * @see http://tools.ietf.org/html/rfc6265#section-4.1.1
+     */
+    private function validateValue($value)
+    {
+        if (isset($value)) {
+            if (preg_match('/[^\x21\x23-\x2B\x2D-\x3A\x3C-\x5B\x5D-\x7E]/', $value)) {
+                throw new \InvalidArgumentException(sprintf('The cookie value "%s" contains invalid characters.', $value));
+            }
+        }
+    }
+
+    /**
+     * Remove the leading '.' and lowercase the domain as per spec in RFC 6265
+     *
+     * @param string|null $domain
+     *
+     * @return string
+     *
+     * @see http://tools.ietf.org/html/rfc6265#section-4.1.2.3
+     * @see http://tools.ietf.org/html/rfc6265#section-5.1.3
+     * @see http://tools.ietf.org/html/rfc6265#section-5.2.3
+     */
+    private function normalizeDomain($domain)
+    {
+        if (isset($domain)) {
+            $domain = ltrim(strtolower($domain), '.');
+        }
+
+        return $domain;
+    }
+
+    /**
+     * Processes path as per spec in RFC 6265
+     *
+     * @param string|null $path
+     *
+     * @return string
+     *
+     * @see http://tools.ietf.org/html/rfc6265#section-5.1.4
+     * @see http://tools.ietf.org/html/rfc6265#section-5.2.4
+     */
+    private function normalizePath($path)
+    {
+        $path = rtrim($path, '/');
+
+        if (empty($path) or substr($path, 0, 1) !== '/') {
+            $path = '/';
+        }
+
+        return $path;
+    }
+
+    /**
+     * Creates a DateTime representation of Max-Age
+     *
+     * @param integer $maxAge
+     *
+     * @return \DateTime
+     */
+    private function createExpiresFromMaxAge($maxAge)
+    {
+        $expires = new \DateTime(sprintf('%d seconds', $maxAge));
+
+        // According to RFC 2616 date should be set to earliest representable date
+        if ($maxAge <= 0) {
+            $expires->setTimestamp(-PHP_INT_MAX);
+        }
+
+        return $expires;
     }
 
     /**
