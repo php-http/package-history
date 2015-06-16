@@ -86,7 +86,12 @@ final class Cookie
 
         if (is_int($expiration)) {
             $maxAge = $expiration;
-            $expires = $this->createExpiresFromMaxAge($expiration);
+            $expires = new \DateTime(sprintf('%d seconds', $maxAge));
+
+            // According to RFC 2616 date should be set to earliest representable date
+            if ($maxAge <= 0) {
+                $expires->setTimestamp(-PHP_INT_MAX);
+            }
         } elseif ($expiration instanceof \DateTime) {
             $expires = $expiration;
         }
@@ -179,25 +184,6 @@ final class Cookie
         }
 
         return $path;
-    }
-
-    /**
-     * Creates a DateTime representation of Max-Age
-     *
-     * @param integer $maxAge
-     *
-     * @return \DateTime
-     */
-    private function createExpiresFromMaxAge($maxAge)
-    {
-        $expires = new \DateTime(sprintf('%d seconds', $maxAge));
-
-        // According to RFC 2616 date should be set to earliest representable date
-        if ($maxAge <= 0) {
-            $expires->setTimestamp(-PHP_INT_MAX);
-        }
-
-        return $expires;
     }
 
     /**
