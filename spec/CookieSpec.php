@@ -9,7 +9,7 @@ class CookieSpec extends ObjectBehavior
 {
     function let()
     {
-        $this->beConstructedWith('name', 'value', 0, null, '/', false, false);
+        $this->beConstructedWith('name', 'value', 0, null, null, false, false);
     }
 
     function it_is_initializable()
@@ -129,7 +129,6 @@ class CookieSpec extends ObjectBehavior
     function it_has_a_path()
     {
         $this->getPath()->shouldReturn('/');
-        $this->hasPath()->shouldReturn(true);
     }
 
     function it_can_be_secure()

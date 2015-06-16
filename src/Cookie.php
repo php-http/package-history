@@ -44,7 +44,7 @@ final class Cookie
     protected $domain;
 
     /**
-     * @var string|null
+     * @var string
      */
     protected $path;
 
@@ -63,7 +63,7 @@ final class Cookie
      * @param string|null       $value
      * @param integer|\DateTime $expiration
      * @param string|null       $domain
-     * @param string            $path
+     * @param string|null       $path
      * @param boolean           $secure
      * @param boolean           $httpOnly
      */
@@ -72,7 +72,7 @@ final class Cookie
         $value = null,
         $expiration = 0,
         $domain = null,
-        $path = '/',
+        $path = null,
         $secure = false,
         $httpOnly = false
     ) {
@@ -110,9 +110,22 @@ final class Cookie
          *
          * @see http://tools.ietf.org/html/rfc6265#section-4.1.2.3
          * @see http://tools.ietf.org/html/rfc6265#section-5.1.3
+         * @see http://tools.ietf.org/html/rfc6265#section-5.2.3
          */
         if (isset($domain)) {
             $domain = ltrim(strtolower($domain), '.');
+        }
+
+        /**
+         * Process path as per spec in RFC 6265
+         *
+         * @see http://tools.ietf.org/html/rfc6265#section-5.1.4
+         * @see http://tools.ietf.org/html/rfc6265#section-5.2.4
+         */
+        $path = rtrim($path, '/');
+
+        if (empty($path) or substr($path, 0, 1) !== '/') {
+            $path = '/';
         }
 
         $this->name = $name;
@@ -228,21 +241,11 @@ final class Cookie
     /**
      * Returns the path
      *
-     * @return string|null
+     * @return string
      */
     public function getPath()
     {
         return $this->path;
-    }
-
-    /**
-     * Checks if there is a path
-     *
-     * @return boolean
-     */
-    public function hasPath()
-    {
-        return isset($this->path);
     }
 
     /**
