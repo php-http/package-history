@@ -131,6 +131,14 @@ class CookieSpec extends ObjectBehavior
         $this->getPath()->shouldReturn('/');
     }
 
+    function it_matches_a_path()
+    {
+        $this->beConstructedWith('name', 'value', null, null, '/path/to/somewhere');
+
+        $this->matchPath('/path/to/somewhere')->shouldReturn(true);
+        $this->matchPath('/path/to/somewhereelse')->shouldReturn(false);
+    }
+
     function it_can_be_secure()
     {
         $this->isSecure()->shouldReturn(false);

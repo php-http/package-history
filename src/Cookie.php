@@ -239,36 +239,6 @@ final class Cookie
     }
 
     /**
-     * Returns the path
-     *
-     * @return string
-     */
-    public function getPath()
-    {
-        return $this->path;
-    }
-
-    /**
-     * Checks if HTTPS is required
-     *
-     * @return boolean
-     */
-    public function isSecure()
-    {
-        return $this->secure;
-    }
-
-    /**
-     * Checks if it is HTTP-only
-     *
-     * @return boolean
-     */
-    public function isHttpOnly()
-    {
-        return $this->httpOnly;
-    }
-
-    /**
      * Matches a domain
      *
      * @param string $domain
@@ -290,5 +260,49 @@ final class Cookie
         }
 
         return (bool) preg_match('/\b' . preg_quote($this->domain) . '$/i', $domain);
+    }
+
+    /**
+     * Returns the path
+     *
+     * @return string
+     */
+    public function getPath()
+    {
+        return $this->path;
+    }
+
+    /**
+     * It matches a path
+     *
+     * @param string $path
+     *
+     * @return boolean
+     *
+     * @see http://tools.ietf.org/html/rfc6265#section-5.1.4
+     */
+    public function matchPath($path)
+    {
+        return $this->path === $path || (strpos($path, $this->path.'/') === 0);
+    }
+
+    /**
+     * Checks if HTTPS is required
+     *
+     * @return boolean
+     */
+    public function isSecure()
+    {
+        return $this->secure;
+    }
+
+    /**
+     * Checks if it is HTTP-only
+     *
+     * @return boolean
+     */
+    public function isHttpOnly()
+    {
+        return $this->httpOnly;
     }
 }
