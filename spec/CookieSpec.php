@@ -2,8 +2,8 @@
 
 namespace spec\Http\Cookie;
 
+use Http\Cookie\Cookie;
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 
 class CookieSpec extends ObjectBehavior
 {
@@ -147,5 +147,16 @@ class CookieSpec extends ObjectBehavior
     function it_can_be_http_only()
     {
         $this->isHttpOnly()->shouldReturn(false);
+    }
+
+    function it_matches_another_cookies()
+    {
+        $this->beConstructedWith('name', 'value', null, 'php-http.org');
+
+        $matches = new Cookie('name', 'value2', null, 'php-http.org');
+        $notMatches = new Cookie('anotherName', 'value2', null, 'php-http.org');
+
+        $this->match($matches)->shouldReturn(true);
+        $this->match($notMatches)->shouldReturn(false);
     }
 }

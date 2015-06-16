@@ -305,4 +305,16 @@ final class Cookie
     {
         return $this->httpOnly;
     }
+
+    /**
+     * Checks if it matches with another cookie
+     *
+     * @param Cookie $cookie
+     *
+     * @return boolean
+     */
+    public function match(Cookie $cookie)
+    {
+        return $this->name === $cookie->name && $this->domain === $cookie->domain and $this->path === $cookie->path;
+    }
 }
