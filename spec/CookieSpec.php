@@ -111,10 +111,19 @@ class CookieSpec extends ObjectBehavior
 
     function it_has_a_valid_domain()
     {
-        $this->beConstructedWith('name', 'value', null, '.InVaLiD.cOm');
+        $this->beConstructedWith('name', 'value', null, '.PhP-hTtP.oRg');
 
-        $this->getDomain()->shouldReturn('invalid.com');
+        $this->getDomain()->shouldReturn('php-http.org');
         $this->hasDomain()->shouldReturn(true);
+    }
+
+    function it_matches_a_domain()
+    {
+        $this->beConstructedWith('name', 'value', null, 'php-http.org');
+
+        $this->matchDomain('PhP-hTtP.oRg')->shouldReturn(true);
+        $this->matchDomain('127.0.0.1')->shouldReturn(false);
+        $this->matchDomain('wWw.PhP-hTtP.oRg')->shouldReturn(true);
     }
 
     function it_has_a_path()

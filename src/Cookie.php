@@ -264,4 +264,28 @@ final class Cookie
     {
         return $this->httpOnly;
     }
+
+    /**
+     * Matches a domain
+     *
+     * @param string $domain
+     *
+     * @return boolean
+     *
+     * @see http://tools.ietf.org/html/rfc6265#section-5.1.3
+     */
+    public function matchDomain($domain)
+    {
+        // Domain is not set or exact match
+        if (!$this->hasDomain() || strcasecmp($domain, $this->domain) === 0) {
+            return true;
+        }
+
+        // Domain is not an IP address
+        if (filter_var($domain, FILTER_VALIDATE_IP)) {
+            return false;
+        }
+
+        return (bool) preg_match('/\b' . preg_quote($this->domain) . '$/i', $domain);
+    }
 }
