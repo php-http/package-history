@@ -85,8 +85,19 @@ final class Cookie
          *
          * @see http://tools.ietf.org/search/rfc2616#section-2.2
          */
-        if (preg_match('/[\x00-\x20]|\x22|[\x28-\x29]|\x2c|\x2f|[\x3a-\x40]|[\x5b-\x5d]|\x7b|\x7d|\x7f/', $name)) {
+        if (preg_match('/[\x00-\x20\x22\x28-\x29\x2c\x2f\x3a-\x40\x5b-\x5d\x7b\x7d\x7f]/', $name)) {
             throw new \InvalidArgumentException(sprintf('The cookie name "%s" contains invalid characters.', $name));
+        }
+
+        /**
+         * Check valid value
+         *
+         * @see http://tools.ietf.org/html/rfc6265#section-4.1.1
+         */
+        if (isset($value)) {
+            if (preg_match('/[^\x21\x23-\x2B\x2D-\x3A\x3C-\x5B\x5D-\x7E]/', $value)) {
+                throw new \InvalidArgumentException(sprintf('The cookie value "%s" contains invalid characters.', $value));
+            }
         }
 
         $maxAge = null;

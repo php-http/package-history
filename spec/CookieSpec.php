@@ -17,12 +17,17 @@ class CookieSpec extends ObjectBehavior
         $this->shouldHaveType('Http\Cookie\Cookie');
     }
 
+    function it_has_a_name()
+    {
+        $this->getName()->shouldReturn('name');
+    }
+
     function it_throws_an_exception_when_the_name_contains_invalid_character()
     {
         for ($i = 0; $i < 128; $i++) {
             $name = chr($i);
 
-            if (preg_match('/[\x00-\x20]|\x22|[\x28-\x29]|\x2c|\x2f|[\x3a-\x40]|[\x5b-\x5d]|\x7b|\x7d|\x7f/', $name)) {
+            if (preg_match('/[\x00-\x20\x22\x28-\x29\x2c\x2f\x3a-\x40\x5b-\x5d\x7b\x7d\x7f]/', $name)) {
                 $expectation = $this->shouldThrow('InvalidArgumentException');
             } else {
                 $expectation = $this->shouldNotThrow('InvalidArgumentException');
@@ -37,15 +42,25 @@ class CookieSpec extends ObjectBehavior
         $this->shouldThrow('InvalidArgumentException')->during('__construct', ['']);
     }
 
-    function it_has_a_name()
-    {
-        $this->getName()->shouldReturn('name');
-    }
-
     function it_has_a_value()
     {
         $this->getValue()->shouldReturn('value');
         $this->hasValue()->shouldReturn(true);
+    }
+
+    function it_throws_an_exception_when_the_value_contains_invalid_character()
+    {
+        for ($i = 0; $i < 128; $i++) {
+            $value = chr($i);
+
+            if (preg_match('/[^\x21\x23-\x2B\x2D-\x3A\x3C-\x5B\x5D-\x7E]/', $value)) {
+                $expectation = $this->shouldThrow('InvalidArgumentException');
+            } else {
+                $expectation = $this->shouldNotThrow('InvalidArgumentException');
+            }
+
+            $expectation->during('__construct', ['name', $value]);
+        }
     }
 
     function it_has_an_invalid_max_age_time()
