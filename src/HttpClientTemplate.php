@@ -14,7 +14,7 @@ namespace Http\Adapter;
 /**
  * @author Márk Sági-Kazár <mark.sagikazar@gmail.com>
  */
-trait HttpClient
+trait HttpClientTemplate
 {
     /**
      * {@inheritdoc}

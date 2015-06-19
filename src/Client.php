@@ -14,9 +14,11 @@ namespace Http\Adapter;
 use Http\Client\HttpClient;
 use Http\Client\Message\InternalRequest;
 use Http\Client\Message\InternalMessageFactory;
+use Http\Discovery\MessageFactoryDiscovery;
 use Http\Message\MessageFactory;
 use Http\Message\MessageFactoryGuesser;
 use Psr\Http\Message\StreamInterface;
+use Psr\Http\Message\RequestInterface;
 
 use Http\Adapter\Normalizer\HeaderNormalizer;
 
@@ -44,9 +46,10 @@ class Client implements HttpClient
     public function __construct(HttpAdapter $adapter = null, MessageFactory $messageFactory = null)
     {
         // guess http adapter
+        $this->adapter = $adapter;
 
         if (!isset($messageFactory)) {
-            $messageFactory = MessageFactoryGuesser::guess();
+            $messageFactory = MessageFactoryDiscovery::find();
         }
 
         if (!$messageFactory instanceof InternalMessageFactory) {
