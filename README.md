@@ -25,7 +25,7 @@ $ composer require php-http/authentication
 ## Testing
 
 ``` bash
-$ phpspec run
+$ composer test
 ```
 
 
