@@ -29,7 +29,7 @@ class Wsse implements Authentication
     public function authenticate(RequestInterface $request)
     {
         // TODO: generate better nonce?
-        $nonce  = base64_encode(substr(md5(uniqid(uniqid() . '_', true)), 0, 16));
+        $nonce  = substr(md5(uniqid(uniqid() . '_', true)), 0, 16);
         $created = date('c');
         $digest  = base64_encode(sha1(base64_decode($nonce) . $created . $this->password, true));
 
