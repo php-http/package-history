@@ -2,10 +2,11 @@
 
 namespace spec\Http\Authentication;
 
+use Prophecy\Argument;
 use Psr\Http\Message\RequestInterface;
 use PhpSpec\ObjectBehavior;
 
-class BasicAuthSpec extends ObjectBehavior
+class WsseSpec extends ObjectBehavior
 {
     function let()
     {
@@ -14,7 +15,7 @@ class BasicAuthSpec extends ObjectBehavior
 
     function it_is_initializable()
     {
-        $this->shouldHaveType('Http\Authentication\BasicAuth');
+        $this->shouldHaveType('Http\Authentication\Wsse');
     }
 
     function it_is_an_authentication()
@@ -46,10 +47,16 @@ class BasicAuthSpec extends ObjectBehavior
         $this->getPassword()->shouldReturn('very_secret');
     }
 
-    function it_authenticates_a_request(RequestInterface $request, RequestInterface $newRequest)
-    {
-        $request->withHeader('Authorization', 'Basic '.base64_encode('john.doe:secret'))->willReturn($newRequest);
+    function it_authenticates_a_request(
+        RequestInterface $request,
+        RequestInterface $newRequest,
+        RequestInterface $newerRequest
+    ) {
+        $request->withHeader('Authorization', 'WSSE profile="UsernameToken"')->willReturn($newRequest);
+        $newRequest->withHeader('X-WSSE', Argument::that(function($arg) {
+            return preg_match('/UsernameToken Username=".*", PasswordDigest=".*", Nonce=".*", Created=".*"/', $arg);
+        }))->willReturn($newerRequest);
 
-        $this->authenticate($request)->shouldReturn($newRequest);
+        $this->authenticate($request)->shouldReturn($newerRequest);
     }
 }

@@ -11,15 +11,7 @@ use Psr\Http\Message\RequestInterface;
  */
 class BasicAuth implements Authentication
 {
-    /**
-     * @var string
-     */
-    private $username;
-
-    /**
-     * @var string
-     */
-    private $password;
+    use UsernamePassword;
 
     /**
      * @param string $username
@@ -28,46 +20,6 @@ class BasicAuth implements Authentication
     public function __construct($username, $password)
     {
         $this->username = $username;
-        $this->password = $password;
-    }
-
-    /**
-     * Returns the username
-     *
-     * @return string
-     */
-    public function getUsername()
-    {
-        return $this->username;
-    }
-
-    /**
-     * Sets the username
-     *
-     * @param string $username
-     */
-    public function setUsername($username)
-    {
-        $this->username = $username;
-    }
-
-    /**
-     * Returns the password
-     *
-     * @return string
-     */
-    public function getPassword()
-    {
-        return $this->password;
-    }
-
-    /**
-     * Sets the password
-     *
-     * @param string $password
-     */
-    public function setPassword($password)
-    {
         $this->password = $password;
     }
 
