@@ -17,6 +17,11 @@ class BasicAuthSpec extends ObjectBehavior
         $this->shouldHaveType('Http\Authentication\BasicAuth');
     }
 
+    function it_is_an_authentication()
+    {
+        $this->shouldImplement('Http\Authentication\Authentication');
+    }
+
     function it_has_a_username()
     {
         $this->getUsername()->shouldReturn('john.doe');

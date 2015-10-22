@@ -17,6 +17,10 @@ class BearerSpec extends ObjectBehavior
         $this->shouldHaveType('Http\Authentication\Bearer');
     }
 
+    function it_is_an_authentication()
+    {
+        $this->shouldImplement('Http\Authentication\Authentication');
+    }
     function it_has_a_token()
     {
         $this->getToken()->shouldReturn('token');

@@ -22,6 +22,11 @@ class MatchingSpec extends ObjectBehavior
         $this->shouldHaveType('Http\Authentication\Matching');
     }
 
+    function it_is_an_authentication()
+    {
+        $this->shouldImplement('Http\Authentication\Authentication');
+    }
+
     function it_has_an_authentication(Authentication $authentication)
     {
         $this->getAuthentication()->shouldReturn($authentication);
