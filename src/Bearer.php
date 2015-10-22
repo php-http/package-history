@@ -1,8 +1,7 @@
 <?php
 
-namespace Http\Authentication\Authentication;
+namespace Http\Authentication;
 
-use Http\Authentication\Authentication;
 use Psr\Http\Message\RequestInterface;
 
 /**

@@ -1,6 +1,6 @@
 <?php
 
-namespace spec\Http\Authentication\Authentication;
+namespace spec\Http\Authentication;
 
 use Psr\Http\Message\RequestInterface;
 use PhpSpec\ObjectBehavior;
@@ -14,7 +14,7 @@ class BasicAuthSpec extends ObjectBehavior
 
     function it_is_initializable()
     {
-        $this->shouldHaveType('Http\Authentication\Authentication\BasicAuth');
+        $this->shouldHaveType('Http\Authentication\BasicAuth');
     }
 
     function it_has_a_username()

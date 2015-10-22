@@ -1,6 +1,6 @@
 <?php
 
-namespace spec\Http\Authentication\Authentication;
+namespace spec\Http\Authentication;
 
 use Http\Authentication\Authentication;
 use Psr\Http\Message\RequestInterface;
@@ -19,7 +19,7 @@ class MatchingSpec extends ObjectBehavior
 
     function it_is_initializable()
     {
-        $this->shouldHaveType('Http\Authentication\Authentication\Matching');
+        $this->shouldHaveType('Http\Authentication\Matching');
     }
 
     function it_has_an_authentication(Authentication $authentication)
@@ -68,6 +68,6 @@ class MatchingSpec extends ObjectBehavior
 
     function it_creates_a_matcher_from_url(Authentication $authentication)
     {
-        $this->createUrlMatcher($authentication, 'url')->shouldHaveType('Http\Authentication\Authentication\Matching');
+        $this->createUrlMatcher($authentication, 'url')->shouldHaveType('Http\Authentication\Matching');
     }
 }
