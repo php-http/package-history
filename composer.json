@@ -1,0 +1,27 @@
+{
+    "name": "php-http/httplug-async",
+    "description": "HTTPlug Async, the HTTP asynchronous client abstraction for PHP",
+    "license": "MIT",
+    "keywords": ["http", "client", "async"],
+    "homepage": "http://php-http.org",
+    "authors": [
+        {
+            "name": "Joel Wurtz",
+            "email": "joel.wurtz@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.4",
+        "php-http/httplug": "^1.0@dev"
+    },
+    "autoload": {
+        "psr-4": {
+            "Http\\Client\\": "src/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.1-dev"
+        }
+    }
+}
