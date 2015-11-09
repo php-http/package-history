@@ -9,7 +9,7 @@ use Psr\Http\Message\StreamInterface;
  *
  * @author Joel Wurtz <joel.wurtz@gmail.com>
  */
-class ChunkedStream extends DecoratedStream
+class ChunkStream extends DecoratedStream
 {
     const DEFAULT_BUFFER_SIZE = 8192;
 

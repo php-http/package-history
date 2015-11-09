@@ -11,7 +11,7 @@ use Psr\Http\Message\StreamInterface;
  *
  * @author Joel Wurtz <joel.wurtz@gmail.com>
  */
-class DechunkedStream extends DecoratedStream
+class DechunkStream extends DecoratedStream
 {
     /**
      * @var string Internal buffer used when user read less content than available in a chunk

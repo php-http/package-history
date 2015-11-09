@@ -8,11 +8,11 @@ use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use Psr\Http\Message\StreamInterface;
 
-class ChunkedStreamSpec extends ObjectBehavior
+class ChunkStreamSpec extends ObjectBehavior
 {
     function it_is_initializable(StreamInterface $stream)
     {
-        $this->beAnInstanceOf('Http\Encoding\ChunkedStream', [$stream]);
+        $this->beAnInstanceOf('Http\Encoding\ChunkStream', [$stream]);
         $this->shouldImplement('Http\Encoding\DecoratedStream');
         $this->shouldImplement('Psr\Http\Message\StreamInterface');
     }
