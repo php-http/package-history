@@ -66,13 +66,6 @@ class DechunkedStream extends DecoratedStream
     /**
      * {@inheritdoc}
      */
-    public function write($string)
-    {
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function read($length)
     {
         if (strlen($this->buffer) >= $length) {
@@ -92,12 +85,12 @@ class DechunkedStream extends DecoratedStream
             $this->buffer = '';
         }
 
+        // Set the buffer to the next chunk
+        $this->buffer = $this->readChunk() ?: '';
+
         if ($this->eof()) {
             return $readed;
         }
-
-        // Set the buffer to the next chunk
-        $this->buffer = $this->readChunk();
 
         return $readed . $this->read($length);
     }
@@ -107,7 +100,13 @@ class DechunkedStream extends DecoratedStream
      */
     public function getContents()
     {
-        // TODO: Implement getContents() method.
+        $content = "";
+
+        while (!$this->eof()) {
+            $content .= $this->readChunk();
+        }
+
+        return $content;
     }
 
     /**
@@ -117,7 +116,33 @@ class DechunkedStream extends DecoratedStream
      */
     public function readChunk()
     {
-        // Get length of the chunk
+        if ($this->eof()) {
+            return false;
+        }
 
+        $readed = '';
+
+        do {
+            $char        = $this->stream->read(1);
+            $readed     .= $char;
+            $lastTwoChar = substr($readed, -2);
+        } while(!$this->stream->eof() && $lastTwoChar !== "\r\n");
+
+        $size  = (integer)trim($readed);
+
+        if ($size === 0) {
+            // Read two next bytes (\r\n)
+            $this->stream->read(2);
+            $this->eof = true;
+
+            return false;
+        }
+
+        $chunk = $this->stream->read($size);
+
+        // Read two next bytes (\r\n)
+        $this->stream->read(2);
+
+        return $chunk;
     }
 }
