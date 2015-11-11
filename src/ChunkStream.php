@@ -28,4 +28,13 @@ class ChunkStream extends FilteredStream
     {
         return 'dechunk';
     }
+
+    protected function fill()
+    {
+        parent::fill();
+
+        if ($this->stream->eof()) {
+            $this->buffer .= "0\r\n\r\n";
+        }
+    }
 }
