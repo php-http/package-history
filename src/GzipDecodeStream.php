@@ -2,6 +2,10 @@
 
 namespace Http\Encoding;
 
-class GzipDecodeStream extends DecoratedStream
+class GzipDecodeStream
 {
+    public function __construct($argument1)
+    {
+        // TODO: write logic here
+    }
 }

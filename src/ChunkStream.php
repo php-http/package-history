@@ -2,67 +2,30 @@
 
 namespace Http\Encoding;
 
-use Psr\Http\Message\StreamInterface;
-
 /**
  * Transform a regular stream into a chunked one
  *
  * @author Joel Wurtz <joel.wurtz@gmail.com>
  */
-class ChunkStream extends DecoratedStream
+class ChunkStream extends FilteredStream
 {
-    const DEFAULT_BUFFER_SIZE = 8192;
-
-    /**
-     * @var int Buffer size used when reading the full stream
-     */
-    private $bufferSize;
-
     /**
      * {@inheritdoc}
-     *
-     * @param int $bufferSIze Buffer size used when reading the full stream
      */
-    public function __construct(StreamInterface $stream, $bufferSize = self::DEFAULT_BUFFER_SIZE)
+    public function getReadFilter()
     {
-        if (!$stream->isReadable()) {
-            throw new \LogicException("Cannot chunk a not readable stream");
+        if (!array_key_exists('chunk', stream_get_filters())) {
+            stream_filter_register('chunk', 'Http\Encoding\Filter\Chunk');
         }
 
-        parent::__construct($stream);
-
-        $this->bufferSize = $bufferSize;
+        return 'chunk';
     }
 
     /**
      * {@inheritdoc}
      */
-    public function read($length)
+    public function getWriteFilter()
     {
-        $buffer = $this->stream->read($length);
-
-        return sprintf("%s\r\n%s\r\n", strlen($buffer), $buffer);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getContents()
-    {
-        $content = '';
-
-        while (!$this->stream->eof()) {
-            $content .= $this->read($this->bufferSize);
-        }
-
-        return $content;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function __toString()
-    {
-        return $this->getContents();
+        return 'dechunk';
     }
 }

@@ -11,7 +11,15 @@ class DeflateStreamSpec extends ObjectBehavior
     function it_is_initializable(StreamInterface $stream)
     {
         $this->beAnInstanceOf('Http\Encoding\DeflateStream', [$stream]);
-        $this->shouldImplement('Http\Encoding\DecoratedStream');
         $this->shouldImplement('Psr\Http\Message\StreamInterface');
+    }
+
+    function it_deflates_content()
+    {
+        $stream = new MemoryStream("This is a test stream");
+        $this->beConstructedWith($stream);
+
+        $stream->rewind();
+        $this->getContents()->shouldReturn(gzdeflate("This is a test stream"));
     }
 }

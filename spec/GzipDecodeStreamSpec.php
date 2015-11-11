@@ -11,7 +11,6 @@ class GzipDecodeStreamSpec extends ObjectBehavior
     function it_is_initializable(StreamInterface $stream)
     {
         $this->beAnInstanceOf('Http\Encoding\GzipDecodeStream', [$stream]);
-        $this->shouldImplement('Http\Encoding\DecoratedStream');
         $this->shouldImplement('Psr\Http\Message\StreamInterface');
     }
 }

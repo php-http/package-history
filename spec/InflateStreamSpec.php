@@ -11,16 +11,24 @@ class InflateStreamSpec extends ObjectBehavior
     function it_is_initializable(StreamInterface $stream)
     {
         $this->beAnInstanceOf('Http\Encoding\InflateStream', [$stream]);
-        $this->shouldImplement('Http\Encoding\DecoratedStream');
         $this->shouldImplement('Psr\Http\Message\StreamInterface');
     }
 
     function it_reads_stream()
     {
         // "This is a test stream" | deflate
-        $stream = new MemoryStream(base64_decode("C8nILFZIVChJLS5RKC4pysxLBwA="));
+        $stream = new MemoryStream(base64_decode("C8nILFYAokSFktTiEoXikqLUxFwA"));
         $this->beConstructedWith($stream);
 
         $this->read(4)->shouldReturn('This');
+    }
+
+    function it_gets_content()
+    {
+        // "This is a test stream" | deflate
+        $stream = new MemoryStream(base64_decode("C8nILFYAokSFktTiEoXikqLUxFwA"));
+        $this->beConstructedWith($stream);
+
+        $this->getContents()->shouldReturn('This is a test stream');
     }
 }

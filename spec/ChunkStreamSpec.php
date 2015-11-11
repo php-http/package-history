@@ -13,23 +13,14 @@ class ChunkStreamSpec extends ObjectBehavior
     function it_is_initializable(StreamInterface $stream)
     {
         $this->beAnInstanceOf('Http\Encoding\ChunkStream', [$stream]);
-        $this->shouldImplement('Http\Encoding\DecoratedStream');
         $this->shouldImplement('Psr\Http\Message\StreamInterface');
     }
 
-    function it_reads()
-    {
-        $stream = new MemoryStream("This is a stream");
-        $this->beConstructedWith($stream);
-
-        $this->read(6)->shouldReturn("6\r\nThis i\r\n");
-    }
-
-    function it_gets_content()
+    function it_chunks_content()
     {
         $stream = new MemoryStream("This is a stream");
         $this->beConstructedWith($stream, 6);
 
-        $this->getContents()->shouldReturn("6\r\nThis i\r\n6\r\ns a st\r\n4\r\nream\r\n0\r\n\r\n");
+        $this->getContents()->shouldReturn("10\r\nThis is a stream\r\n");
     }
 }

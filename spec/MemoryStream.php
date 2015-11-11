@@ -13,7 +13,7 @@ class MemoryStream implements StreamInterface
     public function __construct($body = "")
     {
         $this->size = strlen($body);
-        $this->resource = fopen('php://memory', 'rw');
+        $this->resource = fopen('php://memory', 'rw+');
         fwrite($this->resource, $body);
         fseek($this->resource, 0);
     }
