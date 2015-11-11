@@ -8,6 +8,11 @@ use GuzzleHttp\Psr7\StreamWrapper;
 use Psr\Http\Message\StreamInterface;
 use Clue\StreamFilter as Filter;
 
+/**
+ * A filtered stream has a filter for filtering output and a filter for filtering input made to a underlying stream
+ *
+ * @author Joel Wurtz <joel.wurtz@gmail.com>
+ */
 abstract class FilteredStream implements StreamInterface
 {
     const BUFFER_SIZE = 65536;

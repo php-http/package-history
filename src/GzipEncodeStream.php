@@ -7,6 +7,11 @@ use GuzzleHttp\Psr7\StreamWrapper;
 use Psr\Http\Message\StreamInterface;
 use Clue\StreamFilter as Filter;
 
+/**
+ * Stream for encoding to gzip format (RFC 1952)
+ *
+ * @author Joel Wurtz <joel.wurtz@gmail.com>
+ */
 class GzipEncodeStream extends FilteredStream
 {
     protected $hash;

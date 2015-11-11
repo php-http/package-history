@@ -5,6 +5,11 @@ namespace Http\Encoding;
 use GuzzleHttp\Psr7\LimitStream;
 use Psr\Http\Message\StreamInterface;
 
+/**
+ * Stream for decoding from gzip format (RFC 1952)
+ *
+ * @author Joel Wurtz <joel.wurtz@gmail.com>
+ */
 class GzipDecodeStream extends FilteredStream
 {
     public function __construct(StreamInterface $stream, $readFilterOptions = null, $writeFilterOptions = null)

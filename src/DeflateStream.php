@@ -2,6 +2,11 @@
 
 namespace Http\Encoding;
 
+/**
+ * Stream deflate (RFC 1951)
+ *
+ * @author Joel Wurtz <joel.wurtz@gmail.com>
+ */
 class DeflateStream extends FilteredStream
 {
     public function getReadFilter()
