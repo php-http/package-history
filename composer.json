@@ -1,17 +1,13 @@
 {
-    "name": "php-http/boilerplate",
-    "description": "Boilerplate PHP HTTP library",
+    "name": "php-http/encoding",
+    "description": "PSR 7 Stream for transfer / content encoding headers (chunked, deflate, gzip, ...)",
     "license": "MIT",
-    "keywords": ["boilerplate", "http"],
+    "keywords": ["encoding", "http", "stream"],
     "homepage": "http://php-http.org",
     "authors": [
         {
-            "name": "Eric GELOEN",
-            "email": "geloen.eric@gmail.com"
-        },
-        {
-            "name": "Márk Sági-Kazár",
-            "email": "mark.sagikazar@gmail.com"
+            "name": "Joel Wurtz",
+            "email": "joel.wurtz@gmail.com"
         }
     ],
     "require": {
