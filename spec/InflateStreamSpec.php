@@ -14,10 +14,10 @@ class InflateStreamSpec extends ObjectBehavior
         $this->shouldImplement('Psr\Http\Message\StreamInterface');
     }
 
-    function it_reads_stream()
+    function it_reads()
     {
         // "This is a test stream" | deflate
-        $stream = new MemoryStream(base64_decode("C8nILFYAokSFktTiEoXikqLUxFwA"));
+        $stream = new MemoryStream(gzdeflate('This is a test stream'));
         $this->beConstructedWith($stream);
 
         $this->read(4)->shouldReturn('This');
@@ -26,7 +26,7 @@ class InflateStreamSpec extends ObjectBehavior
     function it_gets_content()
     {
         // "This is a test stream" | deflate
-        $stream = new MemoryStream(base64_decode("C8nILFYAokSFktTiEoXikqLUxFwA"));
+        $stream = new MemoryStream(gzdeflate('This is a test stream'));
         $this->beConstructedWith($stream);
 
         $this->getContents()->shouldReturn('This is a test stream');

@@ -2,11 +2,6 @@
 
 namespace Http\Encoding;
 
-use GuzzleHttp\Psr7\Stream;
-use GuzzleHttp\Psr7\StreamDecoratorTrait;
-use GuzzleHttp\Psr7\StreamWrapper;
-use Psr\Http\Message\StreamInterface;
-
 /**
  * Decorate a stream which is chunked
  *
@@ -14,22 +9,25 @@ use Psr\Http\Message\StreamInterface;
  *
  * @author Joel Wurtz <joel.wurtz@gmail.com>
  */
-class DechunkStream implements StreamInterface
+class DechunkStream extends FilteredStream
 {
-    use StreamDecoratorTrait;
+    /**
+     * {@inheritdoc}
+     */
+    public function getReadFilter()
+    {
+        return 'dechunk';
+    }
 
     /**
      * {@inheritdoc}
      */
-    public function __construct(StreamInterface $stream)
+    public function getWriteFilter()
     {
-        $resource = StreamWrapper::getResource($stream);
-        stream_filter_append($resource, 'chunk', STREAM_FILTER_WRITE);
-        stream_filter_append($resource, 'dechunk', STREAM_FILTER_READ);
-        $this->stream = new Stream($resource);
-    }
-}
+        if (!array_key_exists('chunk', stream_get_filters())) {
+            stream_filter_register('chunk', 'Http\Encoding\Filter\Chunk');
+        }
 
-if (!array_key_exists('chunk', stream_get_filters())) {
-    stream_filter_register('chunk', 'Http\Encoding\Filter\Chunk');
+        return 'chunk';
+    }
 }

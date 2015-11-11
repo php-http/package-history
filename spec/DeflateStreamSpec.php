@@ -14,7 +14,16 @@ class DeflateStreamSpec extends ObjectBehavior
         $this->shouldImplement('Psr\Http\Message\StreamInterface');
     }
 
-    function it_deflates_content()
+    function it_reads()
+    {
+        $stream = new MemoryStream("This is a test stream");
+        $this->beConstructedWith($stream);
+
+        $stream->rewind();
+        $this->read(4)->shouldReturn(substr(gzdeflate("This is a test stream"),0, 4));
+    }
+
+    function it_gets_content()
     {
         $stream = new MemoryStream("This is a test stream");
         $this->beConstructedWith($stream);

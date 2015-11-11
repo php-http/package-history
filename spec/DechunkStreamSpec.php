@@ -16,14 +16,6 @@ class DechunkStreamSpec extends ObjectBehavior
         $this->shouldImplement('Psr\Http\Message\StreamInterface');
     }
 
-    function it_gets_content()
-    {
-        $stream = new MemoryStream("4\r\ntest\r\n0\r\n\r\n\0");
-        $this->beConstructedWith($stream);
-
-        $this->getContents()->shouldReturn('test');
-    }
-
     function it_reads()
     {
         $stream = new MemoryStream("4\r\ntest\r\n4\r\ntest\r\n0\r\n\r\n\0");
@@ -31,5 +23,13 @@ class DechunkStreamSpec extends ObjectBehavior
 
         $this->read(6)->shouldReturn('testte');
         $this->read(6)->shouldReturn('st');
+    }
+
+    function it_gets_content()
+    {
+        $stream = new MemoryStream("4\r\ntest\r\n0\r\n\r\n\0");
+        $this->beConstructedWith($stream);
+
+        $this->getContents()->shouldReturn('test');
     }
 }

@@ -2,23 +2,15 @@
 
 namespace Http\Encoding;
 
-use GuzzleHttp\Psr7\Stream;
-use GuzzleHttp\Psr7\StreamDecoratorTrait;
-use GuzzleHttp\Psr7\StreamWrapper;
-use Psr\Http\Message\StreamInterface;
-
-class InflateStream implements StreamInterface
+class InflateStream extends FilteredStream
 {
-    use StreamDecoratorTrait;
-
-    /**
-     * {@inheritdoc}
-     */
-    public function __construct(StreamInterface $stream)
+    public function getReadFilter()
     {
-        $resource = StreamWrapper::getResource($stream);
-        stream_filter_append($resource, 'zlib.deflate', STREAM_FILTER_WRITE);
-        stream_filter_append($resource, 'zlib.inflate', STREAM_FILTER_READ);
-        $this->stream = new Stream($resource);
+        return 'zlib.inflate';
+    }
+
+    public function getWriteFilter()
+    {
+        return 'zlib.deflate';
     }
 }

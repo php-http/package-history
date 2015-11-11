@@ -34,17 +34,17 @@ abstract class FilteredStream implements StreamInterface
      */
     protected $writeFilter;
 
-    private $buffer = "";
-
     /**
-     * {@inheritdoc}
+     * @var string Internal buffer
      */
+    protected $buffer = "";
+
     public function __construct(StreamInterface $stream, $readFilterOptions = null, $writeFilterOptions = null)
     {
         $resource                  = StreamWrapper::getResource($stream);
         $this->readFilterCallback  = Filter\fun($this->getReadFilter(), $readFilterOptions);
         $this->writeFilterCallback = Filter\fun($this->getWriteFilter(), $writeFilterOptions);
-        Filter\append($resource, $this->readFilterCallback, STREAM_FILTER_READ);
+        $this->readFilter          = Filter\append($resource, $this->readFilterCallback, STREAM_FILTER_READ);
         $this->writeFilter         = Filter\append($resource, $this->writeFilterCallback, STREAM_FILTER_WRITE);
         $this->stream              = new Stream($resource);
     }
