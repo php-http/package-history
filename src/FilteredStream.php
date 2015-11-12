@@ -49,8 +49,6 @@ abstract class FilteredStream implements StreamInterface
         $resource                  = StreamWrapper::getResource($stream);
         $this->readFilterCallback  = Filter\fun($this->getReadFilter(), $readFilterOptions);
         $this->writeFilterCallback = Filter\fun($this->getWriteFilter(), $writeFilterOptions);
-        $this->readFilter          = Filter\append($resource, $this->readFilterCallback, STREAM_FILTER_READ);
-        $this->writeFilter         = Filter\append($resource, $this->writeFilterCallback, STREAM_FILTER_WRITE);
         $this->stream              = new Stream($resource);
     }
 
@@ -97,12 +95,10 @@ abstract class FilteredStream implements StreamInterface
      */
     protected function fill()
     {
-        while (!$this->stream->eof() && strlen($this->buffer) < self::BUFFER_SIZE) {
-            $this->buffer .= $this->stream->read(self::BUFFER_SIZE);
-        }
+        $readFilterCallback = $this->readFilterCallback;
+        $this->buffer      .= $readFilterCallback($this->stream->read(self::BUFFER_SIZE));
 
         if ($this->stream->eof()) {
-            $readFilterCallback = $this->readFilterCallback;
             $this->buffer .= $readFilterCallback();
         }
     }
