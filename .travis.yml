@@ -19,17 +19,17 @@ env:
 
 matrix:
   allow_failures:
-    - php: 7.0
+    - php: hhvm
   fast_finish: true
   include:
     - php: 5.4
       env: COMPOSER_FLAGS="--prefer-stable --prefer-lowest" COVERAGE=true TEST_COMMAND="composer test-ci"
 
 before_install:
-  - composer self-update
+  - travis_retry composer self-update
 
 install:
-  - composer update ${COMPOSER_FLAGS} --prefer-source --no-interaction
+  - travis_retry composer update ${COMPOSER_FLAGS} --prefer-source --no-interaction
 
 script:
   - $TEST_COMMAND
