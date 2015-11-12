@@ -2,7 +2,6 @@
 
 namespace Http\Encoding;
 
-use GuzzleHttp\Psr7\LimitStream;
 use Psr\Http\Message\StreamInterface;
 
 /**
@@ -12,12 +11,9 @@ use Psr\Http\Message\StreamInterface;
  */
 class GzipDecodeStream extends FilteredStream
 {
-    public function __construct(StreamInterface $stream, $readFilterOptions = null, $writeFilterOptions = null)
+    public function __construct(StreamInterface $stream, $level = -1)
     {
-        // Gzip streaming is not handled by php, but by remove gzip it can act like a deflate stream
-        $stream = new LimitStream($stream, -1, 10);
-
-        parent::__construct($stream, $readFilterOptions, $writeFilterOptions);
+        parent::__construct($stream, ['window' => 31], ['window' => 31, 'level' => $level]);
     }
 
     public function getReadFilter()

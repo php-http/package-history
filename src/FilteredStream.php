@@ -66,8 +66,11 @@ abstract class FilteredStream implements StreamInterface
             return $read;
         }
 
-        if ($this->eof()) {
-            return $this->buffer;
+        if ($this->stream->eof()) {
+            $buffer = $this->buffer;
+            $this->buffer = "";
+
+            return $buffer;
         }
 
         $read = $this->buffer;
@@ -75,6 +78,14 @@ abstract class FilteredStream implements StreamInterface
         $this->fill();
 
         return $read . $this->read($length - strlen($read));
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function eof()
+    {
+        return ($this->stream->eof() && $this->buffer === "");
     }
 
     /**

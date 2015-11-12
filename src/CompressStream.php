@@ -1,27 +1,29 @@
 <?php
 
 namespace Http\Encoding;
+
 use Psr\Http\Message\StreamInterface;
 
 /**
- * Stream deflate (RFC 1951)
+ * Stream compress (RFC 1950)
  *
  * @author Joel Wurtz <joel.wurtz@gmail.com>
  */
-class DeflateStream extends FilteredStream
+class CompressStream extends FilteredStream
 {
     public function __construct(StreamInterface $stream, $level = -1)
     {
-        parent::__construct($stream, ['window' => -15, 'level' => $level], ['window' => -15]);
+        parent::__construct($stream, ['window' => 15, 'level' => $level], ['window' => 15]);
     }
 
-    public function getReadFilter()
+        public function getReadFilter()
     {
         return 'zlib.deflate';
     }
 
-    public function getWriteFilter()
+        public function getWriteFilter()
     {
         return 'zlib.inflate';
     }
 }
+ 
