@@ -1,3 +1,5 @@
+> DEPRECATED: Merged into the main repository: https://github.com/php-http/httplug
+
 # HTTPlug Async
 
 [![Latest Version](https://img.shields.io/github/release/php-http/httplug-async.svg?style=flat-square)](https://github.com/php-http/httplug-async/releases)
