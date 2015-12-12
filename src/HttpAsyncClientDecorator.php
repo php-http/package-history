@@ -4,7 +4,7 @@ namespace Http\Client\Tools;
 
 use Http\Client\Exception;
 use Http\Client\HttpAsyncClient;
-use Http\Client\Promise;
+use Http\Promise\Promise;
 use Psr\Http\Message\RequestInterface;
 
 /**

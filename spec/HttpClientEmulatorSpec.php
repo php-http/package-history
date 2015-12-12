@@ -5,9 +5,9 @@ namespace spec\Http\Client\Tools;
 use Http\Client\Exception\TransferException;
 use Http\Client\HttpClient;
 use Http\Client\HttpAsyncClient;
-use Http\Client\Promise;
 use Http\Client\Tools\HttpClientEmulator;
 use Http\Client\Tools\HttpAsyncClientDecorator;
+use Http\Promise\Promise;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use PhpSpec\ObjectBehavior;
@@ -29,7 +29,7 @@ class HttpClientEmulatorSpec extends ObjectBehavior
     {
         $promise->wait()->shouldBeCalled();
         $promise->getState()->willReturn(Promise::FULFILLED);
-        $promise->getResponse()->willReturn($response);
+        $promise->wait()->willReturn($response);
 
         $httpAsyncClient->sendAsyncRequest($request)->willReturn($promise);
 
@@ -40,7 +40,7 @@ class HttpClientEmulatorSpec extends ObjectBehavior
     {
         $promise->wait()->shouldBeCalled();
         $promise->getState()->willReturn(Promise::REJECTED);
-        $promise->getException()->willReturn(new TransferException());
+        $promise->wait()->willThrow(new TransferException());
 
         $httpAsyncClient->sendAsyncRequest($request)->willReturn($promise);
 

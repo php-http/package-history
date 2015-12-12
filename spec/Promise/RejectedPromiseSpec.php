@@ -23,7 +23,7 @@ class RejectedPromiseSpec extends ObjectBehavior
 
     function it_is_a_promise()
     {
-        $this->shouldImplement('Http\Client\Promise');
+        $this->shouldImplement('Http\Promise\Promise');
     }
 
     function it_returns_a_fulfilled_promise(ResponseInterface $response)
@@ -37,10 +37,10 @@ class RejectedPromiseSpec extends ObjectBehavior
             }
         });
 
-        $promise->shouldHaveType('Http\Client\Promise');
+        $promise->shouldHaveType('Http\Promise\Promise');
         $promise->shouldHaveType('Http\Client\Tools\Promise\FulfilledPromise');
         $promise->getState()->shouldReturn(Promise::FULFILLED);
-        $promise->getResponse()->shouldReturn($response);
+        $promise->wait()->shouldReturn($response);
     }
 
     function it_returns_a_rejected_promise()
@@ -54,10 +54,10 @@ class RejectedPromiseSpec extends ObjectBehavior
             }
         });
 
-        $promise->shouldHaveType('Http\Client\Promise');
+        $promise->shouldHaveType('Http\Promise\Promise');
         $promise->shouldHaveType('Http\Client\Tools\Promise\RejectedPromise');
         $promise->getState()->shouldReturn(Promise::REJECTED);
-        $promise->getException()->shouldReturn($exception);
+        $promise->shouldThrow($exception)->duringWait();
     }
 
     function it_is_in_rejected_state()
@@ -65,13 +65,11 @@ class RejectedPromiseSpec extends ObjectBehavior
         $this->getState()->shouldReturn(Promise::REJECTED);
     }
 
-    function it_returns_am_exception(Exception $exception)
+    function it_returns_an_exception()
     {
-        $this->getException()->shouldReturn($exception);
-    }
+        $exception = new TransferException();
 
-    function it_throws_an_exception_for_response()
-    {
-        $this->shouldThrow('LogicException')->duringGetResponse();
+        $this->beConstructedWith($exception);
+        $this->shouldThrow($exception)->duringWait();
     }
 }
