@@ -3,7 +3,7 @@
 namespace Http\Client\Tools;
 
 use Http\Client\Exception;
-use Http\Client\Promise;
+use Http\Promise\Promise;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
@@ -26,13 +26,8 @@ trait HttpClientEmulator
     public function sendRequest(RequestInterface $request)
     {
         $promise = $this->sendAsyncRequest($request);
-        $promise->wait();
 
-        if ($promise->getState() == Promise::REJECTED) {
-            throw $promise->getException();
-        }
-
-        return $promise->getResponse();
+        return $promise->wait();
     }
 
     /**

@@ -3,7 +3,7 @@
 namespace Http\Client\Tools\Promise;
 
 use Http\Client\Exception;
-use Http\Client\Promise;
+use Http\Promise\Promise;
 
 /**
  * A rejected promise.
@@ -30,6 +30,10 @@ final class RejectedPromise implements Promise
      */
     public function then(callable $onFulfilled = null, callable $onRejected = null)
     {
+        if (null === $onRejected) {
+            return $this;
+        }
+
         try {
             return new FulfilledPromise($onRejected($this->exception));
         } catch (Exception $e) {
@@ -48,23 +52,10 @@ final class RejectedPromise implements Promise
     /**
      * {@inheritdoc}
      */
-    public function getResponse()
+    public function wait($unwrap = true)
     {
-        throw new \LogicException('Promise is rejected, no response available');
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getException()
-    {
-        return $this->exception;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function wait()
-    {
+        if ($unwrap) {
+            throw $this->exception;
+        }
     }
 }

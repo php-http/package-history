@@ -3,7 +3,7 @@
 namespace Http\Client\Tools\Promise;
 
 use Http\Client\Exception;
-use Http\Client\Promise;
+use Http\Promise\Promise;
 use Psr\Http\Message\ResponseInterface;
 
 /**
@@ -31,6 +31,10 @@ final class FulfilledPromise implements Promise
      */
     public function then(callable $onFulfilled = null, callable $onRejected = null)
     {
+        if (null === $onFulfilled) {
+            return $this;
+        }
+
         try {
             return new self($onFulfilled($this->response));
         } catch (Exception $e) {
@@ -49,23 +53,10 @@ final class FulfilledPromise implements Promise
     /**
      * {@inheritdoc}
      */
-    public function getResponse()
+    public function wait($unwrap = true)
     {
-        return $this->response;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getException()
-    {
-        throw new \LogicException('Promise is fulfilled, no exception available');
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function wait()
-    {
+        if ($unwrap) {
+            return $this->response;
+        }
     }
 }

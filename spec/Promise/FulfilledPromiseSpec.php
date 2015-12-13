@@ -24,7 +24,7 @@ class FulfilledPromiseSpec extends ObjectBehavior
 
     function it_is_a_promise()
     {
-        $this->shouldImplement('Http\Client\Promise');
+        $this->shouldImplement('Http\Promise\Promise');
     }
 
     function it_returns_a_fulfilled_promise(ResponseInterface $response)
@@ -35,10 +35,10 @@ class FulfilledPromiseSpec extends ObjectBehavior
             }
         });
 
-        $promise->shouldHaveType('Http\Client\Promise');
+        $promise->shouldHaveType('Http\Promise\Promise');
         $promise->shouldHaveType('Http\Client\Tools\Promise\FulfilledPromise');
         $promise->getState()->shouldReturn(Promise::FULFILLED);
-        $promise->getResponse()->shouldReturn($response);
+        $promise->wait()->shouldReturn($response);
     }
 
     function it_returns_a_rejected_promise(RequestInterface $request, ResponseInterface $response)
@@ -51,10 +51,10 @@ class FulfilledPromiseSpec extends ObjectBehavior
             }
         });
 
-        $promise->shouldHaveType('Http\Client\Promise');
+        $promise->shouldHaveType('Http\Promise\Promise');
         $promise->shouldHaveType('Http\Client\Tools\Promise\RejectedPromise');
         $promise->getState()->shouldReturn(Promise::REJECTED);
-        $promise->getException()->shouldReturn($exception);
+        $promise->shouldThrow($exception)->duringWait();
     }
 
     function it_is_in_fulfilled_state()
@@ -64,11 +64,6 @@ class FulfilledPromiseSpec extends ObjectBehavior
 
     function it_has_a_response(ResponseInterface $response)
     {
-        $this->getResponse()->shouldReturn($response);
-    }
-
-    function it_throws_an_exception_for_reason()
-    {
-        $this->shouldThrow('LogicException')->duringGetException();
+        $this->wait()->shouldReturn($response);
     }
 }
