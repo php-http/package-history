@@ -4,7 +4,7 @@ namespace spec\Http\Client\Tools\Promise;
 
 use Http\Client\Exception;
 use Http\Client\Exception\TransferException;
-use Http\Client\Promise;
+use Http\Promise\Promise;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use PhpSpec\ObjectBehavior;

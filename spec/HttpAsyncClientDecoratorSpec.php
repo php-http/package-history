@@ -3,8 +3,8 @@
 namespace spec\Http\Client\Tools;
 
 use Http\Client\HttpAsyncClient;
-use Http\Client\Promise;
 use Http\Client\Tools\HttpAsyncClientDecorator;
+use Http\Promise\Promise;
 use Psr\Http\Message\RequestInterface;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
