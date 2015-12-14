@@ -23,7 +23,7 @@ trait ResponseDecorator
     }
 
     /**
-     * Exchanges the underlying response with another
+     * Exchanges the underlying response with another.
      *
      * @param ResponseInterface $response
      *

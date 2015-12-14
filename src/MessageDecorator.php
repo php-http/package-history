@@ -25,7 +25,7 @@ trait MessageDecorator
     private $message;
 
     /**
-     * Returns the decorated message
+     * Returns the decorated message.
      *
      * Since the underlying Message is immutable as well
      * exposing it is not an issue, because it's state cannot be altered

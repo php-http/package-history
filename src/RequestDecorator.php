@@ -24,7 +24,7 @@ trait RequestDecorator
     }
 
     /**
-     * Exchanges the underlying request with another
+     * Exchanges the underlying request with another.
      *
      * @param RequestInterface $request
      *
