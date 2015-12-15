@@ -4,9 +4,7 @@ namespace Http\Client\Tools;
 
 use Http\Client\Exception;
 use Http\Client\Tools\Promise as P;
-use Http\Promise\Promise;
 use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\ResponseInterface;
 
 /**
  * Emulates an HTTP Async Client in an HTTP Client.

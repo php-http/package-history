@@ -2,10 +2,7 @@
 
 namespace Http\Client\Tools;
 
-use Http\Client\Exception;
-use Http\Promise\Promise;
 use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\ResponseInterface;
 
 /**
  * Emulates an HTTP Client in an HTTP Async Client.
