@@ -15,13 +15,9 @@ use Psr\Http\Message\ResponseInterface;
 trait HttpClientEmulator
 {
     /**
-     * Sends a PSR-7 request.
+     * {@inheritdoc}
      *
-     * @param RequestInterface $request
-     *
-     * @return ResponseInterface
-     *
-     * @throws Exception
+     * @see HttpClient::sendRequest
      */
     public function sendRequest(RequestInterface $request)
     {
@@ -31,11 +27,9 @@ trait HttpClientEmulator
     }
 
     /**
-     * Sends a PSR-7 request in an asynchronous way.
+     * {@inheritdoc}
      *
-     * @param RequestInterface $request
-     *
-     * @return Promise
+     * @see HttpAsyncClient::sendAsyncRequest
      */
     abstract public function sendAsyncRequest(RequestInterface $request);
 }

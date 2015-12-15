@@ -16,22 +16,16 @@ use Psr\Http\Message\ResponseInterface;
 trait HttpAsyncClientEmulator
 {
     /**
-     * Sends a PSR-7 request.
+     * {@inheritdoc}
      *
-     * @param RequestInterface $request
-     *
-     * @return ResponseInterface
-     *
-     * @throws Exception
+     * @see HttpClient::sendRequest
      */
     abstract public function sendRequest(RequestInterface $request);
 
     /**
-     * Sends a PSR-7 request in an asynchronous way.
+     * {@inheritdoc}
      *
-     * @param RequestInterface $request
-     *
-     * @return Promise
+     * @see HttpAsyncClient::sendAsyncRequest
      */
     public function sendAsyncRequest(RequestInterface $request)
     {

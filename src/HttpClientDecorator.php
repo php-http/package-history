@@ -22,13 +22,9 @@ trait HttpClientDecorator
     protected $httpClient;
 
     /**
-     * Sends a PSR-7 request.
+     * {@inheritdoc}
      *
-     * @param RequestInterface $request
-     *
-     * @return ResponseInterface
-     *
-     * @throws Exception
+     * @see HttpClient::sendRequest
      */
     public function sendRequest(RequestInterface $request)
     {

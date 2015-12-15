@@ -21,11 +21,9 @@ trait HttpAsyncClientDecorator
     protected $httpAsyncClient;
 
     /**
-     * Sends a PSR-7 request in an asynchronous way.
+     * {@inheritdoc}
      *
-     * @param RequestInterface $request
-     *
-     * @return Promise
+     * @see HttpAsyncClient::sendAsyncRequest
      */
     public function sendAsyncRequest(RequestInterface $request)
     {
