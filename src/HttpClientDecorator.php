@@ -2,10 +2,8 @@
 
 namespace Http\Client\Tools;
 
-use Http\Client\Exception;
 use Http\Client\HttpClient;
 use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\ResponseInterface;
 
 /**
  * Decorates an HTTP Client.
