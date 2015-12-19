@@ -9,7 +9,7 @@ use Psr\Http\Message\RequestInterface;
  *
  * @author Márk Sági-Kazár <mark.sagikazar@gmail.com>
  */
-class Wsse implements Authentication
+final class Wsse implements Authentication
 {
     use UserPasswordPair;
 
