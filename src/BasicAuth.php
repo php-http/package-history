@@ -9,7 +9,7 @@ use Psr\Http\Message\RequestInterface;
  *
  * @author Márk Sági-Kazár <mark.sagikazar@gmail.com>
  */
-class BasicAuth implements Authentication
+final class BasicAuth implements Authentication
 {
     use UserPasswordPair;
 

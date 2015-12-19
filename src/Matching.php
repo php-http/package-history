@@ -9,7 +9,7 @@ use Psr\Http\Message\RequestInterface;
  *
  * @author Márk Sági-Kazár <mark.sagikazar@gmail.com>
  */
-class Matching implements Authentication
+final class Matching implements Authentication
 {
     /**
      * @var Authentication

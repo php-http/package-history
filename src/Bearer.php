@@ -9,7 +9,7 @@ use Psr\Http\Message\RequestInterface;
  *
  * @author Márk Sági-Kazár <mark.sagikazar@gmail.com>
  */
-class Bearer implements Authentication
+final class Bearer implements Authentication
 {
     /**
      * @var string
