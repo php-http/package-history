@@ -5,7 +5,7 @@ namespace Http\Authentication;
 use Psr\Http\Message\RequestInterface;
 
 /**
- * Authenticate a PSR-7 Request using Basic Auth
+ * Authenticate a PSR-7 Request using Basic Auth.
  *
  * @author Márk Sági-Kazár <mark.sagikazar@gmail.com>
  */

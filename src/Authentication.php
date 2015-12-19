@@ -5,14 +5,14 @@ namespace Http\Authentication;
 use Psr\Http\Message\RequestInterface;
 
 /**
- * Authenticate a PSR-7 Request
+ * Authenticate a PSR-7 Request.
  *
  * @author Márk Sági-Kazár <mark.sagikazar@gmail.com>
  */
 interface Authentication
 {
     /**
-     * Authenticates a request
+     * Authenticates a request.
      *
      * @param RequestInterface $request
      *

@@ -3,7 +3,7 @@
 namespace Http\Authentication;
 
 /**
- * Trait implementing the common username-password pattern
+ * Trait implementing the common username-password pattern.
  *
  * @author Márk Sági-Kazár <mark.sagikazar@gmail.com>
  */
@@ -20,7 +20,7 @@ trait UsernamePassword
     private $password;
 
     /**
-     * Returns the username
+     * Returns the username.
      *
      * @return string
      */
@@ -30,7 +30,7 @@ trait UsernamePassword
     }
 
     /**
-     * Sets the username
+     * Sets the username.
      *
      * @param string $username
      */
@@ -40,7 +40,7 @@ trait UsernamePassword
     }
 
     /**
-     * Returns the password
+     * Returns the password.
      *
      * @return string
      */
@@ -50,7 +50,7 @@ trait UsernamePassword
     }
 
     /**
-     * Sets the password
+     * Sets the password.
      *
      * @param string $password
      */
