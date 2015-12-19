@@ -11,7 +11,7 @@ use Psr\Http\Message\RequestInterface;
  */
 class Wsse implements Authentication
 {
-    use UsernamePassword;
+    use UserPasswordPair;
 
     /**
      * @param string $username

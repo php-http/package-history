@@ -7,7 +7,7 @@ namespace Http\Authentication;
  *
  * @author Márk Sági-Kazár <mark.sagikazar@gmail.com>
  */
-trait UsernamePassword
+trait UserPasswordPair
 {
     /**
      * @var string
