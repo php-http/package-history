@@ -5,7 +5,7 @@ namespace Http\Authentication;
 use Psr\Http\Message\RequestInterface;
 
 /**
- * Authenticate a PSR-7 Request if the reuqest is matching
+ * Authenticate a PSR-7 Request if the reuqest is matching.
  *
  * @author Márk Sági-Kazár <mark.sagikazar@gmail.com>
  */
@@ -28,7 +28,7 @@ class Matching implements Authentication
     public function __construct(Authentication $authentication, callable $matcher = null)
     {
         if (is_null($matcher)) {
-            $matcher = function() {
+            $matcher = function () {
                 return true;
             };
         }
@@ -38,7 +38,7 @@ class Matching implements Authentication
     }
 
     /**
-     * Returns the authentication
+     * Returns the authentication.
      *
      * @return string
      */
@@ -48,7 +48,7 @@ class Matching implements Authentication
     }
 
     /**
-     * Sets the authentication
+     * Sets the authentication.
      *
      * @param Authentication $authentication
      */
@@ -58,7 +58,7 @@ class Matching implements Authentication
     }
 
     /**
-     * Returns the matcher
+     * Returns the matcher.
      *
      * @return callable
      */
@@ -68,7 +68,7 @@ class Matching implements Authentication
     }
 
     /**
-     * Sets the matcher
+     * Sets the matcher.
      *
      * @param callable $matcher
      */
@@ -90,7 +90,7 @@ class Matching implements Authentication
     }
 
     /**
-     * Creates a matching authentication for an URL
+     * Creates a matching authentication for an URL.
      *
      * @param Authentication $authentication
      * @param string         $url
@@ -99,7 +99,7 @@ class Matching implements Authentication
      */
     public static function createUrlMatcher(Authentication $authentication, $url)
     {
-        $matcher = function($request) use ($url) {
+        $matcher = function ($request) use ($url) {
             return preg_match($url, $request->getRequestTarget());
         };
 

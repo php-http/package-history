@@ -5,7 +5,7 @@ namespace Http\Authentication;
 use Psr\Http\Message\RequestInterface;
 
 /**
- * Authenticate a PSR-7 Request using a token
+ * Authenticate a PSR-7 Request using a token.
  *
  * @author Márk Sági-Kazár <mark.sagikazar@gmail.com>
  */
@@ -25,7 +25,7 @@ class Bearer implements Authentication
     }
 
     /**
-     * Returns the token
+     * Returns the token.
      *
      * @return string
      */
@@ -35,7 +35,7 @@ class Bearer implements Authentication
     }
 
     /**
-     * Sets the token
+     * Sets the token.
      *
      * @param string $token
      */

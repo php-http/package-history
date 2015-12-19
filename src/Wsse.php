@@ -5,7 +5,7 @@ namespace Http\Authentication;
 use Psr\Http\Message\RequestInterface;
 
 /**
- * Authenticate a PSR-7 Request using WSSE
+ * Authenticate a PSR-7 Request using WSSE.
  *
  * @author Márk Sági-Kazár <mark.sagikazar@gmail.com>
  */
@@ -29,9 +29,9 @@ class Wsse implements Authentication
     public function authenticate(RequestInterface $request)
     {
         // TODO: generate better nonce?
-        $nonce  = substr(md5(uniqid(uniqid() . '_', true)), 0, 16);
+        $nonce = substr(md5(uniqid(uniqid().'_', true)), 0, 16);
         $created = date('c');
-        $digest  = base64_encode(sha1(base64_decode($nonce) . $created . $this->password, true));
+        $digest = base64_encode(sha1(base64_decode($nonce).$created.$this->password, true));
 
         $wsse = sprintf(
             'UsernameToken Username="%s", PasswordDigest="%s", Nonce="%s", Created="%s"',
