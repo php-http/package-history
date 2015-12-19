@@ -1,5 +1,5 @@
 suites:
-  authentication_suite:
-    namespace: Http\Authentication
-    psr4_prefix: Http\Authentication
+    authentication_suite:
+        namespace: Http\Authentication
+        psr4_prefix: Http\Authentication
 formatter.name: pretty
