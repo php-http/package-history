@@ -17,8 +17,6 @@ abstract class FilteredStream implements StreamInterface
 {
     const BUFFER_SIZE = 65536;
 
-    use StreamDecoratorTrait;
-
     /**
      * @var callable
      */
@@ -46,10 +44,9 @@ abstract class FilteredStream implements StreamInterface
 
     public function __construct(StreamInterface $stream, $readFilterOptions = null, $writeFilterOptions = null)
     {
-        $resource                  = StreamWrapper::getResource($stream);
         $this->readFilterCallback  = Filter\fun($this->getReadFilter(), $readFilterOptions);
         $this->writeFilterCallback = Filter\fun($this->getWriteFilter(), $writeFilterOptions);
-        $this->stream              = new Stream($resource);
+        $this->stream              = $stream;
     }
 
     /**
@@ -116,5 +113,130 @@ abstract class FilteredStream implements StreamInterface
      * @return mixed
      */
     abstract public function getWriteFilter();
+
+    /**
+     * {@inheritdoc}
+     */
+    public function __toString()
+    {
+        try {
+            if ($this->isSeekable()) {
+                $this->seek(0);
+            }
+            return $this->getContents();
+        } catch (\Exception $e) {
+            // Really, PHP? https://bugs.php.net/bug.php?id=53648
+            trigger_error('StreamDecorator::__toString exception: '
+                . (string) $e, E_USER_ERROR);
+            return '';
+        }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getContents()
+    {
+        $buffer = '';
+
+        while (!$this->eof()) {
+            $buf = $this->read(1048576);
+
+            if ($buf == null) {
+                break;
+            }
+
+            $buffer .= $buf;
+        }
+
+        return $buffer;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function close()
+    {
+        $this->stream->close();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getMetadata($key = null)
+    {
+        return $this->stream->getMetadata($key);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function detach()
+    {
+        return $this->stream->detach();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getSize()
+    {
+        return $this->stream->getSize();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function tell()
+    {
+        return $this->stream->tell();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function isReadable()
+    {
+        return $this->stream->isReadable();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function isWritable()
+    {
+        return $this->stream->isWritable();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function isSeekable()
+    {
+        return $this->stream->isSeekable();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function rewind()
+    {
+        $this->seek(0);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function seek($offset, $whence = SEEK_SET)
+    {
+        $this->stream->seek($offset, $whence);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function write($string)
+    {
+        return $this->stream->write($string);
+    }
 }
- 
