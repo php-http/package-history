@@ -1,3 +1,5 @@
+> Moved to php-http/message
+
 # Authentication
 
 [![Latest Version](https://img.shields.io/github/release/php-http/authentication.svg?style=flat-square)](https://github.com/php-http/authentication/releases)
