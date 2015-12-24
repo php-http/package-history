@@ -1,3 +1,5 @@
+> Moved to php-http/message
+
 # Encoding
 
 [![Latest Version](https://img.shields.io/github/release/php-http/encoding.svg?style=flat-square)](https://github.com/php-http/encoding/releases)
