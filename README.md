@@ -1,3 +1,5 @@
+> Moved to php-http/message
+
 # Message Decorator
 
 [![Latest Version](https://img.shields.io/github/release/php-http/message-decorator.svg?style=flat-square)](https://github.com/php-http/message-decorator/releases)
