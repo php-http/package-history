@@ -1,3 +1,5 @@
+> Moved to php-http/client-common
+
 # HTTP Client tools
 
 [![Latest Version](https://img.shields.io/github/release/php-http/client-tools.svg?style=flat-square)](https://github.com/php-http/client-tools/releases)
